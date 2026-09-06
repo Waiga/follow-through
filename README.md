@@ -148,9 +148,10 @@ Filler is treated differently from a hypothetical. "I might look at it" and
 says. "Let me know if that works" is rejected only because nothing was promised
 by when — "Let me know the vendor's answer by Friday" is kept.
 
-What counts for that second rule is a phrase that sets a deadline: `by Friday`,
-`before Monday`, `within two days`, `end of week`. Merely mentioning a time does
-not, or "can you hear me today?" would be recorded as a commitment.
+What counts for that second rule is a phrase that names when work is due: `by
+Friday`, `before Monday`, `within two days`, `end of week`, `on Thursday`.
+Merely mentioning a time does not, or "can you hear me today?" would be recorded
+as a commitment.
 
 The filler patterns match whole utterances rather than openings, because "let me
 start by welcoming everyone" and "let me start the migration" begin identically

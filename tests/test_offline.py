@@ -60,7 +60,7 @@ FORBIDDEN_OS_CALLS = frozenset(
 FORBIDDEN_NAMES = frozenset(
     {
         "__builtins__", "__import__", "builtins", "compile", "eval", "exec",
-        "getattr", "globals", "importlib", "locals", "vars",
+        "getattr", "globals", "importlib", "locals", "modules", "vars",
     }
 )
 
@@ -97,7 +97,9 @@ def offences(source: str, filename: str = "<source>") -> set[str]:
                     found.add(f"import {root}")
         elif isinstance(node, ast.ImportFrom):
             root = (node.module or "").split(".")[0]
-            # A relative import stays inside this package, which is scanned too.
+            # A relative import resolves inside this package, and every file in
+            # the package is scanned — which is only true because the test
+            # below refuses anything that is not readable Python source.
             if node.level == 0 and root not in ALLOWED_MODULES:
                 found.add(f"from {root} import ...")
             for alias in node.names:
@@ -127,6 +129,27 @@ class NothingLeavesTheMachine(unittest.TestCase):
         names = {path.name for path in modules()}
         self.assertIn("cli.py", names)
         self.assertIn("ledger.py", names)
+
+    def test_the_package_contains_nothing_but_python_source(self):
+        """Everything importable must be something this check can read.
+
+        The scan parses ``*.py``. A compiled extension or a sourceless ``.pyc``
+        placed in the package is just as importable and contains no source to
+        parse, so it would pass unexamined — a real payload was smuggled in
+        exactly that way during review, with the whole suite green.
+
+        Rather than trying to inspect a binary, refuse to have one.
+        """
+        strays = [
+            path
+            for path in PACKAGE.rglob("*")
+            if path.is_file()
+            and path.suffix != ".py"
+            and "__pycache__" not in path.parts
+        ]
+        self.assertEqual(
+            strays, [], f"non-source files in the package: {[str(p) for p in strays]}"
+        )
 
     def test_no_module_can_reach_out(self):
         for module in modules():
@@ -207,6 +230,7 @@ class TheGuardCanFail(unittest.TestCase):
 
     def test_catches_the_module_table(self):
         self.assert_caught("import sys\nsys.modules['socket']\n", ".modules")
+        self.assert_caught("from sys import modules\n", "from sys import modules")
 
     def test_catches_the_dynamic_import_hatch(self):
         self.assert_caught("x = __import__('socket')\n", "__import__")

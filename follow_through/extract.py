@@ -155,10 +155,12 @@ def find_due_phrase(sentence: str) -> str:
 
 
 #: A phrase that sets a deadline rather than merely mentioning a time. "by
-#: Friday" commits; "today" appears in "can you hear me today?" and commits
-#: nothing.
+#: Friday" and "on Monday" name a point work is due; "today" appears in "can you
+#: hear me today?" and commits nothing.
 DEADLINE_SHAPED = re.compile(
-    r"^(?:by|before|within|in \d|end of|eod)\b", re.IGNORECASE
+    r"^(?:by|before|within|in \d|end of|eod|on (?:monday|tuesday|wednesday"
+    r"|thursday|friday|saturday|sunday))\b",
+    re.IGNORECASE,
 )
 
 

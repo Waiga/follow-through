@@ -198,13 +198,16 @@ FILLER_PATTERNS: tuple[str, ...] = (
     r"\blet me start\s+(?:\w+\s+){0,2}by\b",
     r"\blet me finish (?:my|the) (?:point|thought|sentence)\b",
     r"\blet me add (?:that|one thing)\b",
-    r"\bcan you hear me\b",
+    r"\bcan you hear (?:me|us)\b",
     r"\bcan you see (?:me|my|the screen)\b",
-    r"\b(?:can|could) you repeat (?:that|what|it)\b",
+    r"\b(?:can|could) you repeat (?:that|what|it|the last|the question)\b",
     r"\bcould you say that again\b",
     r"\bwe'?ll see\s*(?:how|what|if|about|$|[,.?!])",
-    r"\bi'?ll be (?:honest|frank)\b",
-    r"\bi'?ll tell you (?:what|this|that|something)\b",
+    # Only as a discourse marker. "I'll be honest with the client about
+    # the delay on Monday" is a commitment, not a preamble.
+    r"\bi'?ll be (?:honest|frank)(?: with you)?\s*[,.]",
+    r"\bi'?ll admit (?:that|it|i)\b",
+    r"\bi'?ll tell you (?:what|this|that|something|honestly|frankly)\b",
     r"\bi'?ll say (?:this|that)\b",
     r"\bi'?ll bet (?:you|it|that)\b",
 )
@@ -212,7 +215,13 @@ FILLER_PATTERNS: tuple[str, ...] = (
 
 #: Words blocked as owners but allowed as speaker labels. A colon after a name
 #: is evidence a person is talking; the same word inside a sentence is not.
-NAMES_ALLOWED_AS_SPEAKERS = frozenset({"april", "may", "june", "august"})
+NAMES_ALLOWED_AS_SPEAKERS = frozenset(
+    {
+        "april", "august", "december", "february", "friday", "january",
+        "july", "june", "march", "may", "monday", "november", "october",
+        "saturday", "september", "sunday", "thursday", "tuesday", "wednesday",
+    }
+)
 
 
 def _compile(patterns: tuple[str, ...]) -> tuple[re.Pattern[str], ...]:

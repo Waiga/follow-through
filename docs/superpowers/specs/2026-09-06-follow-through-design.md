@@ -114,9 +114,9 @@ a negation, or something already done is rejected outright — a deadline never
 rescues "we'll never get this done by Friday". Conversational filler is rejected
 only when nothing was promised by when.
 
-Two details make that rule safe. The overriding phrase must set a deadline
-("by Friday", "before Monday", "within two days"), not merely mention a time,
-or "can you hear me today?" would be recorded. And each filler pattern must
+Two details make that rule safe. The overriding phrase must name when work is
+due ("by Friday", "before Monday", "on Thursday", "within two days"), not merely
+mention a time, or "can you hear me today?" would be recorded. And each filler pattern must
 match a whole utterance rather than an opening: an earlier version matched
 "let me start", "let me add" and "let me finish", and threw away every genuine
 commitment that began with them. Dropping a real commitment is the worst failure

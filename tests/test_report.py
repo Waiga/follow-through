@@ -54,7 +54,7 @@ class Grouping(unittest.TestCase):
 class Markdown(unittest.TestCase):
     def test_shows_evidence_for_every_entry(self):
         text = report.render_markdown([entry()])
-        self.assertIn("sample.txt` line 1", text)
+        self.assertIn("sample.txt line 1", text)
         self.assertIn("first-person-undertaking", text)
 
     def test_names_a_missing_deadline_rather_than_inventing_one(self):
@@ -75,6 +75,17 @@ class Markdown(unittest.TestCase):
 
     def test_every_report_states_its_limits(self):
         self.assertIn(report.LIMITATIONS, report.render_markdown([]))
+
+
+class SourcePaths(unittest.TestCase):
+    def test_a_backtick_in_a_path_is_kept_not_deleted(self):
+        # The source is the one field that exists so a reader can find the
+        # quote. Silently dropping a character from it misreports where it is.
+        odd = entry()
+        odd.source = "notes/a`b.txt"
+        rendered = report.render_markdown([odd])
+        self.assertIn("a", rendered)
+        self.assertNotIn("notes/ab.txt", rendered)
 
 
 class MarkdownIsNotInjectable(unittest.TestCase):

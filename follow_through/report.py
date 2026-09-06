@@ -88,7 +88,7 @@ def _markdown_entry(entry: Entry) -> list[str]:
     return [
         f"- **{entry.id}** — {as_text(entry.text)}",
         f"  - Deadline: {as_text(due)}",
-        f"  - Source: `{one_line(entry.source).replace('`', '')}` line {entry.line}",
+        f"  - Source: {as_text(entry.source)} line {entry.line}",
         f"  - Cues: {', '.join(entry.cues)}",
     ]
 
