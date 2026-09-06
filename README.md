@@ -14,9 +14,13 @@ statements that commit someone to a future action, and tracks each one until you
 say it is done.
 
 It runs entirely on your machine. No account, no API key, no network call. Your
-transcripts are never uploaded anywhere, because the tool has no way to upload
-anything — and there is a test in this repository that fails if that ever stops
-being true.
+transcripts are never uploaded anywhere.
+
+That is enforced, not just promised. `tests/test_offline.py` reads this package's
+own source on every run and fails if any module imports something that can reach
+the network, calls the part of `os` that starts another program, or uses
+`__import__`, `eval` or `exec` to get at either one behind the scenes. Each of
+those detectors has its own test proving it can fail.
 
 ## Install
 
@@ -36,15 +40,20 @@ follow-through extract examples/weekly-sync.txt
 ```
 
 ```
-5839899d7645  Sam                   by Friday             I'll send the signed lease to finance by Friday.
-edee66854bf3  owner not stated      no stated deadline    Can you also share the insurance certificate?
-b624cb073898  Jordan                by October 3          Jordan will pull the carrier rates by October 3.
-de7265f453ff  Jordan                in 3 days             I'll have a first cut ready in 3 days.
-87f684df85d6  Alex                  no stated deadline    We'll need to decide on the second shift before the move.
-d6f02c843675  Jordan                tonight               Let me draft the shift plan tonight.
-2124eabca805  owner not stated      no stated deadline    Please confirm the headcount with HR.
-f8fdc884499c  Alex                  today                 I'll update the risk register today.
+8a6295803ccc  Sam                   by Friday             I'll send the signed lease to finance by Friday.
+35a117fe08a0  owner not stated      no stated deadline    Can you also share the insurance certificate?
+ab66f295b196  Jordan                by October 3          Jordan will pull the carrier rates by October 3.
+1f0e51f8120a  Jordan                in 3 days             I'll have a first cut ready in 3 days.
+4312edaecc56  owner not stated      no stated deadline    We'll need to decide on the second shift before the move.
+4095a62ef115  Jordan                tonight               Let me draft the shift plan tonight.
+694cf1f34f39  owner not stated      no stated deadline    Please confirm the headcount with HR.
+37f8c8a83e0d  Alex                  today                 I'll update the risk register today.
+0bc8f26c2cae  O'Brien               next week             O'Brien will countersign the lease next week.
 ```
+
+Five other lines in that transcript were left out on purpose: two hypotheticals,
+one thing already done, one "maybe", and a "let me know". Each of them contains a
+phrase the tool otherwise treats as a commitment.
 
 `extract` records nothing. When the list looks right, keep it:
 
@@ -52,15 +61,20 @@ f8fdc884499c  Alex                  today                 I'll update the risk r
 follow-through track examples/weekly-sync.txt
 ```
 
-That writes a ledger to `.follow-through/ledger.json`. Run it again over a longer
-transcript from the same series and only the new commitments are added — nothing
-is duplicated, and nothing you have already closed comes back.
+That writes a ledger to `.follow-through/ledger.json`. Run it again over the same
+file after it has grown and only the new commitments are added — nothing is
+duplicated, and nothing you have already closed comes back.
+
+A commitment is identified by its wording, its owner, and the file it came from.
+The file matters: people promise the same thing, in the same words, every week.
+If last week's transcript and this week's were treated as one, the second promise
+would silently match the first one you closed and disappear.
 
 See what is still open, close something, and write a report:
 
 ```bash
 follow-through list
-follow-through close 5839 --note "lease countersigned and filed"
+follow-through close 8a62 --note "lease countersigned and filed"
 follow-through report
 ```
 
@@ -79,7 +93,9 @@ This list is the design, not a disclaimer.
   phrased unusually will be missed, and some of what it finds will not really be
   a commitment. Every report says so.
 - **It will not guess who owns something.** If the transcript does not say, the
-  owner stays `unknown`. It will not attribute a line to whoever was talking most.
+  owner stays `unknown`. It will not attribute a line to whoever was talking
+  most, and it will not turn `From:` or `TODO:` into a person. "We'll decide on
+  Friday" commits a room, not whoever said "we", so that stays `unknown` too.
 - **It will not guess a deadline.** No timing phrase means no deadline. It records
   the phrase the speaker actually used — `by Friday`, `in 3 days` — as text, and
   never converts it to a calendar date, because that would mean assuming when the
@@ -106,8 +122,17 @@ negated, tentative, or already in the past — `if I get time`, `I don't think I
 
 Owners come from speaker labels (`Alex:` at the start of a line, with or without a
 timestamp). A first-person undertaking belongs to whoever is speaking. A named
-assignment belongs to the person named. When both appear in one sentence the
-owner is genuinely unclear, so it is left unknown.
+assignment belongs to the person named. A collective undertaking belongs to
+nobody. When two of these appear in one sentence the owner is genuinely unclear,
+so it is left unknown.
+
+Two details worth knowing, because they are the places this could surprise you.
+A speaker label applies to the lines that follow it until the next label, which is
+how transcripts work but does mean an unlabelled line is attributed to whoever
+spoke last; a structural label such as `Notes:` ends that turn rather than
+continuing it. And a word is only treated as a name if it is capitalised and is
+not an ordinary English word, which is a filter, not real name detection — an
+unusual name in an unusual position can still be missed.
 
 Every entry keeps the quoted sentence, the file and line it came from, and which
 rules fired. You can always check the tool's work against the source.
@@ -115,8 +140,10 @@ rules fired. You can always check the tool's work against the source.
 ## Your data
 
 - Everything stays in the directory you run it in.
-- File paths inside your working directory are recorded relative to it, so a
-  report you share does not carry the shape of your home directory.
+- File paths are shortened before they are recorded: relative to the directory
+  you ran in when the file is below it, otherwise written with `~` in place of
+  your home directory. A file outside both is recorded in full, because by then
+  there is nothing left to hide.
 - `.gitignore` already excludes `transcripts/`, ledgers, and reports, so your own
   material does not end up in a commit by accident.
 - The examples in this repository are invented. Lumen Freight does not exist, and

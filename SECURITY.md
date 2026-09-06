@@ -14,8 +14,19 @@ and I will tell you what I intend to do and when.
 
 Follow Through reads text files you point it at and writes a ledger and reports
 into directories you choose. It makes no network connection, runs no other
-program, and requires no credentials. `tests/test_offline.py` enforces the first
-two by reading the package's own source.
+program, and requires no credentials.
+
+`tests/test_offline.py` enforces that by parsing the package's own source on
+every test run. It fails if any module imports something that can reach the
+network or load native code, calls one of the `os` functions that launches
+another program, or uses `__import__`, `eval`, `compile` or `exec` to get at
+either indirectly. `os` itself is permitted, because writing a file atomically
+needs it, so the check is on the specific calls rather than the import.
+
+What this does not cover: it is a static check of this package, not of Python
+itself or of anything you install alongside it, and a determined author could
+still find a construction it does not model. It is a guard against drift, not a
+sandbox.
 
 It reads whatever you give it, so treat the ledger and any report you generate as
 being as sensitive as the transcript they came from. Reports are plain files;

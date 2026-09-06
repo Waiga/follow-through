@@ -149,9 +149,6 @@ class ExtractingText(unittest.TestCase):
         self.assertEqual(extract_text("", "empty.txt"), [])
 
 
-if __name__ == "__main__":
-    unittest.main()
-
 
 class SourceLabels(unittest.TestCase):
     def test_a_path_inside_the_working_directory_is_recorded_relative(self):
@@ -178,5 +175,116 @@ class SourceLabels(unittest.TestCase):
 
         from follow_through.extract import source_label
 
-        outside = Path(tempfile.mkdtemp()) / "elsewhere.txt"
+        outside = Path(tempfile.mkdtemp()).resolve() / "elsewhere.txt"
         self.assertEqual(source_label(outside), str(outside))
+
+
+class NamesThatAreNotNames(unittest.TestCase):
+    """Every one of these once produced an owner. None of them is a person."""
+
+    def test_a_header_is_not_a_speaker(self):
+        for line in ("From: alex@example.com", "TODO: I will fix it.", "Action Items: I will circulate notes."):
+            with self.subTest(line=line):
+                speaker, structural, _ = read_speaker(line)
+                self.assertEqual(speaker, "")
+                self.assertTrue(structural)
+
+    def test_a_common_document_header_is_rejected(self):
+        speaker, structural, _ = read_speaker("Discussion: I will fix it.")
+        self.assertEqual(speaker, "")
+        self.assertTrue(structural)
+
+    def test_known_limit_an_unlisted_header_still_reads_as_a_speaker(self):
+        # Recorded, not hidden. The defence is a list of known headers plus a
+        # capitalisation and ordinary-word filter; a capitalised word that is
+        # none of those is indistinguishable from a name in one line of text.
+        # The README says so. If this test starts failing because the check got
+        # better, delete it.
+        speaker, _, _ = read_speaker("Procurement: I will fix it.")
+        self.assertEqual(speaker, "Procurement")
+
+    def test_an_ordinary_noun_phrase_is_not_an_owner(self):
+        self.assertEqual(named_owner("The team will revisit the budget."), UNKNOWN)
+
+
+class NamesThatAre(unittest.TestCase):
+    def test_an_apostrophe_does_not_split_a_name(self):
+        self.assertEqual(named_owner("O'Brien will confirm the headcount."), "O'Brien")
+
+    def test_a_two_word_name_is_kept_whole(self):
+        self.assertEqual(named_owner("Zhang Wei will pull the rates."), "Zhang Wei")
+
+    def test_a_name_is_not_swallowed_by_the_words_before_it(self):
+        self.assertEqual(named_owner("I think Priya will send it."), "Priya")
+
+    def test_an_accented_name_is_recognised(self):
+        self.assertEqual(named_owner("José will send the deck."), "José")
+
+    def test_a_non_latin_speaker_label_is_recognised(self):
+        speaker, structural, remainder = read_speaker("Алекс: I'll send it.")
+        self.assertEqual(speaker, "Алекс")
+        self.assertFalse(structural)
+        self.assertEqual(remainder, "I'll send it.")
+
+
+class CollectiveUndertakings(unittest.TestCase):
+    def test_we_belongs_to_nobody(self):
+        fired, owner = classify("We'll decide on the shift by Friday.", "Sam")
+        self.assertIn(cues.COLLECTIVE, fired)
+        self.assertEqual(owner, UNKNOWN)
+
+    def test_it_is_still_recorded(self):
+        fired, _ = classify("We will ship the order tomorrow.", "Sam")
+        self.assertNotEqual(fired, ())
+
+    def test_mixing_we_and_i_leaves_the_owner_unclear(self):
+        _, owner = classify("I'll draft it and we'll sign it off.", "Sam")
+        self.assertEqual(owner, UNKNOWN)
+
+
+class ConversationalFiller(unittest.TestCase):
+    """The most common sentences on any call. None of them is a commitment."""
+
+    FILLER = (
+        "Let me know if you have any questions.",
+        "Can you hear me?",
+        "We'll see how it goes.",
+        "Let me think about that for a second.",
+        "Could you repeat that?",
+        "I'll be honest, that surprised me.",
+        "I will never understand that decision.",
+    )
+
+    def test_none_of_it_is_recorded(self):
+        for line in self.FILLER:
+            with self.subTest(line=line):
+                self.assertEqual(classify(line, "Alex")[0], ())
+
+    def test_the_real_thing_still_gets_through(self):
+        # The filter must not be so wide that it swallows genuine commitments
+        # built from the same openings.
+        for line in ("Let me draft the plan tonight.", "Can you send the invoice?"):
+            with self.subTest(line=line):
+                self.assertNotEqual(classify(line, "Alex")[0], ())
+
+
+class SourceLabelsAndHome(unittest.TestCase):
+    def test_a_path_under_home_is_written_with_a_tilde(self):
+        from pathlib import Path as _Path
+
+        from follow_through.extract import source_label
+
+        target = _Path.home() / "transcripts" / "q3.txt"
+        self.assertEqual(source_label(target), "~/transcripts/q3.txt")
+
+    def test_no_username_reaches_a_recorded_path(self):
+        from pathlib import Path as _Path
+
+        from follow_through.extract import source_label
+
+        label = source_label(_Path.home() / "notes.txt")
+        self.assertNotIn(_Path.home().name, label)
+
+
+if __name__ == "__main__":
+    unittest.main()

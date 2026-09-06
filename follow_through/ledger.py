@@ -41,9 +41,29 @@ def load(ledger_dir: Path) -> list[Entry]:
     if not isinstance(raw, dict) or "entries" not in raw:
         raise LedgerError(f"{path} is not a Follow Through ledger")
     try:
-        return [Entry.from_dict(item) for item in raw["entries"]]
+        entries = [Entry.from_dict(item) for item in raw["entries"]]
     except (KeyError, TypeError, ValueError) as exc:
         raise LedgerError(f"{path} contains a malformed entry: {exc}") from exc
+    for entry in entries:
+        validate(entry, path)
+    return entries
+
+
+def validate(entry: Entry, path: Path) -> None:
+    """Reject a ledger record that the rest of the tool could not honour.
+
+    An unrecognised state would make an entry invisible: counted in the total,
+    listed under neither open nor closed, and reported to nobody. A closed entry
+    with no reason would break the promise that closure is a recorded human
+    judgement. Both are refused loudly rather than passed through quietly.
+    """
+    if entry.state not in STATES:
+        raise LedgerError(
+            f"{path}: entry {entry.id} has state {entry.state!r}; "
+            f"expected one of {', '.join(STATES)}"
+        )
+    if entry.state == CLOSED and not entry.note.strip():
+        raise LedgerError(f"{path}: entry {entry.id} is closed with no reason given")
 
 
 def save(ledger_dir: Path, entries: list[Entry]) -> Path:

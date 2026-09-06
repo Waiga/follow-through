@@ -22,6 +22,18 @@ LIMITATIONS = (
 )
 
 
+def one_line(text: str) -> str:
+    """Collapse text to a single line before it is placed in a report.
+
+    Quoted sentences and closing notes are written by people, and a note can
+    contain newlines. In Markdown a newline ends the list item, so an unescaped
+    note could close the list and open a heading, and a reader would see
+    structure and entries that the tool never found. Collapsing to one line
+    removes the only lever that has.
+    """
+    return " ".join(text.split())
+
+
 def group_by_owner(entries: list[Entry]) -> list[tuple[str, list[Entry]]]:
     """Group entries by owner, named owners first and ``unknown`` last.
 
@@ -54,9 +66,9 @@ def counts(entries: list[Entry]) -> dict[str, int]:
 def _markdown_entry(entry: Entry) -> list[str]:
     due = entry.due_phrase if entry.due_phrase != UNKNOWN else "no stated deadline"
     return [
-        f"- **{entry.id}** — {entry.text}",
-        f"  - Deadline: {due}",
-        f"  - Source: `{entry.source}` line {entry.line}",
+        f"- **{entry.id}** — {one_line(entry.text)}",
+        f"  - Deadline: {one_line(due)}",
+        f"  - Source: `{one_line(entry.source)}` line {entry.line}",
         f"  - Cues: {', '.join(entry.cues)}",
     ]
 
@@ -92,8 +104,8 @@ def render_markdown(entries: list[Entry]) -> str:
     if closed_entries:
         lines.extend([f"## Closed ({len(closed_entries)})", ""])
         for entry in closed_entries:
-            lines.append(f"- **{entry.id}** — {entry.text}")
-            lines.append(f"  - Closed because: {entry.note}")
+            lines.append(f"- **{entry.id}** — {one_line(entry.text)}")
+            lines.append(f"  - Closed because: {one_line(entry.note)}")
         lines.append("")
 
     lines.extend(["## Limitations", "", LIMITATIONS, ""])
@@ -104,7 +116,7 @@ def _html_entry(entry: Entry) -> str:
     due = entry.due_phrase if entry.due_phrase != UNKNOWN else "no stated deadline"
     return (
         "<li>"
-        f"<code>{html.escape(entry.id)}</code> {html.escape(entry.text)}"
+        f"<code>{html.escape(entry.id)}</code> {html.escape(one_line(entry.text))}"
         f"<dl><dt>Deadline</dt><dd>{html.escape(due)}</dd>"
         f"<dt>Source</dt><dd>{html.escape(entry.source)} line {entry.line}</dd>"
         f"<dt>Cues</dt><dd>{html.escape(', '.join(entry.cues))}</dd></dl>"
@@ -147,8 +159,8 @@ def render_html(entries: list[Entry]) -> str:
         for entry in closed_entries:
             parts.append(
                 f"<li><code>{html.escape(entry.id)}</code> "
-                f"{html.escape(entry.text)}<dl><dt>Closed because</dt>"
-                f"<dd>{html.escape(entry.note)}</dd></dl></li>"
+                f"{html.escape(one_line(entry.text))}<dl><dt>Closed because</dt>"
+                f"<dd>{html.escape(one_line(entry.note))}</dd></dl></li>"
             )
         parts.append("</ul>")
 

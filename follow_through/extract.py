@@ -16,36 +16,40 @@ from pathlib import Path
 from . import cues
 from .models import UNKNOWN, Candidate
 
-#: ``Waiga:`` or ``[00:14] Waiga Arya:`` at the start of a line. Each word of the
-#: label must be capitalised, so prose rarely matches by accident.
+#: ``Alex:`` or ``[00:14] Sam Okafor:`` at the start of a line.
+#:
+#: The name is captured loosely and checked in :func:`read_speaker`. Requiring
+#: an ASCII capital here would silently drop every speaker whose name does not
+#: start with one.
 SPEAKER_LABEL = re.compile(
     r"""^\s*
         (?:[\[(]?\d{1,2}:\d{2}(?::\d{2})?[\])]?\s*)?   # optional timestamp
-        (?P<name>[A-Z][\w'’-]*(?:\s+[A-Z][\w'’-]*){0,2})
+        (?P<name>[^\W\d_][\w'’-]*(?:\s+[^\W\d_][\w'’-]*){0,2})
         \s*:\s
     """,
     re.VERBOSE,
 )
 
 #: Labels that look like speakers but are document structure, not people.
+#:
+#: This list can never be complete, which is why it is not the only defence: a
+#: label is also rejected unless every word in it is capitalised and none of the
+#: words is an ordinary English word from :data:`follow_through.cues.NON_NAME_WORDS`.
+#: Without both checks, ``From:`` and ``TODO:`` become people.
 NON_SPEAKER_LABELS = frozenset(
     {
-        "action",
-        "actions",
-        "agenda",
-        "attendees",
-        "date",
-        "decision",
-        "decisions",
-        "next",
-        "note",
-        "notes",
-        "present",
-        "subject",
-        "summary",
-        "time",
-        "topic",
-        "transcript",
+        "a", "absent", "action", "action item", "action items", "actions", "agenda",
+        "apologies", "ask", "asks", "attendees", "background", "bcc", "cc",
+        "chair", "context", "date", "deadline", "decision", "decisions",
+        "follow up", "follow-up", "from", "item", "items", "location",
+        "minutes", "next", "next step", "next steps", "note", "notes",
+        "objective", "outcome", "owner", "participants", "present", "purpose",
+        "questions", "re", "recording", "reminder", "risks", "sent", "status",
+        "answer", "attendance", "budget", "closing", "comments", "conclusion",
+        "discussion", "issue", "opening", "problem", "q", "question",
+        "resolution", "risk", "scope", "solution", "subject", "summary",
+        "time", "timeline", "to", "todo", "to do", "topic", "transcript",
+        "update", "venue",
     }
 )
 
@@ -76,9 +80,29 @@ def read_speaker(line: str) -> tuple[str, bool, str]:
         return "", False, line
     name = match.group("name").strip()
     remainder = line[match.end() :]
-    if name.lower() in NON_SPEAKER_LABELS:
+    if name.lower() in NON_SPEAKER_LABELS or not looks_like_a_name(name):
         return "", True, remainder
     return name, False, remainder
+
+
+def looks_like_a_name(phrase: str) -> bool:
+    """True when every word in ``phrase`` could be part of a person's name.
+
+    Each word must start with an uppercase letter and must not be an ordinary
+    English word. This is what keeps ``The team will ship`` from producing an
+    owner called "The team", and ``From: alex@example.com`` from producing one
+    called "From". It is a filter, not a name detector: it can only reject.
+    """
+    words = phrase.split()
+    if not words:
+        return False
+    for word in words:
+        stripped = word.strip("'\u2019-")
+        if not stripped or not stripped[0].isupper():
+            return False
+        if stripped.lower() in cues.NON_NAME_WORDS:
+            return False
+    return True
 
 
 def find_due_phrase(sentence: str) -> str:
@@ -103,13 +127,18 @@ def is_excluded(sentence: str) -> bool:
 def named_owner(sentence: str) -> str:
     """Return the name in an ``X will ...`` construction, or ``unknown``.
 
-    A capitalised word is only treated as a name when it is not a pronoun or
-    other ordinary sentence opener. ``We will ship on Monday`` names nobody.
+    The regular expression captures up to three words before the verb. The
+    longest run of those words that still looks like a name wins, so
+    ``Zhang Wei will pull the rates`` yields "Zhang Wei" while
+    ``I think Priya will send it`` yields "Priya" rather than "I think Priya".
+    ``We will ship on Monday`` and ``There will be a delay`` yield nothing.
     """
-    for pattern in cues.NAMED_ASSIGNMENT_RE:
-        match = pattern.search(sentence)
-        if match and match.group(1).lower() not in cues.NON_NAME_WORDS:
-            return match.group(1)
+    for match in cues.NAMED_ASSIGNMENT_RE.finditer(sentence):
+        words = match.group(1).split()
+        for start in range(len(words)):
+            candidate = " ".join(words[start:])
+            if looks_like_a_name(candidate):
+                return candidate
     return UNKNOWN
 
 
@@ -118,35 +147,50 @@ def classify(sentence: str, speaker: str) -> tuple[tuple[str, ...], str]:
 
     Returns an empty cue tuple when the sentence is not a candidate.
 
-    Owner resolution is conservative. A first-person undertaking belongs to the
-    current speaker, if the transcript labels one. A named assignment belongs to
-    the person named. When both fire in the same sentence the owner is genuinely
-    ambiguous, so it is recorded as ``unknown`` rather than guessed.
+    Owner resolution is deliberately reluctant:
+
+    * A first-person undertaking belongs to the current speaker, when the
+      transcript labels one.
+    * A named assignment belongs to the person named.
+    * A collective undertaking ("we'll decide on Friday") belongs to nobody in
+      particular. Recording it against whoever happened to say "we" would be an
+      invention, so the owner stays unknown.
+    * An open ask ("can you confirm?") does not say who was addressed, so the
+      owner stays unknown.
+    * When two of these fire in the same sentence the owner is genuinely
+      unclear, and unclear is recorded as unknown.
     """
     if is_excluded(sentence):
         return (), UNKNOWN
 
-    fired: list[str] = []
-    owner = UNKNOWN
-
     first_person = any(p.search(sentence) for p in cues.FIRST_PERSON_RE)
+    collective = any(p.search(sentence) for p in cues.COLLECTIVE_RE)
     named = named_owner(sentence)
-    assignment = any(p.search(sentence) for p in cues.ASSIGNMENT_RE)
+    open_ask = any(p.search(sentence) for p in cues.ASSIGNMENT_RE)
 
+    fired: list[str] = []
     if first_person:
         fired.append(cues.FIRST_PERSON)
-        owner = speaker or UNKNOWN
-    if named != UNKNOWN:
+    if collective:
+        fired.append(cues.COLLECTIVE)
+    if named != UNKNOWN or open_ask:
         fired.append(cues.ASSIGNMENT)
-        owner = UNKNOWN if first_person else named
-    elif assignment:
-        fired.append(cues.ASSIGNMENT)
-        # The addressed party is not stated in the text, so it stays unknown.
-        if not first_person:
-            owner = UNKNOWN
 
     if not fired:
         return (), UNKNOWN
+
+    claimants = [
+        source
+        for source in (
+            speaker if first_person else "",
+            named if named != UNKNOWN else "",
+        )
+        if source
+    ]
+    if collective or open_ask or len(claimants) != 1:
+        owner = UNKNOWN
+    else:
+        owner = claimants[0]
 
     if find_due_phrase(sentence) != UNKNOWN:
         fired.append(cues.DUE_PHRASE)
@@ -186,14 +230,24 @@ def extract_text(text: str, source: str) -> list[Candidate]:
 def source_label(path: Path) -> str:
     """How a file is named in the ledger and in reports.
 
-    A path inside the current directory is recorded relative to it. Reports are
-    meant to be shareable, and an absolute path would carry the shape of
-    someone's home directory into a document they hand to a colleague.
+    Reports are meant to be shareable, so the path is shortened as far as it can
+    be without losing which file it was: relative to the working directory when
+    the file is below it, otherwise written with ``~`` for the home directory.
+    Only a path outside both is recorded in full, and then there is nothing left
+    to hide.
+
+    A username is not a secret, but it does not belong in a document handed to
+    somebody outside the company either.
     """
+    resolved = path.resolve()
     try:
-        return str(path.resolve().relative_to(Path.cwd().resolve()))
+        return str(resolved.relative_to(Path.cwd().resolve()))
     except ValueError:
-        return str(path)
+        pass
+    try:
+        return str(Path("~") / resolved.relative_to(Path.home().resolve()))
+    except ValueError:
+        return str(resolved)
 
 
 def extract_file(path: Path) -> list[Candidate]:

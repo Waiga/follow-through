@@ -31,8 +31,11 @@ Everything must pass before and after your change.
   what is still correctly rejected. A pattern that catches more by also catching
   ordinary sentences is not an improvement.
 - Keep the offline guarantee. `tests/test_offline.py` fails if any module in the
-  package imports something capable of opening a connection or starting a
-  process. Do not weaken it.
+  package imports something capable of opening a connection, calls one of the
+  `os` functions that starts another program, or reaches either through
+  `__import__`, `eval`, `compile` or `exec`. Do not weaken it. If a change
+  genuinely needs one of those, that is a conversation to have in an issue
+  first, not a line to add to the allowed list.
 - Match the surrounding style. Comments explain why, not what.
 
 ## What review looks like

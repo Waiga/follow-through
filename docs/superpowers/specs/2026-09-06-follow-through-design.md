@@ -86,9 +86,19 @@ cue family:
   `<Name> will`, `<Name> is going to`.
 
 **Owner resolution.** For a first-person undertaking, the owner is the current
-speaker label if one exists, otherwise `unknown`. For an assignment, the owner is
-the addressed name when the sentence names one, otherwise `unknown`. The owner is
-never inferred from context, frequency, or who spoke most.
+speaker label if one exists, otherwise `unknown`. For a named assignment, the
+owner is the person named. A collective undertaking — "we'll decide on Friday" —
+belongs to nobody, because recording it against whoever said "we" would be an
+invention. An open ask does not say who was addressed, so it stays `unknown`.
+When two of these fire in one sentence the owner is unclear, and unclear is
+recorded as `unknown`. The owner is never inferred from context, frequency, or
+who spoke most.
+
+**What counts as a name.** A capitalised word is treated as a name only when no
+word in it is an ordinary English word. This is a filter, not name detection: it
+can reject, never confirm. It exists because the first version produced owners
+called "From", "TODO" and "Brien" — the last of those from splitting "O'Brien" in
+half. Names are matched without assuming ASCII, so "José" and "Алекс" work.
 
 **Due-date cues.** Recognised phrases are recorded verbatim as evidence:
 `by <weekday>`, `by <month> <day>`, `today`, `tomorrow`, `tonight`, `EOD`,
@@ -111,13 +121,24 @@ The ledger is a single JSON file, written locally, holding one record per
 commitment: a stable id, the quoted text, owner, due phrase, source file and
 line, the cues that fired, the state, and the closing note if closed.
 
-Identity is a hash of the normalised quoted text plus the owner. Running `track`
-twice over the same file adds nothing the second time. Running it over an
-extended transcript adds only what is new.
+Identity is a hash of the normalised quoted text, the owner, and the source file.
+Running `track` twice over the same file adds nothing the second time; running it
+over that file after it has grown adds only what is new.
 
-States are `open` and `closed`. There is deliberately no `overdue` state, because
-the tool does not compute dates. A report can show which entries have a due
-phrase and are still open; it will not assert that a deadline passed.
+The source belongs in the identity. People promise the same thing, in the same
+words, every week. Without it, week two's promise would match week one's closed
+entry and disappear — a confirmed "nothing open" where the honest answer is that
+a new commitment exists.
+
+States are `open` and `closed`, and a ledger containing anything else is refused
+on load rather than passed through: an unrecognised state would leave an entry
+counted in the total, listed under neither heading, and reported to nobody. A
+closed entry with no reason is refused for the same kind of reason — closure is
+supposed to be a recorded human judgement.
+
+There is deliberately no `overdue` state, because the tool does not compute dates.
+A report can show which entries have a due phrase and are still open; it will not
+assert that a deadline passed.
 
 ## Reports
 
@@ -143,7 +164,10 @@ be reviewed and extended by a contributor without touching logic.
 
 ## Safety for public release
 
-- No network calls exist anywhere in the package. A test asserts this.
+- No network calls exist anywhere in the package. A test parses the package's own
+  source on every run and fails on a forbidden import, on the `os` calls that
+  launch another program, or on `__import__`, `eval`, `compile` or `exec`. Each
+  detector has its own test proving it can fail.
 - No file is written outside the ledger and reports directories.
 - The repository ships only invented example transcripts, with invented people
   and companies.
@@ -156,9 +180,15 @@ be reviewed and extended by a contributor without touching logic.
 
 Unit tests cover each cue family, each exclusion, owner resolution including the
 unknown path, due-phrase capture, ledger identity and idempotent merge, closure
-recording, and report rendering. One end-to-end test runs the documented example
-and compares against a checked-in expected report. One test asserts the package
-imports no network module.
+recording, and report rendering. One end-to-end test runs the documented example and compares against a
+checked-in expected report, and another checks that the listing printed in the
+README is still what the tool prints.
+
+The example transcript doubles as the exclusion fixture, and every line it
+expects to reject carries a real commitment cue. The first version's rejected
+lines carried none, which meant the end-to-end test passed with the entire
+exclusion table deleted. A fixture that appears to test something and does not is
+worse than no fixture.
 
 ## Out of scope for v0.1
 

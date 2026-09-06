@@ -1,16 +1,17 @@
-Weekly operations call — Lumen Freight (fictional example)
+Weekly operations call — Lumen Freight (invented example)
 
-Alex: Morning everyone. Let's start with the warehouse move.
+Alex: Morning everyone. Let me know if you cannot hear me.
 Sam: The Rotterdam site is confirmed. I'll send the signed lease to finance by Friday.
 Alex: Good. Can you also share the insurance certificate?
-Sam: Yes. I already sent that one last week.
-Jordan: I might look at the routing software again, but I am not sure it is worth it.
-Alex: If I get time this month I would have liked to review the carrier contracts.
+Sam: I already said I'll dig out the insurance certificate.
+Jordan: Maybe I'll take another look at the routing software.
+Alex: If I get time this month I'll review the carrier contracts.
 Sam: Jordan will pull the carrier rates by October 3.
 Jordan: Understood. I'll have a first cut ready in 3 days.
-Alex: One more thing. We'll need to decide on the second shift before the move.
+Alex: We'll need to decide on the second shift before the move.
 Jordan: Let me draft the shift plan tonight.
 Alex: Please confirm the headcount with HR.
 This line continues Alex's turn without a new label. I'll update the risk register today.
+Alex: We'll see how that goes.
 
-Notes: The team will revisit the budget next week.
+Notes: O'Brien will countersign the lease next week.

@@ -43,5 +43,5 @@ jobs:
           follow-through track examples/weekly-sync.txt
           follow-through list
           follow-through report
-          test -f reports/follow-through.md
-          test -f reports/follow-through.html
+      - name: The generated report must match the one checked in
+        run: diff -u examples/expected-report.md reports/follow-through.md

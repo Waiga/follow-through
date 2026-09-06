@@ -77,6 +77,36 @@ class Markdown(unittest.TestCase):
         self.assertIn(report.LIMITATIONS, report.render_markdown([]))
 
 
+class MarkdownIsNotInjectable(unittest.TestCase):
+    """A closing note is written by a person and can contain newlines.
+
+    In Markdown a newline ends the list item, so an unescaped note could close
+    the list, open a heading, and add entries the tool never found to a report a
+    reader trusts.
+    """
+
+    def test_a_multiline_note_cannot_add_structure(self):
+        hostile = entry(state="closed", note="done\n## Injected\n- **ffff** fabricated")
+        rendered = report.render_markdown([hostile])
+        self.assertNotIn("\n## Injected", rendered)
+        self.assertNotIn("\n- **ffff**", rendered)
+
+    def test_a_multiline_quote_cannot_add_structure(self):
+        hostile = entry()
+        hostile.text = "I'll send it.\n## Injected heading"
+        rendered = report.render_markdown([hostile])
+        self.assertNotIn("\n## Injected heading", rendered)
+
+    def test_the_content_is_kept_not_dropped(self):
+        hostile = entry(state="closed", note="done\n## Injected")
+        rendered = report.render_markdown([hostile])
+        self.assertIn("done ## Injected", rendered)
+
+    def test_html_is_protected_by_the_same_rule(self):
+        hostile = entry(state="closed", note="done\n## Injected")
+        self.assertIn("done ## Injected", report.render_html([hostile]))
+
+
 class Html(unittest.TestCase):
     def test_escapes_text_from_the_transcript(self):
         hostile = entry()

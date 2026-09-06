@@ -28,6 +28,27 @@ class Identity(unittest.TestCase):
         second = candidates("Sam: I'll send the lease by Friday.")[0]
         self.assertNotEqual(first.identity, second.identity)
 
+    def test_the_same_promise_in_a_different_file_is_a_new_commitment(self):
+        # A weekly promise repeated word for word in next week's transcript is a
+        # new obligation. Without the source in the identity it would match the
+        # closed entry from last week and vanish.
+        from follow_through.extract import extract_text
+
+        line = "Alex: I'll send the status report by Friday."
+        week_one = extract_text(line, "week-01.txt")[0]
+        week_two = extract_text(line, "week-02.txt")[0]
+        self.assertNotEqual(week_one.identity, week_two.identity)
+
+    def test_a_recurring_promise_survives_last_weeks_closure(self):
+        from follow_through.extract import extract_text
+
+        line = "Alex: I'll send the status report by Friday."
+        entries, _ = ledger.merge([], extract_text(line, "week-01.txt"))
+        ledger.close(entries, entries[0].id, "sent")
+        entries, added = ledger.merge(entries, extract_text(line, "week-02.txt"))
+        self.assertEqual(len(added), 1)
+        self.assertEqual(added[0].state, ledger.OPEN)
+
 
 class Merging(unittest.TestCase):
     def test_adds_new_candidates(self):
@@ -84,6 +105,30 @@ class Persistence(unittest.TestCase):
         ledger.save(self.directory, entries)
         leftovers = list(self.directory.glob("*.tmp"))
         self.assertEqual(leftovers, [])
+
+    def test_an_unrecognised_state_is_refused(self):
+        # It would otherwise be counted in the total and listed under neither
+        # open nor closed: invisible, with no warning.
+        ledger.ledger_path(self.directory).write_text(
+            '{"version": 1, "entries": [{"id": "a1", "text": "t", "owner": "Alex",'
+            ' "due_phrase": "unknown", "cues": [], "source": "s", "line": 1,'
+            ' "state": "done", "note": ""}]}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(ledger.LedgerError) as caught:
+            ledger.load(self.directory)
+        self.assertIn("done", str(caught.exception))
+
+    def test_a_closed_entry_with_no_reason_is_refused(self):
+        ledger.ledger_path(self.directory).write_text(
+            '{"version": 1, "entries": [{"id": "a1", "text": "t", "owner": "Alex",'
+            ' "due_phrase": "unknown", "cues": [], "source": "s", "line": 1,'
+            ' "state": "closed", "note": "  "}]}',
+            encoding="utf-8",
+        )
+        with self.assertRaises(ledger.LedgerError) as caught:
+            ledger.load(self.directory)
+        self.assertIn("no reason", str(caught.exception))
 
     def test_written_file_is_readable_json(self):
         ledger.save(self.directory, [])

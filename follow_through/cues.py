@@ -12,6 +12,7 @@ from __future__ import annotations
 import re
 
 FIRST_PERSON = "first-person-undertaking"
+COLLECTIVE = "collective-undertaking"
 ASSIGNMENT = "assignment-to-another"
 DUE_PHRASE = "due-phrase"
 
@@ -26,6 +27,11 @@ FIRST_PERSON_PATTERNS: tuple[str, ...] = (
     r"\bi can have\b",
     r"\bi can get\b",
     r"\bi'?ll get\b",
+)
+
+#: A group undertaking. Kept separate from the first person on purpose: "we'll
+#: decide on Friday" commits a room, not the person who happened to say it.
+COLLECTIVE_PATTERNS: tuple[str, ...] = (
     r"\bwe'?ll\b",
     r"\bwe will\b",
     r"\bwe'?re going to\b",
@@ -45,18 +51,25 @@ ASSIGNMENT_PATTERNS: tuple[str, ...] = (
     r"\byou need to\b",
 )
 
-#: ``<Name> will ...`` and ``<Name> is going to ...``. The captured group is the
-#: named owner. Requires a capitalised name so ordinary sentences do not match.
-NAMED_ASSIGNMENT_PATTERNS: tuple[str, ...] = (
-    r"\b([A-Z][a-z]+)\s+will\b",
-    r"\b([A-Z][a-z]+)\s+is going to\b",
-    r"\b([A-Z][a-z]+)\s+has agreed to\b",
+#: ``<Name> will ...``, ``<Name> is going to ...``, ``<Name> has agreed to ...``.
+#:
+#: The captured group is up to three words. Whether those words are actually a
+#: name is decided in :func:`follow_through.extract.named_owner`, not here: the
+#: pattern cannot tell "Zhang Wei" from "The team", and a character class cannot
+#: tell an accented capital from a lowercase letter. The leading lookbehind stops
+#: the match starting mid-word, which is what turned "O'Brien" into "Brien".
+NAMED_ASSIGNMENT_PATTERN = (
+    r"(?<![^\W\d_]['\u2019-])"
+    r"((?:[^\W\d_][\w'\u2019-]*\s+){0,2}[^\W\d_][\w'\u2019-]*)"
+    r"\s+(?:will|is going to|has agreed to)\b"
 )
 
 #: Timing phrases. Captured verbatim as evidence; never converted to a date.
 DUE_PATTERNS: tuple[str, ...] = (
     r"\bby (?:this |next )?(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b",
     r"\bon (?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b",
+    r"\bbefore (?:this |next )?(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b",
+    r"\bbefore end of (?:day|week|month)\b",
     r"\bby (?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2}\b",
     r"\bby the \d{1,2}(?:st|nd|rd|th)\b",
     r"\bby end of (?:day|week|month)\b",
@@ -97,6 +110,33 @@ EXCLUSION_PATTERNS: tuple[str, ...] = (
     r"\bwill i be able to\b",
     r"\bwould you have\b",
     r"\bi used to\b",
+    # Conversational filler that borrows the grammar of a commitment. These are
+    # among the most common sentences spoken on any call, and without them the
+    # ledger fills with noise on the first real transcript.
+    r"\blet me know\b",
+    r"\blet me think\b",
+    r"\blet me be\b",
+    r"\blet me say\b",
+    r"\blet me start\b",
+    r"\blet me finish\b",
+    r"\blet me add\b",
+    r"\blet me just\b",
+    r"\bcan you hear\b",
+    r"\bcan you see (?:me|my|the screen)\b",
+    r"\bcan you repeat\b",
+    r"\bcould you repeat\b",
+    r"\bcould you say that again\b",
+    r"\bwe'?ll see\b",
+    r"\bi'?ll be honest\b",
+    r"\bi'?ll be frank\b",
+    r"\bi'?ll tell you\b",
+    r"\bi'?ll say\b",
+    r"\bi'?ll admit\b",
+    r"\bi'?ll never\b",
+    r"\bi will never\b",
+    r"\bwe'?ll never\b",
+    r"\bwe will never\b",
+    r"\bi'?ll bet\b",
 )
 
 
@@ -114,6 +154,17 @@ NON_NAME_WORDS = frozenset(
         "then", "there", "these", "they", "this", "those", "thursday",
         "tuesday", "we", "wednesday", "what", "when", "which", "who", "yes",
         "you", "your",
+        # Words that open a clause and would otherwise be read as a person.
+        "after", "all", "another", "any", "anyone", "as", "at", "because",
+        "before", "both", "by", "each", "either", "else", "even", "every",
+        "everybody", "everything", "for", "from", "here", "how", "in", "is",
+        "it's", "its", "just", "most", "much", "neither", "nobody's", "none",
+        "not", "nothing", "of", "on", "once", "only", "other", "others",
+        "perhaps", "probably", "she'll", "since", "some", "somebody",
+        "something", "still", "such", "team", "than", "though", "to", "today",
+        "tomorrow", "tonight", "until", "us", "very", "we'll", "well", "were",
+        "whatever", "whether", "while", "whoever", "whose", "why", "with",
+        "yesterday", "yours",
     }
 )
 
@@ -127,6 +178,7 @@ ASSIGNMENT_RE = _compile(ASSIGNMENT_PATTERNS)
 DUE_RE = _compile(DUE_PATTERNS)
 EXCLUSION_RE = _compile(EXCLUSION_PATTERNS)
 
-#: Named-assignment patterns are case-sensitive on purpose: the capital letter is
-#: the evidence that a person was named.
-NAMED_ASSIGNMENT_RE = tuple(re.compile(p) for p in NAMED_ASSIGNMENT_PATTERNS)
+COLLECTIVE_RE = _compile(COLLECTIVE_PATTERNS)
+
+#: Case-sensitive on purpose: the capital letter is the evidence of a name.
+NAMED_ASSIGNMENT_RE = re.compile(NAMED_ASSIGNMENT_PATTERN)

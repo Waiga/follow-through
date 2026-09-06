@@ -39,12 +39,19 @@ class Candidate:
     def identity(self) -> str:
         """Stable short id for this commitment.
 
-        Derived from the normalised text and the owner, so re-running over the
-        same transcript does not create duplicates, and the same sentence
-        attributed to two different speakers stays two commitments.
+        Derived from the normalised text, the owner, and the file it came from.
+
+        Text and owner alone are not enough. People promise the same thing every
+        week, in the same words, in a different meeting. Ignoring the source
+        would mean the second week's promise silently matched the first week's
+        closed entry and vanished: a confirmed "nothing open" where the honest
+        answer is that a new commitment exists.
+
+        Including the source keeps re-running over the same growing transcript
+        idempotent, which is the case the deduplication is actually for.
         """
         digest = hashlib.sha256(
-            f"{normalise(self.text)}\x00{self.owner}".encode("utf-8")
+            f"{normalise(self.text)}\x00{self.owner}\x00{self.source}".encode("utf-8")
         ).hexdigest()
         return digest[:12]
 
