@@ -1,0 +1,22 @@
+# Your material. None of this belongs in a shared repository.
+transcripts/
+*.vtt
+*.srt
+.follow-through/
+ledger/
+ledger.json
+reports/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,168 @@
+# Follow Through — Design
+
+**Date:** 6 September 2026
+**Author:** Waiga Arya
+**Status:** Implemented in v0.1.0.
+
+This is the design the first version was built from, kept in the repository so a
+contributor can see what was decided and why, not only what the code does.
+
+## The problem
+
+People commit to things out loud. In a meeting, on a call, in a voice note. The
+commitment is real, the record is not: it exists only inside a transcript nobody
+re-reads. Days later nobody can say what was promised, by whom, or whether it
+happened.
+
+Transcription is now cheap and universal. Nearly every meeting tool emits text.
+The gap is not capture. The gap is that captured speech is never converted into
+a list of obligations that can be closed.
+
+## What Follow Through does
+
+Follow Through is a local command-line tool. It reads a transcript or a notes
+file, finds statements that commit someone to a future action, and tracks each
+one until it is explicitly closed.
+
+It is deterministic and offline. It has no network access, no API keys, no
+model calls, and no runtime dependencies beyond the Python standard library.
+Text that goes in never leaves the machine.
+
+## What Follow Through refuses to do
+
+This section is the product, not a disclaimer.
+
+- It does not claim to find every commitment. Recall is bounded by the patterns
+  it can see in text, and it says so in every report.
+- It does not guess an owner. If the transcript does not say who committed, the
+  owner is recorded as `unknown` and stays `unknown`.
+- It does not guess a deadline. No date phrase means `due: unknown`, never a
+  default of "this week".
+- It does not decide that something was done. Closure is a human act, recorded
+  with a reason.
+- It does not score a person, rank reliability, or produce a compliance metric.
+- It does not send anything anywhere.
+
+The design inherits one rule from Repo Scout: absence of evidence is reported as
+unknown, never as a confirmed negative.
+
+## Users
+
+The first user is an operator who speaks their obligations faster than they can
+record them, and who already has transcripts. The tool is useful to anyone in
+that position: founders, managers, consultants, anyone running recorded calls.
+
+## Interface
+
+```
+follow-through extract <file>            show candidate commitments found in a file
+follow-through track <file>              add newly found commitments to the local ledger
+follow-through list [--state ...]        show ledger entries
+follow-through close <id> --note "..."   record that an entry is closed, and why
+follow-through report                    write a Markdown and HTML report
+```
+
+Global options precede the command, matching Repo Scout:
+
+```
+follow-through --ledger-dir ./ledger track meeting.txt
+follow-through --reports-dir ./reports report
+```
+
+## How extraction works
+
+The extractor is a set of explicit, inspectable rules. There is no model.
+
+**Segmentation.** The file is split into lines, then into sentences. Speaker
+labels of the form `Name:` at the start of a line are recognised and become the
+speaking context for the sentences that follow, until the next label.
+
+**Commitment cues.** A sentence becomes a candidate when it matches at least one
+cue family:
+
+- *First person undertaking* — `I'll`, `I will`, `I'm going to`, `let me`,
+  `I can have`, `we'll`, `we will`, `we're going to`.
+- *Assignment to another party* — `can you`, `could you`, `please send`,
+  `<Name> will`, `<Name> is going to`.
+
+**Owner resolution.** For a first-person undertaking, the owner is the current
+speaker label if one exists, otherwise `unknown`. For an assignment, the owner is
+the addressed name when the sentence names one, otherwise `unknown`. The owner is
+never inferred from context, frequency, or who spoke most.
+
+**Due-date cues.** Recognised phrases are recorded verbatim as evidence:
+`by <weekday>`, `by <month> <day>`, `today`, `tomorrow`, `tonight`, `EOD`,
+`end of day`, `end of week`, `this week`, `next week`, `in N days`,
+`by the <ordinal>`. The phrase is stored as text. No calendar date is computed,
+because computing one would require assuming the date the conversation happened.
+
+**Exclusions.** A sentence is rejected when it is a question about capability
+rather than an ask (`will I be able to`), when it is hypothetical or negated
+(`if I`, `I would have`, `I don't think I'll`, `I might`, `maybe I'll`), or when
+the undertaking is in the past (`I sent`, `I already did`).
+
+**Output.** Every candidate carries the cue families that fired, the exact source
+line number, and the quoted sentence. A reader can always check the tool's work
+against the source.
+
+## The ledger
+
+The ledger is a single JSON file, written locally, holding one record per
+commitment: a stable id, the quoted text, owner, due phrase, source file and
+line, the cues that fired, the state, and the closing note if closed.
+
+Identity is a hash of the normalised quoted text plus the owner. Running `track`
+twice over the same file adds nothing the second time. Running it over an
+extended transcript adds only what is new.
+
+States are `open` and `closed`. There is deliberately no `overdue` state, because
+the tool does not compute dates. A report can show which entries have a due
+phrase and are still open; it will not assert that a deadline passed.
+
+## Reports
+
+`report` writes Markdown and HTML. The report opens with counts, then lists open
+entries grouped by owner, with `unknown` owners in their own group so they are
+visible rather than buried. Every entry shows its evidence. Every report carries
+the same limitations paragraph as the README.
+
+## Structure
+
+```
+follow_through/
+  cli.py          argument parsing, command dispatch, exit codes
+  extract.py      segmentation, cue matching, owner and due resolution
+  cues.py         the cue tables, as data
+  ledger.py       load, merge, save, close; identity hashing
+  report.py       Markdown and HTML rendering
+  models.py       the record types shared across the above
+```
+
+Each module has one job and can be read alone. `cues.py` is data so the rules can
+be reviewed and extended by a contributor without touching logic.
+
+## Safety for public release
+
+- No network calls exist anywhere in the package. A test asserts this.
+- No file is written outside the ledger and reports directories.
+- The repository ships only invented example transcripts, with invented people
+  and companies.
+- `.gitignore` excludes ledgers, reports, and any `transcripts/` directory, so a
+  contributor cannot casually commit their own material.
+- The five Repo Scout release gates apply: authorship, confidentiality,
+  engineering quality, project clarity, external confirmation.
+
+## Testing
+
+Unit tests cover each cue family, each exclusion, owner resolution including the
+unknown path, due-phrase capture, ledger identity and idempotent merge, closure
+recording, and report rendering. One end-to-end test runs the documented example
+and compares against a checked-in expected report. One test asserts the package
+imports no network module.
+
+## Out of scope for v0.1
+
+Calendar dates, reminders, notifications, calendar or email integration, audio
+input, model-assisted extraction, multi-user state, and any hosted component.
+Each of these is a defensible future step; none is needed to make the tool useful
+on day one.
