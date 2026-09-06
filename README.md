@@ -143,11 +143,18 @@ assignment belongs to the person named. A collective undertaking belongs to
 nobody. When two of these appear in one sentence the owner is genuinely unclear,
 so it is left unknown.
 
-Filler is treated differently from a hypothetical. "I might look at it" is
-rejected outright. "Let me know if that works" is rejected only because no
-deadline is stated — "Let me know the vendor's answer by Friday" is kept, because
-a stated deadline is the strongest evidence one sentence can carry that something
-was actually meant.
+Filler is treated differently from a hypothetical. "I might look at it" and
+"we'll never get this done" are rejected outright, whatever else the sentence
+says. "Let me know if that works" is rejected only because nothing was promised
+by when — "Let me know the vendor's answer by Friday" is kept.
+
+What counts for that second rule is a phrase that sets a deadline: `by Friday`,
+`before Monday`, `within two days`, `end of week`. Merely mentioning a time does
+not, or "can you hear me today?" would be recorded as a commitment.
+
+The filler patterns match whole utterances rather than openings, because "let me
+start by welcoming everyone" and "let me start the migration" begin identically
+and only one of them is noise.
 
 Three details worth knowing, because they are where this could surprise you.
 

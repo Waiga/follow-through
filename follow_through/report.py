@@ -37,7 +37,10 @@ def one_line(text: str) -> str:
 #: Characters that turn quoted text into live Markdown: emphasis, code, and
 #: links. A closing note is free text somebody typed, and a report is shared.
 #: Nobody should be able to hide a clickable link inside one.
-MARKDOWN_ACTIVE = "\\`*_[]<>"
+#:
+#: The underscore is deliberately absent. It is not emphasis inside a word, and
+#: escaping it filled ordinary reports with ``cost\_per\_unit``.
+MARKDOWN_ACTIVE = "\\`*[]<>"
 
 
 def as_text(value: str) -> str:
@@ -85,7 +88,7 @@ def _markdown_entry(entry: Entry) -> list[str]:
     return [
         f"- **{entry.id}** — {as_text(entry.text)}",
         f"  - Deadline: {as_text(due)}",
-        f"  - Source: `{one_line(entry.source)}` line {entry.line}",
+        f"  - Source: `{one_line(entry.source).replace('`', '')}` line {entry.line}",
         f"  - Cues: {', '.join(entry.cues)}",
     ]
 

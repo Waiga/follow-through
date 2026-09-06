@@ -100,6 +100,10 @@ EXCLUSION_PATTERNS: tuple[str, ...] = (
     r"\bwe'?re not going to\b",
     r"\bi won'?t\b",
     r"\bwe won'?t\b",
+    r"\bi'?ll never\b",
+    r"\bi will never\b",
+    r"\bwe'?ll never\b",
+    r"\bwe will never\b",
     r"\bi might\b",
     r"\bwe might\b",
     r"\bmaybe i'?ll\b",
@@ -116,16 +120,17 @@ EXCLUSION_PATTERNS: tuple[str, ...] = (
 
 #: Capitalised words that begin sentences but are not people.
 #:
-#: April, May and June are deliberately absent: they are given names at least as
-#: often as they are months, and a month in a deadline is recognised by
-#: :data:`DUE_PATTERNS`, which does not consult this list. Without this, "We
+#: Month names are here, including April, May and June, because "May will be
+#: tight for the launch" must not invent a person called May. They are exempted
+#: for speaker labels only — see :data:`NAMES_ALLOWED_AS_SPEAKERS` — because
+#: "May:" at the start of a line is strong evidence of an actual person. Without this, "We
 #: will ship on Monday" would record an owner called "We", and "There will be a
 #: delay" an owner called "There". A pronoun is not a name.
 NON_NAME_WORDS = frozenset(
     {
-        "and", "also", "august", "but", "december", "everyone",
+        "and", "also", "april", "august", "but", "december", "everyone",
         "february", "finally", "first", "friday", "he", "her", "his", "however",
-        "i", "if", "it", "january", "july", "let", "march",
+        "i", "if", "it", "january", "july", "june", "let", "march", "may",
         "meanwhile", "monday", "my", "next", "no", "nobody", "november", "now",
         "october", "one", "or", "otherwise", "our", "please", "saturday",
         "september", "she", "so", "someone", "sunday", "that", "the", "their",
@@ -180,31 +185,34 @@ NON_NAME_WORDS = frozenset(
 #: one is present these patterns stand down. Dropping a genuine commitment is the
 #: worst thing this tool can do, and it must not happen quietly.
 FILLER_PATTERNS: tuple[str, ...] = (
-    r"\blet me know\b",
-    r"\blet me think\b",
-    r"\blet me be\b",
-    r"\blet me say\b",
-    r"\blet me start\b",
-    r"\blet me finish\b",
-    r"\blet me add\b",
-    r"\blet me just\b",
-    r"\bcan you hear\b",
+    # Each of these must match the whole filler utterance, not the two words it
+    # opens with. "Let me start by welcoming Priya" is filler; "Let me start the
+    # migration on the staging box" is a commitment, and an earlier version of
+    # this list threw both away.
+    r"\blet me know\s*(?:if\b|$|[,.?!])",
+    r"\blet me know your thoughts\b",
+    r"\blet me think about (?:that|it|this)\b",
+    r"\blet me think\s*(?:$|[,.?!])",
+    r"\blet me be (?:honest|frank|clear|blunt)\b",
+    r"\blet me (?:just )?say (?:that|this)\b",
+    r"\blet me start\s+(?:\w+\s+){0,2}by\b",
+    r"\blet me finish (?:my|the) (?:point|thought|sentence)\b",
+    r"\blet me add (?:that|one thing)\b",
+    r"\bcan you hear me\b",
     r"\bcan you see (?:me|my|the screen)\b",
-    r"\bcan you repeat\b",
-    r"\bcould you repeat\b",
+    r"\b(?:can|could) you repeat (?:that|what|it)\b",
     r"\bcould you say that again\b",
-    r"\bwe'?ll see\b",
-    r"\bi'?ll be honest\b",
-    r"\bi'?ll be frank\b",
-    r"\bi'?ll tell you\b",
-    r"\bi'?ll say\b",
-    r"\bi'?ll admit\b",
-    r"\bi'?ll never\b",
-    r"\bi will never\b",
-    r"\bwe'?ll never\b",
-    r"\bwe will never\b",
-    r"\bi'?ll bet\b",
+    r"\bwe'?ll see\s*(?:how|what|if|about|$|[,.?!])",
+    r"\bi'?ll be (?:honest|frank)\b",
+    r"\bi'?ll tell you (?:what|this|that|something)\b",
+    r"\bi'?ll say (?:this|that)\b",
+    r"\bi'?ll bet (?:you|it|that)\b",
 )
+
+
+#: Words blocked as owners but allowed as speaker labels. A colon after a name
+#: is evidence a person is talking; the same word inside a sentence is not.
+NAMES_ALLOWED_AS_SPEAKERS = frozenset({"april", "may", "june", "august"})
 
 
 def _compile(patterns: tuple[str, ...]) -> tuple[re.Pattern[str], ...]:

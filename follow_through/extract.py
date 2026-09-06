@@ -59,8 +59,12 @@ NON_SPEAKER_LABELS = frozenset(
 #: against a quote the reader cannot find in the file.
 ABBREVIATIONS = (
     "dr", "mr", "mrs", "ms", "prof", "sr", "jr", "st", "mt", "vs", "etc",
-    "eg", "ie", "no", "approx", "dept", "est", "inc", "ltd", "co",
+    "eg", "ie", "approx", "dept", "inc", "ltd",
 )
+# "no." is deliberately absent. As an abbreviation for "number" it is rare in
+# speech; as an answer it ends sentences constantly, and treating it as an
+# abbreviation joined "the answer is no." to the commitment that followed and
+# swallowed both.
 
 #: Sentence boundary: terminal punctuation followed by whitespace or end of line.
 SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+")
@@ -108,12 +112,14 @@ def read_speaker(line: str) -> tuple[str, bool, str]:
         return "", False, line
     name = match.group("name").strip()
     remainder = line[match.end() :]
-    if name.lower() in NON_SPEAKER_LABELS or not looks_like_a_name(name):
+    if name.lower() in NON_SPEAKER_LABELS or not looks_like_a_name(
+        name, allow=cues.NAMES_ALLOWED_AS_SPEAKERS
+    ):
         return "", True, remainder
     return name, False, remainder
 
 
-def looks_like_a_name(phrase: str) -> bool:
+def looks_like_a_name(phrase: str, allow: frozenset[str] = frozenset()) -> bool:
     """True when every word in ``phrase`` could be part of a person's name.
 
     Each word must start with an uppercase letter and must not be an ordinary
@@ -128,7 +134,8 @@ def looks_like_a_name(phrase: str) -> bool:
         stripped = word.strip("'\u2019-")
         if not stripped or not stripped[0].isupper():
             return False
-        if stripped.lower() in cues.NON_NAME_WORDS:
+        lowered = stripped.lower()
+        if lowered in cues.NON_NAME_WORDS and lowered not in allow:
             return False
     return True
 
@@ -147,6 +154,19 @@ def find_due_phrase(sentence: str) -> str:
     return best[1] if best else UNKNOWN
 
 
+#: A phrase that sets a deadline rather than merely mentioning a time. "by
+#: Friday" commits; "today" appears in "can you hear me today?" and commits
+#: nothing.
+DEADLINE_SHAPED = re.compile(
+    r"^(?:by|before|within|in \d|end of|eod)\b", re.IGNORECASE
+)
+
+
+def sets_a_deadline(phrase: str) -> bool:
+    """True when a due phrase actually sets a deadline."""
+    return phrase != UNKNOWN and bool(DEADLINE_SHAPED.match(phrase))
+
+
 def is_excluded(sentence: str) -> bool:
     """True when the sentence should not be recorded as a commitment.
 
@@ -159,7 +179,7 @@ def is_excluded(sentence: str) -> bool:
     """
     if any(pattern.search(sentence) for pattern in cues.EXCLUSION_RE):
         return True
-    if find_due_phrase(sentence) != UNKNOWN:
+    if sets_a_deadline(find_due_phrase(sentence)):
         return False
     return any(pattern.search(sentence) for pattern in cues.FILLER_RE)
 

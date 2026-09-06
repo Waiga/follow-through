@@ -114,6 +114,13 @@ class MarkdownIsNotInjectable(unittest.TestCase):
         self.assertNotIn("**PAID IN FULL**", rendered)
         self.assertNotIn("`rm -rf /`", rendered)
 
+    def test_ordinary_business_text_is_left_readable(self):
+        # Escaping must not fill a report with backslashes. Underscores in a SKU
+        # or a column name are the common case.
+        hostile = entry(state="closed", note="cost_per_unit fixed for SKU_LF_014 (12%)")
+        rendered = report.render_markdown([hostile])
+        self.assertIn("cost_per_unit fixed for SKU_LF_014 (12%)", rendered)
+
     def test_html_is_protected_by_the_same_rule(self):
         hostile = entry(state="closed", note="done\n## Injected")
         self.assertIn("done ## Injected", report.render_html([hostile]))

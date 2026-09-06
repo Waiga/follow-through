@@ -324,17 +324,33 @@ class TeamsAndCompaniesAreNamedParties(unittest.TestCase):
 
 
 class NamesThatAreAlsoOtherWords(unittest.TestCase):
-    def test_a_month_that_is_also_a_given_name_is_allowed(self):
-        # May, June and April are people as often as they are months, and the
-        # months are recognised as deadlines by a different rule anyway.
+    """A month is a person often enough to matter, and a month often enough to
+    matter. The two positions are treated differently, because the evidence
+    differs: a colon after a word says somebody is speaking, and a word in the
+    middle of a sentence says nothing.
+    """
+
+    def test_a_month_inside_a_sentence_is_not_an_owner(self):
+        # "May will be tight for the launch" must not invent a person.
+        for line in (
+            "May will be tight for the launch.",
+            "April will be the cutoff for the new packaging.",
+            "June will be busy.",
+        ):
+            with self.subTest(line=line):
+                self.assertEqual(named_owner(line), UNKNOWN)
+
+    def test_the_same_word_as_a_speaker_label_is_a_person(self):
         for name in ("May", "June", "April"):
             with self.subTest(name=name):
-                self.assertEqual(named_owner(f"{name} will send the report."), name)
+                speaker, structural, _ = read_speaker(f"{name}: I'll send the deck.")
+                self.assertEqual(speaker, name)
+                self.assertFalse(structural)
 
-    def test_such_a_name_is_still_a_valid_speaker(self):
-        speaker, structural, _ = read_speaker("May: I'll send the deck.")
-        self.assertEqual(speaker, "May")
-        self.assertFalse(structural)
+    def test_a_month_in_a_deadline_is_unaffected(self):
+        from follow_through.extract import find_due_phrase
+
+        self.assertEqual(find_due_phrase("I'll send it by May 3."), "by May 3")
 
 
 class Abbreviations(unittest.TestCase):
@@ -353,6 +369,22 @@ class Abbreviations(unittest.TestCase):
     def test_the_quote_a_reader_sees_is_the_whole_sentence(self):
         found = extract_text("Dr. Smith will send it by Friday.", "s.txt")
         self.assertEqual(found[0].text, "Dr. Smith will send it by Friday.")
+
+    def test_an_answer_of_no_still_ends_a_sentence(self):
+        # "no." was once treated as an abbreviation for "number". It joined the
+        # answer to the commitment that followed, and the exclusion phrase in
+        # the first half then threw the whole thing away.
+        self.assertEqual(
+            split_sentences("I already said no. I'll send the contract by Friday."),
+            ["I already said no.", "I'll send the contract by Friday."],
+        )
+
+    def test_the_commitment_after_an_answer_of_no_survives(self):
+        found = extract_text(
+            "Alex: I already said no. I'll send the contract by Friday.", "s.txt"
+        )
+        self.assertEqual(len(found), 1)
+        self.assertEqual(found[0].text, "I'll send the contract by Friday.")
 
     def test_ordinary_sentences_still_split(self):
         self.assertEqual(
@@ -387,9 +419,44 @@ class FillerYieldsToADeadline(unittest.TestCase):
                 self.assertEqual(classify(line, "Alex")[0], ())
 
     def test_a_negation_is_not_rescued_by_a_deadline(self):
-        # Hard exclusions outrank the deadline. "I don't think I'll have it by
-        # Friday" states a deadline and is the opposite of a promise.
-        self.assertEqual(classify("I don't think I'll have it by Friday.", "Alex")[0], ())
+        # Hard exclusions outrank the deadline. Each of these states a deadline
+        # and is the opposite of a promise.
+        for line in (
+            "I don't think I'll have it by Friday.",
+            "We'll never get this done by Friday.",
+            "I won't have it by Monday.",
+        ):
+            with self.subTest(line=line):
+                self.assertEqual(classify(line, "Alex")[0], ())
+
+    def test_a_bare_time_word_does_not_rescue_filler(self):
+        # "today" mentions a time; it does not set a deadline. Only a phrase
+        # like "by Friday" is strong enough to overrule the filler list.
+        for line in (
+            "Let me know if you have any questions today.",
+            "Can you hear me today?",
+            "We'll see how it goes this week.",
+            "Let me think about it tomorrow.",
+        ):
+            with self.subTest(line=line):
+                self.assertEqual(classify(line, "Alex")[0], ())
+
+    def test_openings_that_are_not_filler_survive_without_any_deadline(self):
+        # The filler patterns must match a whole utterance, not its first two
+        # words. Every one of these was silently dropped by an earlier version.
+        for line in (
+            "Let me just double-check the invoice totals before we sign.",
+            "Let me start the migration on the staging box.",
+            "Let me add the new SKUs to the catalogue.",
+            "Let me finish the deck and send it round.",
+            "Let me think about the pricing model and come back with options.",
+            "I'll tell you the exact freight cost once the quote lands.",
+            "I'll say something to the warehouse team about the packing errors.",
+            "We'll see the new dashboard through to launch.",
+            "Can you repeat the order for the second pallet?",
+        ):
+            with self.subTest(line=line):
+                self.assertNotEqual(classify(line, "Alex")[0], (), "lost a commitment")
 
 
 if __name__ == "__main__":

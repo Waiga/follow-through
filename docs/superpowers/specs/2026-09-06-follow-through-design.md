@@ -110,11 +110,23 @@ company rather than a person. The second is not a defect — "Legal will review 
 contract" names who is responsible, and refusing it would lose a real commitment.
 
 **Filler versus hypotheticals.** Exclusions come in two strengths. A hypothetical,
-a negation, or something already done is rejected outright. Conversational filler
-is rejected only when no deadline is stated, because "let me know if that works"
-and "let me know the vendor's answer by Friday" open identically and only one of
-them is noise. Dropping a real commitment is the worst failure this tool has, so
-the filler list yields to the strongest evidence a single sentence can carry.
+a negation, or something already done is rejected outright — a deadline never
+rescues "we'll never get this done by Friday". Conversational filler is rejected
+only when nothing was promised by when.
+
+Two details make that rule safe. The overriding phrase must set a deadline
+("by Friday", "before Monday", "within two days"), not merely mention a time,
+or "can you hear me today?" would be recorded. And each filler pattern must
+match a whole utterance rather than an opening: an earlier version matched
+"let me start", "let me add" and "let me finish", and threw away every genuine
+commitment that began with them. Dropping a real commitment is the worst failure
+this tool has, and it was doing it silently.
+
+**Sentence boundaries.** A fragment ending in an abbreviation or an initial is
+joined to the next one, so "Dr. Smith will send it" stays whole. "No." is not on
+that list: as an abbreviation for "number" it is rare in speech, and treating it
+as one joined "the answer is no." to the commitment after it, whereupon the
+exclusion phrase in the first half discarded both.
 
 **Due-date cues.** Recognised phrases are recorded verbatim as evidence:
 `by <weekday>`, `by <month> <day>`, `today`, `tomorrow`, `tonight`, `EOD`,
