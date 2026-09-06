@@ -34,6 +34,23 @@ def one_line(text: str) -> str:
     return " ".join(text.split())
 
 
+#: Characters that turn quoted text into live Markdown: emphasis, code, and
+#: links. A closing note is free text somebody typed, and a report is shared.
+#: Nobody should be able to hide a clickable link inside one.
+MARKDOWN_ACTIVE = "\\`*_[]<>"
+
+
+def as_text(value: str) -> str:
+    """Prepare a person's words for a Markdown document.
+
+    Collapsed to one line so it cannot introduce structure, then escaped so it
+    cannot introduce emphasis, code spans, or links. Escaped characters render
+    as themselves, so the reader sees exactly what was written.
+    """
+    collapsed = one_line(value)
+    return "".join("\\" + char if char in MARKDOWN_ACTIVE else char for char in collapsed)
+
+
 def group_by_owner(entries: list[Entry]) -> list[tuple[str, list[Entry]]]:
     """Group entries by owner, named owners first and ``unknown`` last.
 
@@ -66,8 +83,8 @@ def counts(entries: list[Entry]) -> dict[str, int]:
 def _markdown_entry(entry: Entry) -> list[str]:
     due = entry.due_phrase if entry.due_phrase != UNKNOWN else "no stated deadline"
     return [
-        f"- **{entry.id}** — {one_line(entry.text)}",
-        f"  - Deadline: {one_line(due)}",
+        f"- **{entry.id}** — {as_text(entry.text)}",
+        f"  - Deadline: {as_text(due)}",
         f"  - Source: `{one_line(entry.source)}` line {entry.line}",
         f"  - Cues: {', '.join(entry.cues)}",
     ]
@@ -104,8 +121,8 @@ def render_markdown(entries: list[Entry]) -> str:
     if closed_entries:
         lines.extend([f"## Closed ({len(closed_entries)})", ""])
         for entry in closed_entries:
-            lines.append(f"- **{entry.id}** — {one_line(entry.text)}")
-            lines.append(f"  - Closed because: {one_line(entry.note)}")
+            lines.append(f"- **{entry.id}** — {as_text(entry.text)}")
+            lines.append(f"  - Closed because: {as_text(entry.note)}")
         lines.append("")
 
     lines.extend(["## Limitations", "", LIMITATIONS, ""])

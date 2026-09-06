@@ -49,6 +49,16 @@ class Candidate:
 
         Including the source keeps re-running over the same growing transcript
         idempotent, which is the case the deduplication is actually for.
+
+        The source used is the recorded label, not the absolute path. An
+        absolute path would make every id depend on where the repository happens
+        to sit, so no two people would see the same ids for the same transcript.
+
+        The cost is a real edge: two directories that each contain a
+        ``standup.txt``, tracked from inside themselves into one shared ledger,
+        both record the source as ``standup.txt`` and merge. Run ``track`` from a
+        common parent, so the recorded paths differ, and they stay separate. This
+        is written up in the README rather than left to be discovered.
         """
         digest = hashlib.sha256(
             f"{normalise(self.text)}\x00{self.owner}\x00{self.source}".encode("utf-8")

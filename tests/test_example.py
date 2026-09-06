@@ -12,6 +12,7 @@ entire exclusion table deleted. They now fail.
 """
 
 import os
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -37,9 +38,11 @@ class DocumentedExample(unittest.TestCase):
     def setUp(self):
         # Source paths are recorded relative to the working directory, so the
         # checked-in report only matches when the test runs from the repository
-        # root. Make that true regardless of where the runner was started.
-        os.chdir(ROOT)
+        # root. Make that true regardless of where the runner was started, and
+        # put the runner back where it was afterwards. The previous directory
+        # has to be read before the change, not after.
         self.addCleanup(os.chdir, Path.cwd())
+        os.chdir(ROOT)
         self.candidates = extract_file(TRANSCRIPT)
         self.entries, _ = ledger.merge([], self.candidates)
 
@@ -110,18 +113,47 @@ class DocumentedExample(unittest.TestCase):
 
 
 class ReadmeStaysTrue(unittest.TestCase):
-    """The README prints a listing. Nothing else checks that it is real."""
+    """The README prints a listing. Nothing else checks that it is real.
 
-    def test_the_listing_in_the_readme_is_what_the_tool_prints(self):
-        os.chdir(ROOT)
+    An earlier version of this test asserted only that each id and each quoted
+    sentence appeared somewhere in the file. That passed with the owner column
+    changed, the deadline column changed, and an entirely fabricated tenth row
+    added. It now compares the whole block, line for line.
+    """
+
+    def setUp(self):
         self.addCleanup(os.chdir, Path.cwd())
-        readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        for candidate in extract_file(TRANSCRIPT):
-            line = f"{candidate.identity}  {candidate.owner}"
-            with self.subTest(id=candidate.identity):
-                self.assertIn(candidate.identity, readme)
-                self.assertIn(candidate.text, readme)
-                self.assertIn(line.split()[0], readme)
+        os.chdir(ROOT)
+        self.readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+    def listing(self) -> list[str]:
+        """The lines of the first fenced block that holds the extract output."""
+        blocks = self.readme.split("```")
+        for block in blocks:
+            lines = [line for line in block.splitlines() if line.strip()]
+            if lines and lines[0].startswith(("8a62", "follow-through extract")):
+                if lines[0].startswith("follow-through"):
+                    continue
+                return lines
+        self.fail("the README no longer contains the extract listing")
+
+    def test_every_printed_line_appears_exactly_as_the_tool_prints_it(self):
+        from follow_through.cli import _describe
+
+        printed = [_describe(candidate) for candidate in extract_file(TRANSCRIPT)]
+        self.assertEqual(self.listing(), printed)
+
+    def test_the_listing_has_no_extra_rows(self):
+        self.assertEqual(len(self.listing()), len(extract_file(TRANSCRIPT)))
+
+    def test_the_close_command_in_the_readme_names_a_real_entry(self):
+        identities = {c.identity for c in extract_file(TRANSCRIPT)}
+        used = re.search(r"follow-through close (\w+) --note", self.readme)
+        self.assertIsNotNone(used, "the README no longer shows a close command")
+        self.assertTrue(
+            any(identity.startswith(used.group(1)) for identity in identities),
+            f"the README closes {used.group(1)!r}, which no entry starts with",
+        )
 
 
 if __name__ == "__main__":

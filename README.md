@@ -18,9 +18,17 @@ transcripts are never uploaded anywhere.
 
 That is enforced, not just promised. `tests/test_offline.py` reads this package's
 own source on every run and fails if any module imports something that can reach
-the network, calls the part of `os` that starts another program, or uses
-`__import__`, `eval` or `exec` to get at either one behind the scenes. Each of
-those detectors has its own test proving it can fail.
+the network, names one of the `os` functions that starts another program —
+however it is spelled, including behind an alias, an aliased import, or a string
+passed to `getattr` — or reaches for `__import__`, `eval` or `exec`. Each
+detector has its own test proving it can fail, and one test smuggles a working
+exfiltration path in to confirm it is caught.
+
+Being precise about what that is: it is a static read of this package's source, on
+a package that declares no dependencies. It is a guard against drift, not a
+sandbox. It does not run the code and it cannot vouch for your Python
+installation. What it does is make the offline promise expensive to break by
+accident and impossible to break in the obvious ways without a test turning red.
 
 ## Install
 
@@ -70,6 +78,13 @@ The file matters: people promise the same thing, in the same words, every week.
 If last week's transcript and this week's were treated as one, the second promise
 would silently match the first one you closed and disappear.
 
+The file is recorded as the path you gave, shortened, not as an absolute path —
+otherwise the same transcript would produce different ids on different machines.
+One consequence worth knowing: if two directories each hold a `standup.txt` and
+both are tracked from inside themselves into one shared ledger, both record
+`standup.txt` and merge. Run `track` from a common parent and the paths differ,
+so they stay separate.
+
 See what is still open, close something, and write a report:
 
 ```bash
@@ -94,8 +109,10 @@ This list is the design, not a disclaimer.
   a commitment. Every report says so.
 - **It will not guess who owns something.** If the transcript does not say, the
   owner stays `unknown`. It will not attribute a line to whoever was talking
-  most, and it will not turn `From:` or `TODO:` into a person. "We'll decide on
+  most, and it will not turn `From:` or `TODO:` into an owner. "We'll decide on
   Friday" commits a room, not whoever said "we", so that stays `unknown` too.
+  An owner is whoever the text names, which may be a team — "Legal will review
+  the contract" records Legal, because that is who was named.
 - **It will not guess a deadline.** No timing phrase means no deadline. It records
   the phrase the speaker actually used — `by Friday`, `in 3 days` — as text, and
   never converts it to a calendar date, because that would mean assuming when the
@@ -126,13 +143,25 @@ assignment belongs to the person named. A collective undertaking belongs to
 nobody. When two of these appear in one sentence the owner is genuinely unclear,
 so it is left unknown.
 
-Two details worth knowing, because they are the places this could surprise you.
-A speaker label applies to the lines that follow it until the next label, which is
-how transcripts work but does mean an unlabelled line is attributed to whoever
-spoke last; a structural label such as `Notes:` ends that turn rather than
-continuing it. And a word is only treated as a name if it is capitalised and is
-not an ordinary English word, which is a filter, not real name detection — an
-unusual name in an unusual position can still be missed.
+Filler is treated differently from a hypothetical. "I might look at it" is
+rejected outright. "Let me know if that works" is rejected only because no
+deadline is stated — "Let me know the vendor's answer by Friday" is kept, because
+a stated deadline is the strongest evidence one sentence can carry that something
+was actually meant.
+
+Three details worth knowing, because they are where this could surprise you.
+
+A speaker label applies to the lines that follow it until the next label. That is
+how transcripts work, but it does mean an unlabelled line is attributed to
+whoever spoke last. A structural label such as `Notes:` ends that turn rather
+than continuing it.
+
+A word is treated as a name when it is capitalised and is not an ordinary English
+word. That is a filter, not name detection. It rejects `From:`, `TODO:` and
+`Actually`; it cannot tell an unusual name from an unusual noun, so a heading it
+has never heard of will read as a speaker. There is a test that says so.
+
+An owner is not necessarily a person. Whoever the sentence names is recorded.
 
 Every entry keeps the quoted sentence, the file and line it came from, and which
 rules fired. You can always check the tool's work against the source.

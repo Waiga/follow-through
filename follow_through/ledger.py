@@ -40,6 +40,13 @@ def load(ledger_dir: Path) -> list[Entry]:
         raise LedgerError(f"{path} is not valid JSON: {exc}") from exc
     if not isinstance(raw, dict) or "entries" not in raw:
         raise LedgerError(f"{path} is not a Follow Through ledger")
+    version = raw.get("version")
+    if version != LEDGER_VERSION:
+        raise LedgerError(
+            f"{path} is a version {version} ledger; this build understands "
+            f"version {LEDGER_VERSION}. Refusing rather than guessing what "
+            f"changed."
+        )
     try:
         entries = [Entry.from_dict(item) for item in raw["entries"]]
     except (KeyError, TypeError, ValueError) as exc:

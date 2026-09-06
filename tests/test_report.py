@@ -102,6 +102,18 @@ class MarkdownIsNotInjectable(unittest.TestCase):
         rendered = report.render_markdown([hostile])
         self.assertIn("done ## Injected", rendered)
 
+    def test_a_note_cannot_render_a_clickable_link(self):
+        hostile = entry(state="closed", note="paid [proof](http://evil.example/x)")
+        rendered = report.render_markdown([hostile])
+        self.assertNotIn("[proof](http://evil.example/x)", rendered)
+        self.assertIn("proof", rendered)
+
+    def test_a_note_cannot_render_emphasis_or_code(self):
+        hostile = entry(state="closed", note="**PAID IN FULL** `rm -rf /`")
+        rendered = report.render_markdown([hostile])
+        self.assertNotIn("**PAID IN FULL**", rendered)
+        self.assertNotIn("`rm -rf /`", rendered)
+
     def test_html_is_protected_by_the_same_rule(self):
         hostile = entry(state="closed", note="done\n## Injected")
         self.assertIn("done ## Injected", report.render_html([hostile]))

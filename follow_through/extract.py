@@ -43,7 +43,8 @@ NON_SPEAKER_LABELS = frozenset(
         "chair", "context", "date", "deadline", "decision", "decisions",
         "follow up", "follow-up", "from", "item", "items", "location",
         "minutes", "next", "next step", "next steps", "note", "notes",
-        "objective", "outcome", "owner", "participants", "present", "purpose",
+        "blocker", "blockers", "followup", "homework", "objective", "outcome",
+        "owner", "participants", "present", "purpose", "recap", "warning",
         "questions", "re", "recording", "reminder", "risks", "sent", "status",
         "answer", "attendance", "budget", "closing", "comments", "conclusion",
         "discussion", "issue", "opening", "problem", "q", "question",
@@ -53,13 +54,40 @@ NON_SPEAKER_LABELS = frozenset(
     }
 )
 
+#: Titles and short forms whose full stop does not end a sentence. Without this,
+#: "Dr. Smith will send it" splits in two and records an owner called "Smith"
+#: against a quote the reader cannot find in the file.
+ABBREVIATIONS = (
+    "dr", "mr", "mrs", "ms", "prof", "sr", "jr", "st", "mt", "vs", "etc",
+    "eg", "ie", "no", "approx", "dept", "est", "inc", "ltd", "co",
+)
+
 #: Sentence boundary: terminal punctuation followed by whitespace or end of line.
 SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+")
 
+#: A fragment ending like this did not really end a sentence: an abbreviation
+#: from the list above, or a single initial as in "J. Okafor".
+FALSE_ENDING = re.compile(
+    r"(?:\b(?:" + "|".join(ABBREVIATIONS) + r")|\b[^\W\d_])\.$",
+    re.IGNORECASE,
+)
+
 
 def split_sentences(text: str) -> list[str]:
-    """Split a line into sentences, dropping empties."""
-    return [part.strip() for part in SENTENCE_SPLIT.split(text) if part.strip()]
+    """Split a line into sentences, dropping empties.
+
+    A fragment that ends in an abbreviation or an initial is joined back to the
+    one after it. Otherwise "Dr. Smith will send it" becomes two sentences, and
+    the commitment is recorded against a quote that does not appear in the file.
+    """
+    parts = [part.strip() for part in SENTENCE_SPLIT.split(text) if part.strip()]
+    joined: list[str] = []
+    for part in parts:
+        if joined and FALSE_ENDING.search(joined[-1]):
+            joined[-1] = f"{joined[-1]} {part}"
+        else:
+            joined.append(part)
+    return joined
 
 
 def read_speaker(line: str) -> tuple[str, bool, str]:
@@ -120,8 +148,20 @@ def find_due_phrase(sentence: str) -> str:
 
 
 def is_excluded(sentence: str) -> bool:
-    """True when the sentence is hypothetical, negated, or already past."""
-    return any(pattern.search(sentence) for pattern in cues.EXCLUSION_RE)
+    """True when the sentence should not be recorded as a commitment.
+
+    Two rules, not one. A hypothetical, a negation, or something already done is
+    rejected outright. Conversational filler is rejected only when the sentence
+    states no deadline: "let me know if you have questions" is noise, while
+    "let me know the vendor's answer by Friday" is a real ask wearing the same
+    opening. A stated deadline is the strongest evidence one sentence can carry
+    that something was meant, so it overrules the filler list.
+    """
+    if any(pattern.search(sentence) for pattern in cues.EXCLUSION_RE):
+        return True
+    if find_due_phrase(sentence) != UNKNOWN:
+        return False
+    return any(pattern.search(sentence) for pattern in cues.FILLER_RE)
 
 
 def named_owner(sentence: str) -> str:

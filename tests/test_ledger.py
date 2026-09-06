@@ -130,6 +130,14 @@ class Persistence(unittest.TestCase):
             ledger.load(self.directory)
         self.assertIn("no reason", str(caught.exception))
 
+    def test_a_ledger_from_a_future_version_is_refused(self):
+        ledger.ledger_path(self.directory).write_text(
+            '{"version": 999, "entries": []}', encoding="utf-8"
+        )
+        with self.assertRaises(ledger.LedgerError) as caught:
+            ledger.load(self.directory)
+        self.assertIn("999", str(caught.exception))
+
     def test_written_file_is_readable_json(self):
         ledger.save(self.directory, [])
         raw = json.loads(ledger.ledger_path(self.directory).read_text(encoding="utf-8"))

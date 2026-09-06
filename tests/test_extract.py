@@ -286,5 +286,111 @@ class SourceLabelsAndHome(unittest.TestCase):
         self.assertNotIn(_Path.home().name, label)
 
 
+class AdverbsAreNotPeople(unittest.TestCase):
+    """Sentence openers that a capitalisation rule alone reads as names."""
+
+    OPENERS = (
+        "Actually will not work.",
+        "Hopefully will be ready.",
+        "Regardless will be fine.",
+        "Certainly will help.",
+        "Below will show the numbers.",
+        "Attached will explain it.",
+        "Later will be too late.",
+        "Nevertheless will be needed.",
+    )
+
+    def test_none_of_them_becomes_an_owner(self):
+        for line in self.OPENERS:
+            with self.subTest(line=line):
+                self.assertEqual(named_owner(line), UNKNOWN)
+
+    def test_an_adverb_does_not_shield_a_real_name_behind_it(self):
+        self.assertEqual(named_owner("Hopefully Priya will do it."), "Priya")
+
+
+class TeamsAndCompaniesAreNamedParties(unittest.TestCase):
+    """A named party need not be a person, and recording one is not a guess.
+
+    "Legal will review the contract" names who is responsible. Refusing it
+    because Legal is not a human would lose a real commitment.
+    """
+
+    def test_a_department_is_recorded(self):
+        self.assertEqual(named_owner("Legal will review the contract."), "Legal")
+
+    def test_an_article_still_blocks_a_bare_noun_phrase(self):
+        self.assertEqual(named_owner("The team will revisit it."), UNKNOWN)
+
+
+class NamesThatAreAlsoOtherWords(unittest.TestCase):
+    def test_a_month_that_is_also_a_given_name_is_allowed(self):
+        # May, June and April are people as often as they are months, and the
+        # months are recognised as deadlines by a different rule anyway.
+        for name in ("May", "June", "April"):
+            with self.subTest(name=name):
+                self.assertEqual(named_owner(f"{name} will send the report."), name)
+
+    def test_such_a_name_is_still_a_valid_speaker(self):
+        speaker, structural, _ = read_speaker("May: I'll send the deck.")
+        self.assertEqual(speaker, "May")
+        self.assertFalse(structural)
+
+
+class Abbreviations(unittest.TestCase):
+    def test_a_title_does_not_end_a_sentence(self):
+        self.assertEqual(
+            split_sentences("Dr. Smith will send it by Friday. Then we start."),
+            ["Dr. Smith will send it by Friday.", "Then we start."],
+        )
+
+    def test_an_initial_does_not_end_a_sentence(self):
+        self.assertEqual(
+            split_sentences("J. Okafor will confirm it."),
+            ["J. Okafor will confirm it."],
+        )
+
+    def test_the_quote_a_reader_sees_is_the_whole_sentence(self):
+        found = extract_text("Dr. Smith will send it by Friday.", "s.txt")
+        self.assertEqual(found[0].text, "Dr. Smith will send it by Friday.")
+
+    def test_ordinary_sentences_still_split(self):
+        self.assertEqual(
+            split_sentences("I will send it. Then we start."),
+            ["I will send it.", "Then we start."],
+        )
+
+
+class FillerYieldsToADeadline(unittest.TestCase):
+    """Filler is only filler when nothing was actually promised by when."""
+
+    WITH_A_DEADLINE = (
+        "Let me start the migration tomorrow.",
+        "Let me finish the deck by Friday.",
+        "Let me add the numbers to the model today.",
+        "Let me just send the contract today.",
+        "Let me know the vendor's answer by Friday.",
+        "I'll tell you the final number on Monday.",
+        "I'll say yes or no by end of week.",
+        "Can you repeat the analysis by Friday?",
+        "We'll see the data before Monday.",
+    )
+
+    def test_a_stated_deadline_rescues_the_sentence(self):
+        for line in self.WITH_A_DEADLINE:
+            with self.subTest(line=line):
+                self.assertNotEqual(classify(line, "Alex")[0], (), "lost a commitment")
+
+    def test_the_same_opening_without_a_deadline_is_still_filler(self):
+        for line in ("Let me know if that works.", "Could you repeat that?"):
+            with self.subTest(line=line):
+                self.assertEqual(classify(line, "Alex")[0], ())
+
+    def test_a_negation_is_not_rescued_by_a_deadline(self):
+        # Hard exclusions outrank the deadline. "I don't think I'll have it by
+        # Friday" states a deadline and is the opposite of a promise.
+        self.assertEqual(classify("I don't think I'll have it by Friday.", "Alex")[0], ())
+
+
 if __name__ == "__main__":
     unittest.main()

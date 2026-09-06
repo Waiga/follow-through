@@ -88,7 +88,8 @@ DUE_PATTERNS: tuple[str, ...] = (
 )
 
 #: A sentence matching any of these is never a commitment, whatever else fired.
-#: Hypotheticals, negations, and things already done.
+#: Hypotheticals, negations, and things already done. These hold even when a
+#: deadline is stated: "I don't think I'll have it by Friday" is not a promise.
 EXCLUSION_PATTERNS: tuple[str, ...] = (
     r"\bif i\b",
     r"\bif we\b",
@@ -110,9 +111,75 @@ EXCLUSION_PATTERNS: tuple[str, ...] = (
     r"\bwill i be able to\b",
     r"\bwould you have\b",
     r"\bi used to\b",
-    # Conversational filler that borrows the grammar of a commitment. These are
-    # among the most common sentences spoken on any call, and without them the
-    # ledger fills with noise on the first real transcript.
+)
+
+
+#: Capitalised words that begin sentences but are not people.
+#:
+#: April, May and June are deliberately absent: they are given names at least as
+#: often as they are months, and a month in a deadline is recognised by
+#: :data:`DUE_PATTERNS`, which does not consult this list. Without this, "We
+#: will ship on Monday" would record an owner called "We", and "There will be a
+#: delay" an owner called "There". A pronoun is not a name.
+NON_NAME_WORDS = frozenset(
+    {
+        "and", "also", "august", "but", "december", "everyone",
+        "february", "finally", "first", "friday", "he", "her", "his", "however",
+        "i", "if", "it", "january", "july", "let", "march",
+        "meanwhile", "monday", "my", "next", "no", "nobody", "november", "now",
+        "october", "one", "or", "otherwise", "our", "please", "saturday",
+        "september", "she", "so", "someone", "sunday", "that", "the", "their",
+        "then", "there", "these", "they", "this", "those", "thursday",
+        "tuesday", "we", "wednesday", "what", "when", "which", "who", "yes",
+        "you", "your",
+        # Words that open a clause and would otherwise be read as a person.
+        "after", "all", "another", "any", "anyone", "as", "at", "because",
+        "before", "both", "by", "each", "either", "else", "even", "every",
+        "everybody", "everything", "for", "from", "here", "how", "in", "is",
+        "it's", "its", "just", "most", "much", "neither", "nobody's", "none",
+        "not", "nothing", "of", "on", "once", "only", "other", "others",
+        "perhaps", "probably", "she'll", "since", "some", "somebody",
+        "something", "still", "such", "team", "than", "though", "to", "today",
+        "tomorrow", "tonight", "until", "us", "very", "we'll", "well", "were",
+        "whatever", "whether", "while", "whoever", "whose", "why", "with",
+        "yesterday", "yours",
+        # Adverbs and participles that open a sentence. Without these, "Actually
+        # will not work" records an owner called "Actually".
+        "absolutely", "actually", "additionally", "afterwards", "again",
+        "alternatively", "apparently", "arguably", "attached", "basically",
+        "besides", "briefly", "certainly", "clearly", "consequently",
+        "conversely", "crucially", "curiously", "eventually", "evidently",
+        "frankly", "fortunately", "further", "furthermore", "generally",
+        "helpfully", "honestly", "hopefully", "ideally", "importantly",
+        "included", "incidentally", "indeed", "initially", "instead",
+        "interestingly", "later", "likewise", "luckily", "moreover",
+        "naturally", "nevertheless", "nonetheless", "obviously",
+        "occasionally", "originally", "personally", "possibly", "presumably",
+        "previously", "realistically", "regardless", "sadly", "secondly",
+        "seemingly", "separately", "similarly", "sometimes", "specifically",
+        "strictly", "subsequently", "surely", "technically", "thankfully",
+        "theoretically", "thirdly", "typically", "ultimately", "unfortunately",
+        "unusually", "usually", "worryingly",
+        # Quantifiers and positions that read as subjects.
+        "above", "across", "again", "against", "along", "behind", "below",
+        "beside", "beyond", "everyone's", "half", "inside", "outside", "over",
+        "throughout", "under", "within", "without",
+    }
+)
+
+
+
+#: Conversational filler that borrows the grammar of a commitment. These are the
+#: most common sentences spoken on any call, and without them the ledger fills
+#: with noise on the first real transcript.
+#:
+#: Unlike the list above, filler yields to a stated deadline. "Let me know if you
+#: have questions" is filler; "Let me know the vendor's answer by Friday" is a
+#: real ask that happens to start the same way. A deadline is the strongest
+#: evidence available in one sentence that something was actually meant, so when
+#: one is present these patterns stand down. Dropping a genuine commitment is the
+#: worst thing this tool can do, and it must not happen quietly.
+FILLER_PATTERNS: tuple[str, ...] = (
     r"\blet me know\b",
     r"\blet me think\b",
     r"\blet me be\b",
@@ -140,35 +207,6 @@ EXCLUSION_PATTERNS: tuple[str, ...] = (
 )
 
 
-#: Capitalised words that begin sentences but are not people. Without this, "We
-#: will ship on Monday" would record an owner called "We", and "There will be a
-#: delay" an owner called "There". A pronoun is not a name.
-NON_NAME_WORDS = frozenset(
-    {
-        "and", "also", "april", "august", "but", "december", "everyone",
-        "february", "finally", "first", "friday", "he", "her", "his", "however",
-        "i", "if", "it", "january", "july", "june", "let", "march", "may",
-        "meanwhile", "monday", "my", "next", "no", "nobody", "november", "now",
-        "october", "one", "or", "otherwise", "our", "please", "saturday",
-        "september", "she", "so", "someone", "sunday", "that", "the", "their",
-        "then", "there", "these", "they", "this", "those", "thursday",
-        "tuesday", "we", "wednesday", "what", "when", "which", "who", "yes",
-        "you", "your",
-        # Words that open a clause and would otherwise be read as a person.
-        "after", "all", "another", "any", "anyone", "as", "at", "because",
-        "before", "both", "by", "each", "either", "else", "even", "every",
-        "everybody", "everything", "for", "from", "here", "how", "in", "is",
-        "it's", "its", "just", "most", "much", "neither", "nobody's", "none",
-        "not", "nothing", "of", "on", "once", "only", "other", "others",
-        "perhaps", "probably", "she'll", "since", "some", "somebody",
-        "something", "still", "such", "team", "than", "though", "to", "today",
-        "tomorrow", "tonight", "until", "us", "very", "we'll", "well", "were",
-        "whatever", "whether", "while", "whoever", "whose", "why", "with",
-        "yesterday", "yours",
-    }
-)
-
-
 def _compile(patterns: tuple[str, ...]) -> tuple[re.Pattern[str], ...]:
     return tuple(re.compile(p, re.IGNORECASE) for p in patterns)
 
@@ -177,6 +215,7 @@ FIRST_PERSON_RE = _compile(FIRST_PERSON_PATTERNS)
 ASSIGNMENT_RE = _compile(ASSIGNMENT_PATTERNS)
 DUE_RE = _compile(DUE_PATTERNS)
 EXCLUSION_RE = _compile(EXCLUSION_PATTERNS)
+FILLER_RE = _compile(FILLER_PATTERNS)
 
 COLLECTIVE_RE = _compile(COLLECTIVE_PATTERNS)
 

@@ -98,7 +98,23 @@ who spoke most.
 word in it is an ordinary English word. This is a filter, not name detection: it
 can reject, never confirm. It exists because the first version produced owners
 called "From", "TODO" and "Brien" — the last of those from splitting "O'Brien" in
-half. Names are matched without assuming ASCII, so "José" and "Алекс" work.
+half — and the second still produced "Actually" and "Hopefully". Names are matched
+without assuming ASCII, so "José" and "Алекс" work, and April, May and June are
+allowed through because they are given names as often as months.
+
+The filter cannot close the class, only narrow it. A capitalised word in the
+subject position is indistinguishable from a name in one line of text. Two
+consequences are accepted and documented rather than hidden: a heading the list
+has never seen will read as a speaker, and a named party may be a team or a
+company rather than a person. The second is not a defect — "Legal will review the
+contract" names who is responsible, and refusing it would lose a real commitment.
+
+**Filler versus hypotheticals.** Exclusions come in two strengths. A hypothetical,
+a negation, or something already done is rejected outright. Conversational filler
+is rejected only when no deadline is stated, because "let me know if that works"
+and "let me know the vendor's answer by Friday" open identically and only one of
+them is noise. Dropping a real commitment is the worst failure this tool has, so
+the filler list yields to the strongest evidence a single sentence can carry.
 
 **Due-date cues.** Recognised phrases are recorded verbatim as evidence:
 `by <weekday>`, `by <month> <day>`, `today`, `tomorrow`, `tonight`, `EOD`,

