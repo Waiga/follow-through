@@ -177,8 +177,11 @@ NON_NAME_WORDS = frozenset(
         # Hindi time words that would otherwise read as names: "Kal Rohit
         # karega" must find Rohit, not Kal.
         "aaj", "kal", "parso", "abhi", "shaam", "subah", "raat",
+        # "Main challenge is the Omega launch" must not record an owner called
+        # Main. It is Hindi for "I" and English for "principal".
+        "main",
     }
-    | hinglish.FUNCTION_WORDS
+    | hinglish.NOT_NAMES
 )
 
 
@@ -268,6 +271,9 @@ NAMED_ASSIGNMENT_RE = re.compile(NAMED_ASSIGNMENT_PATTERN)
 
 #: The Hindi equivalent, used differently. English puts the name immediately
 #: before "will"; Hindi is subject-object-verb, so "Rohit ye deck banayega" has
-#: two words in between and the name has to be looked for from the front of the
-#: sentence instead. See :func:`follow_through.extract.named_owner`.
-FUTURE_VERB_RE = re.compile(r"\b" + hinglish.FUTURE_VERB + r"\b")
+#: two words in between. The name is taken from whichever name-like words sit
+#: closest to the verb. See :func:`follow_through.extract.named_owner`.
+#: Case-insensitive, like every other pattern here. It was not, and that made
+#: the whole guard list inert in this one place: the list is lowercase, and
+#: Ortega, Vega, Omega and Bodega only ever appear capitalised.
+FUTURE_VERB_RE = re.compile(r"\b" + hinglish.FUTURE_VERB + r"\b", re.IGNORECASE)

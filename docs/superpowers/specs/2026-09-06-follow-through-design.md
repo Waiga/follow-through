@@ -68,17 +68,34 @@ like "karungi", "Ortega" like "karega", "karo" is a syrup and "bolo" is a tie.
 Fifteen of fifty-nine ordinary English sentences were recorded as commitments,
 four of them owned by invented people — "Q3", "Project", "Phase 1", "Slide 3".
 
-The gate is the presence of a Hindi function word: pronouns, postpositions,
-auxiliaries, connectives. They are unavoidable in a Hindi sentence, near-absent
+The gate has two signals, either sufficient. The first is a Hindi function word:
+pronouns, postpositions, auxiliaries, connectives. They are unavoidable in a Hindi sentence, near-absent
 from an English one, and carry no meaning worth matching on their own. Words that
 exist in both languages are deliberately excluded from the list — "the", "to",
 "me", "us", "main", "hi", "par", and "agar", which is Hindi for "if" and also a
 laboratory growth medium. One false hit opens every Hindi rule on an English
 sentence, and a real Hindi sentence contains several of these words, not one.
 
-The cost is a Hindi fragment too short to contain a function word: "Anjali
-karegi" is left alone, because it is the same shape as "Maria Ortega". On three
-real transcripts the gate removed every English false positive and cost nothing.
+The second signal is an unmistakably Hindi verb: a lowercase word ending -ega,
+-egi, -enge, -unga or -ungi, or one of a short list of imperatives that have no
+English twin. This exists because most Hinglish is code-mixed — English nouns
+with a single Hindi verb, "Amazon listing Farhan update karega" — and a
+function-word test alone dropped eleven of twenty realistic lines of that shape.
+
+Case is what makes the second signal safe. Hindi verbs are not capitalised
+mid-sentence; the English words sharing those endings are proper nouns (Ortega,
+Vega, Omega, Noriega). Lowercase lookalikes that are ordinary English words —
+challenge, revenge, fungi, lungi — are held by a short guard list, which must be
+matched case-insensitively: it was not, and that silently made every entry in it
+inert, since those words only ever appear capitalised.
+
+Names that are also Hindi function words — Jo, Ho, Diya, Bas, Tak — are kept out
+of the not-a-name list. Rejecting one as a speaker label is worse than losing an
+owner: the label is then read as document structure, which also ends the current
+speaker's turn and orphans every unlabelled line after it.
+
+On three real transcripts the gate removed every English false positive and cost
+nothing.
 
 Two structural differences drive the rules:
 

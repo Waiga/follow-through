@@ -86,11 +86,53 @@ class Assignment(unittest.TestCase):
         self.assertEqual(named_owner("Rahul kal invoice bhej dega."), "Rahul")
         self.assertEqual(named_owner("Rohit kal tak vendor ko call karega."), "Rohit")
 
-    def test_a_fragment_with_no_hindi_in_it_is_left_alone(self):
-        # "Ortega raised it" and "Anjali karegi" are the same shape to a regular
-        # expression. Without a Hindi word in the sentence the rules stay away,
-        # and the cost of that is a two-word fragment like this one.
-        self.assertEqual(named_owner("Anjali karegi."), UNKNOWN)
+    def test_a_bare_two_word_assignment_still_works(self):
+        # A lowercase Hindi verb is itself enough evidence of Hindi, so this
+        # needs no other Hindi word around it.
+        self.assertEqual(named_owner("Anjali karegi."), "Anjali")
+
+    def test_a_capitalised_lookalike_is_not_a_verb(self):
+        # "Maria Ortega" and "Anjali karegi" are the same shape. Capitalisation
+        # is what separates them: Hindi verbs are not capitalised mid-sentence,
+        # and the English words that share these endings are proper nouns.
+        for line in (
+            "Maria Ortega raised it.",
+            "Sam Vega flagged it.",
+            "Nina Bodega called.",
+            "Ana Talega replied.",
+        ):
+            with self.subTest(line=line):
+                self.assertEqual(named_owner(line), UNKNOWN)
+                self.assertEqual(classify(line, "Alex")[0], ())
+
+    def test_a_lowercase_lookalike_is_guarded_by_name(self):
+        for line in ("The fungi spread.", "He wore a lungi.", "That is a challenge."):
+            with self.subTest(line=line):
+                self.assertEqual(classify(line, "Alex")[0], ())
+
+    def test_a_name_that_is_also_a_hindi_word_is_still_a_name(self):
+        # Jo, Ho, Diya, Bas and Tak are real people. Rejecting one as a speaker
+        # is worse than losing an owner: the label reads as document structure
+        # and orphans every unlabelled line after it.
+        from follow_through.extract import read_speaker
+
+        for name in ("Jo", "Ho", "Diya", "Bas", "Tak"):
+            with self.subTest(name=name):
+                speaker, structural, _ = read_speaker(f"{name}: I'll send it.")
+                self.assertEqual(speaker, name)
+                self.assertFalse(structural)
+
+    def test_a_multi_word_name_is_kept_whole(self):
+        self.assertEqual(named_owner("Ye SOP Priya Sharma likhegi."), "Priya Sharma")
+        self.assertEqual(
+            named_owner("Rahul ko Lumen Freight invoice bhejega."), "Lumen Freight"
+        )
+
+    def test_the_name_closest_to_the_verb_wins(self):
+        # Hindi fronts the object for emphasis, so position in the sentence is a
+        # worse guide than proximity to the verb.
+        self.assertEqual(named_owner("Amazon listing Farhan update karega."), "Farhan")
+        self.assertEqual(named_owner("Rohit ka Ortega account Neha dekhegi."), "Neha")
 
     def test_an_english_word_that_looks_like_a_hindi_future_is_not_one(self):
         for line in ("That is a challenge for us.", "We need revenge."):

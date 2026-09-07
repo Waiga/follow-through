@@ -126,7 +126,9 @@ def read_speaker(line: str) -> tuple[str, bool, str]:
     remainder = line[match.end() :]
     words = name.split()
     if len(words) > 1 and words[-1].isdigit():
-        if words[0].lower() not in NUMBERED_SPEAKERS:
+        # "Speaker 1", and also "Male Speaker 1", so check every word rather
+        # than only the first.
+        if not any(word.lower() in NUMBERED_SPEAKERS for word in words[:-1]):
             return "", True, remainder
     if name.lower() in NON_SPEAKER_LABELS or not looks_like_a_name(
         name, allow=cues.NAMES_ALLOWED_AS_SPEAKERS
@@ -147,18 +149,35 @@ def is_hinglish(sentence: str) -> bool:
     "bolo" is a tie. Applied to every sentence, the Hindi rules recorded
     commitments that were not there and invented people to own them.
 
-    The test is the presence of a Hindi function word — hai, ko, kar, nahi, main.
-    They are unavoidable in a Hindi sentence and near-absent from an English one,
-    and unlike the content words they carry no meaning worth matching on.
+    Two signals, either of which is enough.
 
-    This is a filter, not language identification. It will pass an English
-    sentence about somebody called Sehai. It exists to keep the Hindi rules away
-    from sentences they were never meant to see.
+    A Hindi function word — hai, ko, kar, nahi. They are unavoidable in a Hindi
+    sentence, near-absent from an English one, and unlike content words they
+    carry no meaning worth matching on.
+
+    Or an unmistakably Hindi verb: a lowercase word ending -ega, -egi, -enge,
+    -unga or -ungi, or one of a short list of imperatives. Most Hinglish is
+    code-mixed — English nouns with a single Hindi verb, "Amazon listing Farhan
+    update karega" — and the function-word test alone missed eleven of twenty
+    realistic lines of that shape. Only lowercase words count for this signal,
+    because Hindi verbs are not capitalised mid-sentence while the English words
+    that share those endings are proper nouns: Ortega, Vega, Omega, Noriega.
+
+    This is a filter, not language identification. It exists to keep the Hindi
+    rules away from sentences they were never meant to see.
     """
-    found = [word.group(0).lower() for word in WORD.finditer(sentence)]
-    if set(found) & cues.hinglish.FUNCTION_WORDS:
+    found = [word.group(0) for word in WORD.finditer(sentence)]
+    lowered = {word.lower() for word in found}
+    if lowered & cues.hinglish.FUNCTION_WORDS:
         return True
-    return bool(found) and found[0] in cues.hinglish.SENTENCE_INITIAL
+    if lowered & cues.hinglish.UNAMBIGUOUS_IMPERATIVES:
+        return True
+    for word in found:
+        if word[0].isupper() or word.lower() in cues.hinglish.FALSE_FUTURES:
+            continue
+        if word.lower().endswith(cues.hinglish.VERB_ENDINGS):
+            return True
+    return False
 
 
 def looks_like_a_name(phrase: str, allow: frozenset[str] = frozenset()) -> bool:
@@ -262,20 +281,35 @@ def named_owner(sentence: str) -> str:
                 return candidate
 
     # Hindi puts the verb last, so the name is not adjacent to it: "Rohit ye
-    # deck banayega" has two words in between. Hindi is also subject-first, so
-    # the first word in the sentence that could be a name is the subject.
+    # deck banayega" has two words in between.
+    #
+    # The run of name-like words closest to the verb wins. Hindi is
+    # subject-first, but the object is often fronted for emphasis — "Carrier
+    # rates Farhan nikalega" is Farhan's job, not Carrier's — so proximity to
+    # the verb is a better guide than position in the sentence. Taking the whole
+    # run rather than one word keeps "Priya Sharma" and "Lumen Freight" intact.
     if is_hinglish(sentence):
         verb = cues.FUTURE_VERB_RE.search(sentence)
         if verb:
-            # The last name-like word before the verb, not the first. Hindi is
-            # subject-first, but the object is often fronted for emphasis:
-            # "Carrier rates Farhan nikalega" is Farhan's job, not Carrier's.
-            # Whoever sits closest to the verb is the one doing it.
-            candidate = UNKNOWN
-            for word in WORD.finditer(sentence[: verb.start()]):
-                if looks_like_a_name(word.group(0)):
-                    candidate = word.group(0)
-            return candidate
+            words = [w.group(0) for w in WORD.finditer(sentence[: verb.start()])]
+            last = None
+            for index, word in enumerate(words):
+                if looks_like_a_name(word):
+                    last = index
+            if last is not None:
+                name = [words[last]]
+                # Reach back over adjacent name words so "Priya Sharma" and
+                # "Lumen Freight" stay whole, but stop at an acronym: "Ye SOP
+                # Priya Sharma likhegi" is Priya Sharma's job, not SOP's.
+                while (
+                    len(name) < 3
+                    and last > 0
+                    and looks_like_a_name(words[last - 1])
+                    and not words[last - 1].isupper()
+                ):
+                    last -= 1
+                    name.insert(0, words[last])
+                return " ".join(name)
     return UNKNOWN
 
 

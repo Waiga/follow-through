@@ -129,9 +129,16 @@ overrules the filler list.
 difference between a Hindi verb and an ordinary English word: `fungi` ends like
 `karungi`, `Ortega` like `karega`, `karo` is a syrup and `bolo` is a tie. Applied
 to everything, these rules invented commitments in English sentences and invented
-people to own them. So a sentence has to contain a Hindi function word — `hai`,
-`ko`, `kar`, `nahi` — before any of them is allowed near it. The cost is that a
-two-word fragment with no Hindi in it is left alone; that is the right trade.
+people to own them.
+
+So a sentence has to look like Hindi first. Either it contains a Hindi function
+word — `hai`, `ko`, `kar`, `nahi` — or it contains an unmistakably Hindi verb: a
+**lowercase** word ending `-ega`, `-egi`, `-enge`, `-unga`, `-ungi`. The
+lowercase part is what does the work. Hindi verbs are not capitalised in the
+middle of a sentence, and the English words that share those endings are proper
+nouns: Ortega, Vega, Omega, Noriega. That one distinction separates
+"Amazon listing Farhan update karega" from "Maria Ortega raised the issue"
+without needing a dictionary of either language.
 
 Transliteration is not standardised — people write `hu` and `hoon`, `kar dunga`
 and `kardunga`. The common spellings are covered and the list will always be

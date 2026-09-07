@@ -100,13 +100,39 @@ FALSE_FUTURES: tuple[str, ...] = (
     "senega",
     "telega",
     "strategi",
-    "rutabaga",
 )
 
-#: "main" is Hindi for "I" and English for "principal". It counts as Hindi only
-#: as the first word of a sentence, where English would not put it: Hindi says
-#: "Main bhej dunga", English says "the main issue".
-SENTENCE_INITIAL = frozenset({"main", "mai", "hum", "hamein", "humein"})
+#: Function words that are also somebody's name. They stay out of the
+#: not-a-name list: Jo, Ho, Diya, Bas and Tak are real people, and rejecting a
+#: speaker label is worse than losing an owner — it is read as document
+#: structure, which also orphans every unlabelled line that follows it.
+ALSO_NAMES = frozenset({"bas", "diya", "ho", "jo", "mai", "na", "se", "tak"})
+
+#: Function words that could never be a name, for the name filter in
+#: :mod:`follow_through.cues`.
+NOT_NAMES = frozenset()  # filled below, once FUNCTION_WORDS exists
+
+#: Unambiguous Hindi verb endings, used as a second signal that a sentence is
+#: Hindi. Most Hinglish is code-mixed — English nouns with one Hindi verb, as in
+#: "Amazon listing Farhan update karega" — and a function-word test alone missed
+#: eleven of twenty realistic lines like that.
+#:
+#: Only lowercase words count. Hindi verbs are not capitalised mid-sentence, and
+#: the English words that share these endings are proper nouns: Ortega, Vega,
+#: Omega, Noriega. Capitalisation separates them cleanly where a word list could
+#: not. The lowercase lookalikes — challenge, revenge, fungi, lungi — stay in
+#: :data:`FALSE_FUTURES`.
+VERB_ENDINGS = ("ega", "egi", "enge", "unga", "ungi")
+
+#: Imperatives with no English twin. "karo", "bolo" and "dekho" are deliberately
+#: absent: Karo is a syrup, a bolo is a tie, and those collisions are what the
+#: gate exists to prevent.
+UNAMBIGUOUS_IMPERATIVES = frozenset(
+    {
+        "bhejo", "nikalo", "batao", "mangao", "likho", "bharo", "karwao",
+        "bhijwao", "dilao", "bhijwadena", "puchlo",
+    }
+)
 
 #: A guard that refuses the words above before any morphological rule runs.
 _NOT_A_FUTURE = r"(?!(?:" + "|".join(FALSE_FUTURES) + r")\b)"
@@ -180,11 +206,10 @@ COLLECTIVE: tuple[str, ...] = (
     # transcript it met, and caught one genuine item. Not worth the trade.
 )
 
-#: "<somebody> will do it", Hindi form: ``Anjali karegi``, ``Rahul bhejega``,
-#: ``dono karenge``. Used by the named-assignment rule in
-#: :mod:`follow_through.cues`, which decides whether the word before it is
-#: really a name. This is how work is handed out in a Hindi conversation, and
-#: without it every assignment in the meeting is invisible.
+#: "<somebody> will do it", Hindi form: ``Anjali ye kaam karegi``,
+#: ``Rahul kal invoice bhej dega``. This is how work is handed out in a Hindi
+#: conversation, and without it every assignment in the meeting is invisible.
+#:
 #: Only -ega and -egi. The -enge form is deliberately absent: whenever it
 #: matches, the collective rule matches too, and a collective undertaking has no
 #: owner by design — so that branch could never produce one on real input.
@@ -279,3 +304,6 @@ FILLER: tuple[str, ...] = (
     r"\bsuno\b",
     r"\bbolo (?:kya|na)\b",
 )
+
+# Resolved here so the two lists can be defined in reading order.
+NOT_NAMES = FUNCTION_WORDS - ALSO_NAMES
