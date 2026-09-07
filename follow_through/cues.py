@@ -51,6 +51,9 @@ ASSIGNMENT_PATTERNS: tuple[str, ...] = (
     r"\bplease get\b",
     r"\byou'?ll need to\b",
     r"\byou need to\b",
+    # An imperative that opens a sentence. "I'll follow up with him" is first
+    # person and must not match, hence the anchor.
+    r"^(?:just |please )?follow up with\b",
 )
 
 #: ``<Name> will ...``, ``<Name> is going to ...``, ``<Name> has agreed to ...``.
@@ -63,7 +66,7 @@ ASSIGNMENT_PATTERNS: tuple[str, ...] = (
 NAMED_ASSIGNMENT_PATTERN = (
     r"(?<![^\W\d_]['\u2019-])"
     r"((?:[^\W\d_][\w'\u2019-]*\s+){0,2}[^\W\d_][\w'\u2019-]*)"
-    r"\s+(?:will|is going to|has agreed to|" + hinglish.FUTURE_VERB + r")\b"
+    r"\s+(?:will|is going to|has agreed to)\b"
 )
 
 #: Timing phrases. Captured verbatim as evidence; never converted to a date.
@@ -171,7 +174,11 @@ NON_NAME_WORDS = frozenset(
         "above", "across", "again", "against", "along", "behind", "below",
         "beside", "beyond", "everyone's", "half", "inside", "outside", "over",
         "throughout", "under", "within", "without",
+        # Hindi time words that would otherwise read as names: "Kal Rohit
+        # karega" must find Rohit, not Kal.
+        "aaj", "kal", "parso", "abhi", "shaam", "subah", "raat",
     }
+    | hinglish.FUNCTION_WORDS
 )
 
 
@@ -233,16 +240,34 @@ def _compile(patterns: tuple[str, ...]) -> tuple[re.Pattern[str], ...]:
     return tuple(re.compile(p, re.IGNORECASE) for p in patterns)
 
 
-#: English and Hinglish are merged into one set of families. Nothing downstream
-#: needs to know which language a sentence was in, and a sentence that mixes both
-#: — which is how people actually speak — is matched by whichever fires.
-FIRST_PERSON_RE = _compile(FIRST_PERSON_PATTERNS + hinglish.FIRST_PERSON)
-ASSIGNMENT_RE = _compile(ASSIGNMENT_PATTERNS + hinglish.ASSIGNMENT)
-DUE_RE = _compile(DUE_PATTERNS + hinglish.DUE)
-EXCLUSION_RE = _compile(EXCLUSION_PATTERNS + hinglish.EXCLUSIONS)
-FILLER_RE = _compile(FILLER_PATTERNS + hinglish.FILLER)
+#: The two languages are compiled separately, not merged.
+#:
+#: Merging them was the first design and it was wrong. Roman script cannot tell
+#: a Hindi verb from an English word by shape alone: "fungi" ends like "karungi",
+#: "Ortega" like "karega", "karo" is a syrup, "bolo" is a tie. Applying Hindi
+#: rules to an English sentence invented commitments and invented owners.
+#:
+#: A sentence is now tested for Hindi before the Hindi rules are allowed near it.
+#: See :func:`follow_through.extract.is_hinglish`.
+FIRST_PERSON_RE = _compile(FIRST_PERSON_PATTERNS)
+FIRST_PERSON_HI_RE = _compile(hinglish.FIRST_PERSON)
+ASSIGNMENT_RE = _compile(ASSIGNMENT_PATTERNS)
+ASSIGNMENT_HI_RE = _compile(hinglish.ASSIGNMENT)
+DUE_RE = _compile(DUE_PATTERNS)
+DUE_HI_RE = _compile(hinglish.DUE)
+EXCLUSION_RE = _compile(EXCLUSION_PATTERNS)
+EXCLUSION_HI_RE = _compile(hinglish.EXCLUSIONS)
+FILLER_RE = _compile(FILLER_PATTERNS)
+FILLER_HI_RE = _compile(hinglish.FILLER)
 
-COLLECTIVE_RE = _compile(COLLECTIVE_PATTERNS + hinglish.COLLECTIVE)
+COLLECTIVE_RE = _compile(COLLECTIVE_PATTERNS)
+COLLECTIVE_HI_RE = _compile(hinglish.COLLECTIVE)
 
 #: Case-sensitive on purpose: the capital letter is the evidence of a name.
 NAMED_ASSIGNMENT_RE = re.compile(NAMED_ASSIGNMENT_PATTERN)
+
+#: The Hindi equivalent, used differently. English puts the name immediately
+#: before "will"; Hindi is subject-object-verb, so "Rohit ye deck banayega" has
+#: two words in between and the name has to be looked for from the front of the
+#: sentence instead. See :func:`follow_through.extract.named_owner`.
+FUTURE_VERB_RE = re.compile(r"\b" + hinglish.FUTURE_VERB + r"\b")

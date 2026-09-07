@@ -62,6 +62,24 @@ downstream knows which language a sentence was in and a mixed sentence — which
 how people actually speak — is matched by whichever rule fires. A third language
 would be added the same way.
 
+**The Hindi rules are gated on the sentence containing Hindi.** They were first
+applied to every sentence, and Roman script does not permit that: "fungi" ends
+like "karungi", "Ortega" like "karega", "karo" is a syrup and "bolo" is a tie.
+Fifteen of fifty-nine ordinary English sentences were recorded as commitments,
+four of them owned by invented people — "Q3", "Project", "Phase 1", "Slide 3".
+
+The gate is the presence of a Hindi function word: pronouns, postpositions,
+auxiliaries, connectives. They are unavoidable in a Hindi sentence, near-absent
+from an English one, and carry no meaning worth matching on their own. Words that
+exist in both languages are deliberately excluded from the list — "the", "to",
+"me", "us", "main", "hi", "par", and "agar", which is Hindi for "if" and also a
+laboratory growth medium. One false hit opens every Hindi rule on an English
+sentence, and a real Hindi sentence contains several of these words, not one.
+
+The cost is a Hindi fragment too short to contain a function word: "Anjali
+karegi" is left alone, because it is the same shape as "Maria Ortega". On three
+real transcripts the gate removed every English false positive and cost nothing.
+
 Two structural differences drive the rules:
 
 **Person is in the verb ending.** `-unga` / `-ungi` is first person, `-enge` is

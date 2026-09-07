@@ -30,6 +30,18 @@ SPEAKER_LABEL = re.compile(
     re.VERBOSE,
 )
 
+#: Words that take a number and are still a speaker: "Speaker 1", "Caller 2".
+#:
+#: An allowlist, because the numeric suffix was added for exactly these and it
+#: also matched "Slide 3:", "Phase 1:" and "Option 2:" — which then became the
+#: recorded owner of every commitment in the paragraph beneath them.
+NUMBERED_SPEAKERS = frozenset(
+    {
+        "agent", "attendee", "caller", "guest", "host", "interviewer",
+        "participant", "person", "speaker", "unknown", "user", "voice",
+    }
+)
+
 #: Labels that look like speakers but are document structure, not people.
 #:
 #: This list can never be complete, which is why it is not the only defence: a
@@ -112,11 +124,41 @@ def read_speaker(line: str) -> tuple[str, bool, str]:
         return "", False, line
     name = match.group("name").strip()
     remainder = line[match.end() :]
+    words = name.split()
+    if len(words) > 1 and words[-1].isdigit():
+        if words[0].lower() not in NUMBERED_SPEAKERS:
+            return "", True, remainder
     if name.lower() in NON_SPEAKER_LABELS or not looks_like_a_name(
         name, allow=cues.NAMES_ALLOWED_AS_SPEAKERS
     ):
         return "", True, remainder
     return name, False, remainder
+
+
+#: A word stripped of the punctuation that surrounds it in a sentence.
+WORD = re.compile(r"[^\W\d_][\w'\u2019-]*")
+
+
+def is_hinglish(sentence: str) -> bool:
+    """True when a sentence contains Hindi, and Hindi rules may be applied.
+
+    Roman script hides the difference between a Hindi verb and an English word.
+    "fungi" ends like "karungi", "Ortega" like "karega"; "karo" is a syrup and
+    "bolo" is a tie. Applied to every sentence, the Hindi rules recorded
+    commitments that were not there and invented people to own them.
+
+    The test is the presence of a Hindi function word — hai, ko, kar, nahi, main.
+    They are unavoidable in a Hindi sentence and near-absent from an English one,
+    and unlike the content words they carry no meaning worth matching on.
+
+    This is a filter, not language identification. It will pass an English
+    sentence about somebody called Sehai. It exists to keep the Hindi rules away
+    from sentences they were never meant to see.
+    """
+    found = [word.group(0).lower() for word in WORD.finditer(sentence)]
+    if set(found) & cues.hinglish.FUNCTION_WORDS:
+        return True
+    return bool(found) and found[0] in cues.hinglish.SENTENCE_INITIAL
 
 
 def looks_like_a_name(phrase: str, allow: frozenset[str] = frozenset()) -> bool:
@@ -150,8 +192,11 @@ def find_due_phrase(sentence: str) -> str:
     The earliest match wins, so ``by Friday`` is preferred over a later
     ``next week`` in the same sentence.
     """
+    patterns = cues.DUE_RE
+    if is_hinglish(sentence):
+        patterns = patterns + cues.DUE_HI_RE
     best: tuple[int, str] | None = None
-    for pattern in cues.DUE_RE:
+    for pattern in patterns:
         match = pattern.search(sentence)
         if match and (best is None or match.start() < best[0]):
             best = (match.start(), match.group(0))
@@ -190,11 +235,14 @@ def is_excluded(sentence: str) -> bool:
     opening. A stated deadline is the strongest evidence one sentence can carry
     that something was meant, so it overrules the filler list.
     """
-    if any(pattern.search(sentence) for pattern in cues.EXCLUSION_RE):
+    hindi = is_hinglish(sentence)
+    exclusions = cues.EXCLUSION_RE + (cues.EXCLUSION_HI_RE if hindi else ())
+    if any(pattern.search(sentence) for pattern in exclusions):
         return True
     if sets_a_deadline(find_due_phrase(sentence)):
         return False
-    return any(pattern.search(sentence) for pattern in cues.FILLER_RE)
+    filler = cues.FILLER_RE + (cues.FILLER_HI_RE if hindi else ())
+    return any(pattern.search(sentence) for pattern in filler)
 
 
 def named_owner(sentence: str) -> str:
@@ -212,6 +260,22 @@ def named_owner(sentence: str) -> str:
             candidate = " ".join(words[start:])
             if looks_like_a_name(candidate):
                 return candidate
+
+    # Hindi puts the verb last, so the name is not adjacent to it: "Rohit ye
+    # deck banayega" has two words in between. Hindi is also subject-first, so
+    # the first word in the sentence that could be a name is the subject.
+    if is_hinglish(sentence):
+        verb = cues.FUTURE_VERB_RE.search(sentence)
+        if verb:
+            # The last name-like word before the verb, not the first. Hindi is
+            # subject-first, but the object is often fronted for emphasis:
+            # "Carrier rates Farhan nikalega" is Farhan's job, not Carrier's.
+            # Whoever sits closest to the verb is the one doing it.
+            candidate = UNKNOWN
+            for word in WORD.finditer(sentence[: verb.start()]):
+                if looks_like_a_name(word.group(0)):
+                    candidate = word.group(0)
+            return candidate
     return UNKNOWN
 
 
@@ -236,10 +300,15 @@ def classify(sentence: str, speaker: str) -> tuple[tuple[str, ...], str]:
     if is_excluded(sentence):
         return (), UNKNOWN
 
-    first_person = any(p.search(sentence) for p in cues.FIRST_PERSON_RE)
-    collective = any(p.search(sentence) for p in cues.COLLECTIVE_RE)
+    hindi = is_hinglish(sentence)
+    first_person_re = cues.FIRST_PERSON_RE + (cues.FIRST_PERSON_HI_RE if hindi else ())
+    collective_re = cues.COLLECTIVE_RE + (cues.COLLECTIVE_HI_RE if hindi else ())
+    assignment_re = cues.ASSIGNMENT_RE + (cues.ASSIGNMENT_HI_RE if hindi else ())
+
+    first_person = any(p.search(sentence) for p in first_person_re)
+    collective = any(p.search(sentence) for p in collective_re)
     named = named_owner(sentence)
-    open_ask = any(p.search(sentence) for p in cues.ASSIGNMENT_RE)
+    open_ask = any(p.search(sentence) for p in assignment_re)
 
     fired: list[str] = []
     if first_person:

@@ -125,6 +125,14 @@ The rules match the ending, so verbs nobody thought to list are still caught.
 "by tomorrow". Only the second one sets a deadline, and only the second one
 overrules the filler list.
 
+**The Hindi rules only run on Hindi sentences.** Roman script hides the
+difference between a Hindi verb and an ordinary English word: `fungi` ends like
+`karungi`, `Ortega` like `karega`, `karo` is a syrup and `bolo` is a tie. Applied
+to everything, these rules invented commitments in English sentences and invented
+people to own them. So a sentence has to contain a Hindi function word — `hai`,
+`ko`, `kar`, `nahi` — before any of them is allowed near it. The cost is that a
+two-word fragment with no Hindi in it is left alone; that is the right trade.
+
 Transliteration is not standardised — people write `hu` and `hoon`, `kar dunga`
 and `kardunga`. The common spellings are covered and the list will always be
 incomplete. Adding to it is the single most useful contribution anyone can make,
