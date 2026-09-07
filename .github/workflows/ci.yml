@@ -45,3 +45,9 @@ jobs:
           follow-through report
       - name: The generated report must match the one checked in
         run: diff -u examples/expected-report.md reports/follow-through.md
+      - name: The Hinglish example must produce its checked-in report too
+        run: |
+          rm -rf .follow-through reports
+          follow-through track examples/weekly-sync-hinglish.txt
+          follow-through report
+          diff -u examples/expected-report-hinglish.md reports/follow-through.md

@@ -46,6 +46,40 @@ This section is the product, not a disclaimer.
 The design inherits one rule from Repo Scout: absence of evidence is reported as
 unknown, never as a confirmed negative.
 
+## Languages
+
+The tool reads English and Hinglish — Hindi conversation transliterated into
+Roman script, which is what transcription tools return for most of India.
+
+This was not in the original design. It was added after the first version was
+run on a real meeting transcript and found **zero** commitments in a conversation
+that contained seven, because every promise in it was of the form "main hi follow
+up dalta hu". An English-only rule set does not degrade gracefully on a Hindi
+conversation; it returns nothing at all, while reporting nothing wrong.
+
+Hinglish lives in one module that feeds the same cue families, so nothing
+downstream knows which language a sentence was in and a mixed sentence — which is
+how people actually speak — is matched by whichever rule fires. A third language
+would be added the same way.
+
+Two structural differences drive the rules:
+
+**Person is in the verb ending.** `-unga` / `-ungi` is first person, `-enge` is
+collective, and `-ega` / `-egi` following a name is an assignment to that person.
+Matching the ending rather than a list of verbs covers the language instead of a
+sample, at the cost of a small guard list for English words that end the same way
+— "challenge", "revenge", "omega".
+
+**The deadline marker is at the end.** `kal` is "tomorrow"; `kal tak` is "by
+tomorrow". Only the second sets a deadline, so the filler override tests the end
+of the phrase for Hinglish and the start of it for English.
+
+Two rules were tried and removed for producing false positives on real speech:
+`ho jayega` ("it will get done"), which is nearly always a prediction, and a
+general "any word plus na hai" obligation rule, which fired on the English nouns
+that fill Hinglish sentences — "done hai", "phone hai", "online hai". The verb
+stems are listed explicitly instead.
+
 ## Users
 
 The first user is an operator who speaks their obligations faster than they can

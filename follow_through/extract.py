@@ -24,7 +24,7 @@ from .models import UNKNOWN, Candidate
 SPEAKER_LABEL = re.compile(
     r"""^\s*
         (?:[\[(]?\d{1,2}:\d{2}(?::\d{2})?[\])]?\s*)?   # optional timestamp
-        (?P<name>[^\W\d_][\w'’-]*(?:\s+[^\W\d_][\w'’-]*){0,2})
+        (?P<name>[^\W\d_][\w'’-]*(?:\s+[^\W\d_][\w'’-]*){0,2}(?:\s+\d{1,3})?)
         \s*:\s
     """,
     re.VERBOSE,
@@ -130,6 +130,10 @@ def looks_like_a_name(phrase: str, allow: frozenset[str] = frozenset()) -> bool:
     words = phrase.split()
     if not words:
         return False
+    # Transcripts label unidentified voices "Speaker 1", "Participant 2". The
+    # number is part of the label, not a word that has to look like a name.
+    if len(words) > 1 and words[-1].isdigit():
+        words = words[:-1]
     for word in words:
         stripped = word.strip("'\u2019-")
         if not stripped or not stripped[0].isupper():
@@ -164,9 +168,16 @@ DEADLINE_SHAPED = re.compile(
 )
 
 
+#: Hindi marks a deadline at the end of the phrase rather than the start:
+#: "kal tak" is "by tomorrow", where "kal" on its own is only "tomorrow".
+DEADLINE_SHAPED_SUFFIX = re.compile(r"\b(?:tak|ke andar|hi|me|mein)$", re.IGNORECASE)
+
+
 def sets_a_deadline(phrase: str) -> bool:
     """True when a due phrase actually sets a deadline."""
-    return phrase != UNKNOWN and bool(DEADLINE_SHAPED.match(phrase))
+    if phrase == UNKNOWN:
+        return False
+    return bool(DEADLINE_SHAPED.match(phrase) or DEADLINE_SHAPED_SUFFIX.search(phrase))
 
 
 def is_excluded(sentence: str) -> bool:

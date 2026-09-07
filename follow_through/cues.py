@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import re
 
+from . import hinglish
+
 FIRST_PERSON = "first-person-undertaking"
 COLLECTIVE = "collective-undertaking"
 ASSIGNMENT = "assignment-to-another"
@@ -61,7 +63,7 @@ ASSIGNMENT_PATTERNS: tuple[str, ...] = (
 NAMED_ASSIGNMENT_PATTERN = (
     r"(?<![^\W\d_]['\u2019-])"
     r"((?:[^\W\d_][\w'\u2019-]*\s+){0,2}[^\W\d_][\w'\u2019-]*)"
-    r"\s+(?:will|is going to|has agreed to)\b"
+    r"\s+(?:will|is going to|has agreed to|" + hinglish.FUTURE_VERB + r")\b"
 )
 
 #: Timing phrases. Captured verbatim as evidence; never converted to a date.
@@ -210,6 +212,9 @@ FILLER_PATTERNS: tuple[str, ...] = (
     r"\bi'?ll tell you (?:what|this|that|something|honestly|frankly)\b",
     r"\bi'?ll say (?:this|that)\b",
     r"\bi'?ll bet (?:you|it|that)\b",
+    # Describing the method just agreed, not undertaking anything new.
+    r"\bthat'?s how we'?ll\b",
+    r"\bthat is how we'?ll\b",
 )
 
 
@@ -228,13 +233,16 @@ def _compile(patterns: tuple[str, ...]) -> tuple[re.Pattern[str], ...]:
     return tuple(re.compile(p, re.IGNORECASE) for p in patterns)
 
 
-FIRST_PERSON_RE = _compile(FIRST_PERSON_PATTERNS)
-ASSIGNMENT_RE = _compile(ASSIGNMENT_PATTERNS)
-DUE_RE = _compile(DUE_PATTERNS)
-EXCLUSION_RE = _compile(EXCLUSION_PATTERNS)
-FILLER_RE = _compile(FILLER_PATTERNS)
+#: English and Hinglish are merged into one set of families. Nothing downstream
+#: needs to know which language a sentence was in, and a sentence that mixes both
+#: — which is how people actually speak — is matched by whichever fires.
+FIRST_PERSON_RE = _compile(FIRST_PERSON_PATTERNS + hinglish.FIRST_PERSON)
+ASSIGNMENT_RE = _compile(ASSIGNMENT_PATTERNS + hinglish.ASSIGNMENT)
+DUE_RE = _compile(DUE_PATTERNS + hinglish.DUE)
+EXCLUSION_RE = _compile(EXCLUSION_PATTERNS + hinglish.EXCLUSIONS)
+FILLER_RE = _compile(FILLER_PATTERNS + hinglish.FILLER)
 
-COLLECTIVE_RE = _compile(COLLECTIVE_PATTERNS)
+COLLECTIVE_RE = _compile(COLLECTIVE_PATTERNS + hinglish.COLLECTIVE)
 
 #: Case-sensitive on purpose: the capital letter is the evidence of a name.
 NAMED_ASSIGNMENT_RE = re.compile(NAMED_ASSIGNMENT_PATTERN)

@@ -13,6 +13,12 @@ Follow Through is a command-line tool that reads a transcript, finds the
 statements that commit someone to a future action, and tracks each one until you
 say it is done.
 
+It reads English and Hinglish — Hindi spoken in Roman script, which is what
+transcription tools return for most of India. That is not a bonus feature. On a
+real meeting transcript, English-only rules found zero commitments in a
+conversation that contained seven, because every promise in it looked like
+"main hi follow up dalta hu".
+
 It runs entirely on your machine. No account, no API key, no network call. Your
 transcripts are never uploaded anywhere.
 
@@ -99,6 +105,31 @@ ones that actually go missing.
 
 A worked example of the finished report is in
 [`examples/expected-report.md`](examples/expected-report.md).
+
+## Hinglish
+
+The same command, on [`examples/weekly-sync-hinglish.txt`](examples/weekly-sync-hinglish.txt):
+
+```
+30c32ccddb01  Neha                  kal tak               Main signed copy finance ko kal tak bhej dungi.
+```
+
+Hindi puts two things in different places from English, and both matter.
+
+**Who is committing is in the verb ending, not in a pronoun.** `-unga` / `-ungi`
+is "I will", `-enge` is "we will", `-ega` / `-egi` after a name is "she will" or
+"he will" — which is how work actually gets handed to someone in a Hindi meeting.
+The rules match the ending, so verbs nobody thought to list are still caught.
+
+**When it is due is at the end of the phrase.** `kal` is "tomorrow"; `kal tak` is
+"by tomorrow". Only the second one sets a deadline, and only the second one
+overrules the filler list.
+
+Transliteration is not standardised — people write `hu` and `hoon`, `kar dunga`
+and `kardunga`. The common spellings are covered and the list will always be
+incomplete. Adding to it is the single most useful contribution anyone can make,
+and the rules are plain data in
+[`follow_through/hinglish.py`](follow_through/hinglish.py).
 
 ## What it will not do
 

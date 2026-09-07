@@ -9,6 +9,16 @@ same thing.
 
 ## Good first contributions
 
+**More Hinglish spellings.** `follow_through/hinglish.py` covers the common
+transliterations, and transliteration has no standard. If the tool misses how you
+or your colleagues actually write Hindi in Roman script, that is a one-line
+change with two tests.
+
+**Another language entirely.** Hinglish was added as one module that feeds the
+same cue families, and nothing downstream knows which language a sentence was in.
+A second language would be added the same way. Tamil, Bengali, Spanish and
+Portuguese transcripts have the same problem and none of the tooling.
+
 **More cue patterns.** The rules live in `follow_through/cues.py` as plain data.
 Add the phrasings you actually hear — regional English, industry habits, ways of
 committing that the current list misses. Each new pattern needs one test showing
