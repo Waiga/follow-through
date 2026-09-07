@@ -14,10 +14,17 @@ statements that commit someone to a future action, and tracks each one until you
 say it is done.
 
 It reads English and Hinglish — Hindi spoken in Roman script, which is what
-transcription tools return for most of India. That is not a bonus feature. On a
-real meeting transcript, English-only rules found zero commitments in a
-conversation that contained seven, because every promise in it looked like
-"main hi follow up dalta hu".
+transcription tools return for most of India. That is not a bonus feature.
+English-only rules do not degrade gracefully on a Hindi conversation: they
+return nothing at all, while reporting nothing wrong.
+
+The Hinglish rules were added after the English-only version missed the
+commitments in one real Hindi-English meeting transcript, where every promise
+looked like "main hi follow up dalta hu". That is a single private transcript,
+scored by the person who wrote the rules. It explains why the module exists; it
+is not evidence that it works. The Hinglish rules have never been measured
+against any public corpus, no such corpus is known to me, and the Hinglish
+example in this repository is invented.
 
 It runs entirely on your machine. No account, no API key, no network call. Your
 transcripts are never uploaded anywhere.
@@ -171,6 +178,70 @@ This list is the design, not a disclaimer.
 One rule sits underneath all of these: absence of evidence is reported as
 unknown, never as a confirmed no.
 
+### Deliberate trade-offs
+
+These are choices, not oversights. Each one loses something real, and each one
+was measured against 1,067 real meeting records before it was made.
+
+- **A conditional is not a commitment.** "If we extend the last call, we will
+  need to ask people to check the model" is rejected, and so is the genuine
+  undertaking that sometimes follows one. On the corpus most sentences of this
+  shape were conditions rather than promises, so the exclusion stays.
+- **A bare third-party future is only kept when it states a limit.** "A revised
+  draft will be posted by Friday" is recorded with no owner. "The routers will
+  have the whole table" is not recorded at all, because in a technical meeting
+  "will" is more often a prediction than a promise.
+- **An acronym never owns a commitment.** "TCPCL will wait for review" records
+  nothing. That also means "IESG will publish it" records nothing. A protocol,
+  a document and a working-group short name all look identical to a part
+  number, and naming one as the person responsible is exactly the invention
+  this tool exists not to make. Write the owner as a word — `Legal`, `Chairs` —
+  and it is recorded.
+- **"I can" counts only at the start of a clause, and only unhedged.** "I can
+  write the text" is an offer. "It is nice to have this as I can just mirror it
+  in my code" is not, and "I could possibly reach out" is not either.
+- **An exclusion applies to the whole sentence.** "I sent the draft last week
+  and I'll post the update by Friday" is rejected because of its first half.
+  Splitting a sentence into clauses reliably is a bigger change than this tool
+  is, and rejecting too much is the safer failure.
+- **A bare institution or a country is still recorded as an owner.** "China will
+  continue to expand its fleet" records China, and it is a forecast rather than
+  anything anybody in the room can be held to. The article rule above catches
+  "the Committee" and "the Department"; it cannot catch "China" or "Congress",
+  because a bare capitalised proper noun naming a state has exactly the same
+  shape as a surname. Separating them needs a gazetteer or a part-of-speech
+  tagger, and this package carries no dependencies. It is a limit of the tool in
+  this genre, written down here rather than half-filtered.
+- **Ambiguous narration is kept rather than dropped.** "Let me go to Mr
+  Pugliaresi" is floor management; "I will go to the vendor and get a quote" is
+  work, and one sentence does not separate them. So verbs like *go to*, *move
+  on* and *turn to* are only treated as narration after "let me" or "let us", or
+  when they address somebody by title. Everywhere else the false positive is
+  kept, because losing a commitment is the worse error.
+- **A document under forty lines is never measured for wrapping.** Below that
+  the percentile is just the longest line again, which is the statistic that
+  failed, so short files keep the cautious rule and a wrapped one may still be
+  read in fragments. This is the shape of the tool's own examples, which is
+  worth saying: the fixtures in this repository are too short to exercise the
+  measurement, and that is exactly how the defect in it survived a test suite.
+- **The orthography test needs the evidence to be in the file.** "Due to visa
+  rules, we would not comment" is refused in a transcript that says "due to"
+  somewhere in lower case, which any real one does many times over. In a file of
+  a few lines that happens to use the word only once, and capitalised, there is
+  nothing to contradict it and the line is recorded. The test gets stronger the
+  longer the document is, which is the opposite of the usual failure and worth
+  knowing.
+- **An unmarked action item can lose its owner to the orthography test.**
+  "Chairs to schedule an interim", with no bullet and no deadline, in a document
+  that also writes "the chairs" in lower case, is dropped. Put a bullet in front
+  of it or a date inside it and it is kept. The test removes 630 findings on a
+  real corpus that were the preposition frame wearing a capital letter; this is
+  what it costs, and it costs it only to single-word owners that are also
+  ordinary English words.
+- **One sentence yields one owner.** "Carsten, Jim and Christian volunteered to
+  review" records Christian, the name nearest the verb. It records a real
+  person, and it under-reports the other two.
+
 ## How it decides
 
 The rules are ordinary regular expressions, kept together as data in
@@ -178,16 +249,78 @@ The rules are ordinary regular expressions, kept together as data in
 them without touching any logic. There is no model involved.
 
 A sentence becomes a candidate when it contains someone undertaking to do
-something (`I'll`, `we will`, `let me`) or handing work to somebody else
-(`can you`, `please send`, `Priya will`). It is rejected when it is hypothetical,
-negated, tentative, or already in the past — `if I get time`, `I don't think I'll`,
-`I might`, `I already sent`.
+something (`I'll`, `we will`, `let me`, `let's`, `I can write`), handing work to
+somebody else (`please send`, `Priya will`, `Mark agreed to`), or writing it down
+as an action item (`Mark to post the revised draft`, `Ask the WG to adopt it`).
+It is rejected when it is hypothetical, negated, tentative, or already in the
+past — `if I get time`, `I don't think I'll`, `I might`, `I already sent`,
+`Mozilla will not implement`.
 
-Owners come from speaker labels (`Alex:` at the start of a line, with or without a
-timestamp). A first-person undertaking belongs to whoever is speaking. A named
-assignment belongs to the person named. A collective undertaking belongs to
-nobody. When two of these appear in one sentence the owner is genuinely unclear,
-so it is left unknown.
+Contractions require their apostrophe, straight or typographic. This reads like
+a detail and is not one: `we'?ll` also matches the ordinary word "well", and on
+1,067 real transcripts that single optional character produced 36.7% of
+everything the tool reported.
+
+A question is only an assignment when it asks for something. "Could you post
+that to the list?" is a request; "Can you explain the difference between the two
+modes?" is a question at a microphone, and recording it as an obligation was the
+tool's second largest source of noise.
+
+Nothing quoted is read as a commitment. A scribe writing down what somebody else
+said is reporting, not recording a promise, and a negated future — "X will not
+do Y" — is refused in every person.
+
+Four shapes carry a commitment without any of the words above, and all four are
+read:
+
+- **Committing in so many words.** "Will you commit to working with my office?"
+  and the answer, "I certainly can commit to working with you." The verb is the
+  cue. So is an expectation put on the record — "I hope you will consult with
+  the public".
+- **A subject the scribe dropped.** "Fangwei: will move the model to that
+  format." The label already said who, so the sentence does not. Only read
+  where a label is present, and only for an act: "will be sending the text" is
+  an undertaking, "will be discussed on the list" has no agent in it and "will
+  need more review" is a state.
+- **Reported speech.** "Jankowicz says she will abide by it." Minutes are
+  written afterwards, so this is their ordinary voice. The name in front of the
+  reporting verb is the person committing.
+- **A note-style action item.** "Mark to post the revised draft."
+
+That last one is also the most dangerous cue in the tool, because English uses
+the same shape for something else entirely: "According to this scheme", "Due to
+visa rules", "Thanks to the Chair". Three tests keep them apart, and none of
+them is a list of prepositions.
+
+The word after `to` has to be able to begin an infinitive. A bare verb does; a
+determiner or a pronoun does not, and that makes the `to` a preposition. `be` is
+allowed, because "Mirja to be the responsible AD" is a real assignment.
+
+The head must not be a word this document also writes in lower case. A capital
+at the start of a sentence carries no information — the capital is the sentence.
+When the same file says "due to" and "want to" in lower case elsewhere, the
+capital was punctuation. A name never gets that contradiction, and every word of
+a name has to be contradicted before the head is refused, so "Mark Nottingham"
+survives a document that also contains the verb "mark".
+
+A bullet in front of the line, or a deadline inside it, overrides that last
+test. Either is independent evidence that a scribe was writing an item.
+
+Against all of that runs one more filter: a first-person undertaking whose verb
+is an act of speech inside the meeting is narration, not a commitment. Yielding,
+recognising, backing up, refreshing your memory and going to the next witness do
+not outlive the room.
+
+Owners come from speaker labels. `Alex:`, `[00:14] Sam Okafor:`,
+`Tony Li (TL):`, `Suresh Krishnan, Kaloom:`, `ekr:` and `<mnot>` are all read as
+people; a real transcript uses every one of those shapes. A first-person
+undertaking belongs to whoever is speaking. A named assignment belongs to the
+person named. A collective undertaking belongs to nobody. When two of these
+appear in one sentence the owner is genuinely unclear, so it is left unknown.
+
+A heading ends the current speaker's turn, including when it sits alone on its
+line — `Action items:` with nothing after it. A pasted mail quote (`> ...`) ends
+it too: those are somebody else's words.
 
 Filler is treated differently from a hypothetical. "I might look at it" and
 "we'll never get this done" are rejected outright, whatever else the sentence
@@ -215,10 +348,39 @@ word. That is a filter, not name detection. It rejects `From:`, `TODO:` and
 `Actually`; it cannot tell an unusual name from an unusual noun, so a heading it
 has never heard of will read as a speaker. There is a test that says so.
 
-An owner is not necessarily a person. Whoever the sentence names is recorded.
+An owner is not necessarily a person. Whoever the sentence names is recorded —
+unless an article stands in front of the name. English does not put one in front
+of a person: "Priya will send the deck" names somebody, "The Committee will hold
+a hearing" and "our Chairs will decide" name a thing and a role. That single test
+replaces a list of institutions, and on a real corpus the institutions arrived
+almost entirely wearing "the".
+
+Transcripts are usually hard-wrapped at seventy or eighty columns, so a sentence
+routinely spans two lines. Read one line at a time, nearly half of what the tool
+found on raw wrapped files was cut off, and the deadline was normally in the half
+it threw away.
+
+So the file is measured first. A hard-wrapped file has a ceiling: nearly every
+line stops just short of one column, and the few that pass it are a URL, a table
+row or a rule of equals signs. That ceiling is read off the 95th percentile of
+the line lengths, never off the longest line — the longest line is the outlier
+the ceiling has to be measured in spite of. A file needs at least forty lines
+before the percentile can exclude anything, and a quarter of its lines have to
+sit in the band just under the ceiling; otherwise it is note-style minutes,
+where joining bullets into each other would be worse than not joining prose.
+
+In a file measured as wrapped, a line that stops short of the ceiling without
+punctuation is joined to the one below it whatever case that line starts in.
+Everywhere else the join only happens when the next line begins in lower case,
+which is the cautious rule. The cautious rule on its own was not enough:
+political testimony is full of proper nouns, so continuations begin with a
+capital constantly, and half-sentences like "Venezuelans to speak their minds
+has crumbled" were left looking like action items because they began a line.
 
 Every entry keeps the quoted sentence, the file and line it came from, and which
-rules fired. You can always check the tool's work against the source.
+rules fired. You can always check the tool's work against the source. The line
+number is the line the sentence started on, counted the way an editor counts:
+a page break inside an old plain-text transcript is not a new line.
 
 ## Your data
 
@@ -247,14 +409,97 @@ one of them makes the tool find something it used to miss.
 
 ## Honest status
 
-Version 0.1. It is a first release. The behaviour described here is covered by
-tests that run on every change, and the example above is checked in and compared
-against real output, so the documentation cannot drift away from the code.
+Version 0.2. The behaviour described here is covered by tests that run on every
+change, and the example above is checked in and compared against real output, so
+the documentation cannot drift away from the code.
 
-What it has not had is users. The cue patterns reflect English as spoken in
-business meetings, and they have not been tested against many people's
-transcripts. If it misses things in yours, that is the most useful thing you
-could tell me, and an issue is welcome.
+What it has not had is users. If it misses things in your transcripts, that is
+the most useful thing you could tell me, and an issue is welcome.
+
+## Against real documents
+
+Everything above says what the tool is meant to do. This section says what it
+did when it was pointed at documents nobody involved with it had written.
+
+### The corpus
+
+6,320 real meeting records, 184 MB: 5,733 IETF working-group minutes spanning
+IETF 65 in 2006 to IETF 126 in 2026, and 587 United States congressional hearing
+transcripts from 2016 to 2024. Both are public records, neither was written for
+this tool, and no example in this repository came from either.
+
+### How it was scored
+
+A tool must not be allowed to grade itself, so two independent measures.
+
+**The scribes' own answers.** Many IETF minutes carry an "Action items" block a
+human wrote during the meeting. The tool never sees that block; it reads the
+discussion, and the block says what a person present thought was agreed.
+
+**A blind labelling.** 800 sentences were drawn uniformly at random from a
+population defined without reference to this tool's rules: any sentence in the
+corpus containing a marker from a fixed list of ordinary English future and
+obligation words. Labellers who had not seen the source code marked each one a
+commitment or not. A second labeller re-marked 200 of them without seeing the
+first set: they agreed on 197 of 200, Cohen's kappa 0.92.
+
+### What it did
+
+| | v0.1 | v0.2 |
+|---|---|---|
+| precision, 800 blind labels | 0.131 | 0.348 |
+| recall, 800 blind labels | 0.432 | 0.605 |
+| recall, whole pipeline over whole documents | 0.318 | 0.455 |
+| action items the scribes marked and it missed | 1,598 of 1,760 | 1,249 of 1,760 |
+| findings quoted cut off mid-sentence | 62.6% | 11.7% |
+| findings carrying a deadline | 1.5% | 3.7% |
+| hard-wrapped files correctly detected as wrapped | 24% | 84% |
+| total findings over the corpus | 90,529 | 63,540 |
+
+Four rounds of fixes sit behind that, and `tests/test_corpus_defects.py` is
+their regression suite: 88 tests whose fixtures are real corpus sentences rather
+than invented ones.
+
+The largest single defect was one optional apostrophe. `\bwe'?ll\b` matches the
+ordinary word **well**, and `\bi'?ll\b` matches **ill** — 31,599 findings, more
+than a third of everything the tool reported, came from that alone. It is now 96.
+
+The worst was a quoted slogan recorded as an open obligation owned by the group
+the slogan named. Two guards close it, and neither is a list of words.
+
+Two of the four rounds existed to fix something an earlier round had introduced.
+The cue added to catch `Mark to post the draft` also fired on the ordinary
+English preposition, so a report carried owners called According, Deferring and
+Due — 5.5% of all findings, now 1.8%. The line-rejoiner added to fix that
+measured a file's width from its longest line, so one URL or table row hid the
+wrap column and it missed 76% of the hard-wrapped files it existed for,
+including the transcript it had been written from. Both were caught by measuring
+again rather than by reading the summary of the fix. A synthetic fixture passes
+because whoever wrote it wrote it clean; only real files disagree with you.
+
+### What this establishes, and what it does not
+
+It establishes that the tool survives real input. 6,320 documents, zero crashes,
+zero timeouts, about a seventh of a second each.
+
+It establishes that every defect class listed above is real, because each one was
+found in a document somebody actually published.
+
+**It does not establish that this tool is good at reading your meetings.**
+Standards-body minutes and parliamentary hearings are two genres it was not
+designed for, in which most sentences containing "will" are prediction,
+procedure or rhetoric rather than promise. These are numbers from hostile
+ground, not a description of ordinary use. No measurement on ordinary business
+meeting transcripts exists, because no public corpus of them does — and a
+precision of 0.348 is not a good score by any reading.
+
+Three further limits, stated rather than buried. Both corpora are hard-wrapped
+at about seventy columns, so two thirds of the sampled sentences are cut
+mid-line; that is what the tool sees too, but it is harsher than
+one-sentence-per-line input. The whole corpus is English, so nothing in this
+section says anything at all about the Hinglish rules. And 71% of what human
+scribes wrote down as an action item is still missed: on written minutes this
+tool finds under a third of what a person in the room recorded.
 
 Follow Through was built with AI assistance, under human direction and reviewed
 before release.

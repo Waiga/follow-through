@@ -52,10 +52,15 @@ The tool reads English and Hinglish — Hindi conversation transliterated into
 Roman script, which is what transcription tools return for most of India.
 
 This was not in the original design. It was added after the first version was
-run on a real meeting transcript and found **zero** commitments in a conversation
-that contained seven, because every promise in it was of the form "main hi follow
-up dalta hu". An English-only rule set does not degrade gracefully on a Hindi
-conversation; it returns nothing at all, while reporting nothing wrong.
+run on one real meeting transcript and found nothing, because every promise in
+it was of the form "main hi follow up dalta hu". An English-only rule set does
+not degrade gracefully on a Hindi conversation; it returns nothing at all, while
+reporting nothing wrong.
+
+That observation came from a single private transcript and was scored by the
+author of the rules. It is the reason the module exists. It is not a measurement,
+and the Hinglish rules have never been run against a public Hindi-English
+corpus — none is known to me.
 
 Hinglish lives in one module that feeds the same cue families, so nothing
 downstream knows which language a sentence was in and a mixed sentence — which is

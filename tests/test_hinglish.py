@@ -1,9 +1,14 @@
 """Hinglish extraction: Hindi conversation transliterated into Roman script.
 
-This is not a nice-to-have. On a real Delhi meeting transcript the English-only
-rules found zero commitments in a conversation that contained seven, because the
-promises were all of the form "main hi follow up dalta hu". Every test here
-exists to stop that from being true again.
+This is not a nice-to-have. An English-only rule set does not degrade gracefully
+on a Hindi conversation; it returns nothing at all while reporting nothing wrong.
+The rules were added after the English-only version missed the commitments in one
+real Hindi-English meeting transcript, where the promises were all of the form
+"main hi follow up dalta hu".
+
+That was a single private transcript, scored by the author of the rules. Nothing
+here measures the rules against real Hindi speech: these tests pin behaviour the
+rules are meant to have, on invented lines.
 
 The example transcript is invented. Lumen Freight does not exist, and neither do
 Neha, Rohit or Farhan.
