@@ -44,9 +44,12 @@ What this changes about the evidence, stated plainly:
   200 sentences. Read it as prompt and rubric stability, not as evidence that
   the labelling rubric is one two people would apply the same way.
 
-The README's wording has been left exactly as published rather than edited here,
-because changing a published claim is a separate decision from documenting it.
-This section is the correction of record until that decision is made.
+The README said "labellers who had not seen the source code" and "a second
+labeller", under a heading whose premise is that a tool must not grade itself.
+That wording was corrected on 9 September 2026, in the same change that shipped
+this manifest: the README now states that no person labelled any of the 800
+sentences, and that the kappa is two runs of one model rather than human
+inter-annotator agreement. This section remains the full account.
 
 ## 1. The corpus: 6,320 public meeting records
 

@@ -424,32 +424,46 @@ did when it was pointed at documents nobody involved with it had written.
 **How this was measured.** Which 6,320 documents, how they were selected, which
 of the four measurement passes each figure below belongs to, and the complete
 800-sentence labelled set with its labels:
-[`docs/corpus-manifest.md`](docs/corpus-manifest.md). **Read its opening section
-before reading the numbers here** — it records who the labellers actually were,
-which this section does not say and which changes how the precision, recall and
-kappa figures should be read.
+[`docs/corpus-manifest.md`](docs/corpus-manifest.md). Its opening section carries
+the full account of how the 800 labels were produced, including the dispatch-by-
+dispatch record.
 
 ### The corpus
 
 6,320 real meeting records, 184 MB: 5,733 IETF working-group minutes spanning
 IETF 65 in 2006 to IETF 126 in 2026, and 587 United States congressional hearing
-transcripts from 2016 to 2024. Both are public records, neither was written for
-this tool, and no example in this repository came from either.
+transcripts from seven years between 2016 and 2024 (2017 and 2020 were not
+sampled). Both are public records, neither was written for this tool, and no
+example in this repository came from either.
 
 ### How it was scored
 
-A tool must not be allowed to grade itself, so two independent measures.
+A tool must not be allowed to grade itself, so two measures it did not produce.
+One of them is weaker than that phrasing suggests, and the weakness is stated below
+rather than left for the reader to discover.
 
 **The scribes' own answers.** Many IETF minutes carry an "Action items" block a
 human wrote during the meeting. The tool never sees that block; it reads the
 discussion, and the block says what a person present thought was agreed.
 
-**A blind labelling.** 800 sentences were drawn uniformly at random from a
-population defined without reference to this tool's rules: any sentence in the
-corpus containing a marker from a fixed list of ordinary English future and
-obligation words. Labellers who had not seen the source code marked each one a
-commitment or not. A second labeller re-marked 200 of them without seeing the
-first set: they agreed on 197 of 200, Cohen's kappa 0.92.
+**A blind labelling, by a model rather than by people.** 800 sentences were drawn
+uniformly at random from a population defined without reference to this tool's
+rules: any sentence in the corpus containing a marker from a fixed list of ordinary
+English future and obligation words. Each was marked a commitment or not by an
+isolated language model instance, five in total: four labelling 200 sentences each,
+and a fifth re-labelling one block of 200 to measure agreement. The fifth agreed
+with the first on 197 of 200, Cohen's kappa 0.92.
+
+No person labelled any of the 800 sentences. The isolation was real — each
+instance started fresh, was given the task from linguistic criteria alone, and was
+instructed not to read this tool's source and not to look for its answers, so no
+labeller could have copied it. But the labels come from the same model family that
+wrote the tool being graded, which satisfies "a tool must not grade itself" less
+completely than human annotation would. And the kappa is not human
+inter-annotator agreement: it is two runs of one model on one prompt, so read it
+as rubric stability rather than as evidence that two people would mark these
+sentences the same way. The scribes' own answers above do not have this problem,
+and they are the measure to weight.
 
 ### What it did
 
