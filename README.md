@@ -421,6 +421,14 @@ the most useful thing you could tell me, and an issue is welcome.
 Everything above says what the tool is meant to do. This section says what it
 did when it was pointed at documents nobody involved with it had written.
 
+**How this was measured.** Which 6,320 documents, how they were selected, which
+of the four measurement passes each figure below belongs to, and the complete
+800-sentence labelled set with its labels:
+[`docs/corpus-manifest.md`](docs/corpus-manifest.md). **Read its opening section
+before reading the numbers here** — it records who the labellers actually were,
+which this section does not say and which changes how the precision, recall and
+kappa figures should be read.
+
 ### The corpus
 
 6,320 real meeting records, 184 MB: 5,733 IETF working-group minutes spanning

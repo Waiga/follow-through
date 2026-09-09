@@ -1,0 +1,801 @@
+index	batch	corpus	source_document	label	second_label	sentence
+0	pilot	us-congress	CHRG-117hhrg45230.txt	NO		perfectly positioned to accelerate the innovations we need to address
+1	pilot	us-congress	CHRG-117shrg46951.txt	YES		Will you commit to working with my office on this proposal which
+2	pilot	us-congress	CHRG-118hhrg60114.txt	NO		The administration and Congress should work with industry to
+3	pilot	us-congress	minutes-99-pals.txt	YES		Fangwei: will move MS PW modeling to that model
+4	pilot	us-congress	CHRG-118hhrg53710.txt	YES		I will get back to you on the timing
+5	pilot	us-congress	CHRG-117hhrg44538.txt	NO		will tend to reject data that is too biased, that doesn't fit
+6	pilot	us-congress	CHRG-114hhrg26123.txt	FRAG		little bit hollow in here, hey, well, you know, we have got to
+7	pilot	us-congress	CHRG-116hhrg36639.txt	NO		providing healthcare to people, you are going to have a bigger
+8	pilot	us-congress	CHRG-115hhrg35951.txt	NO		Well, I am still waiting for a response for
+9	pilot	us-congress	CHRG-117shrg49451.txt	NO		going to be vulnerable to increased peak flow rates, and
+10	pilot	us-congress	CHRG-118hhrg54069.txt	NO		that a mob that chanted, quote, ``Jews will not replace us''
+11	pilot	us-congress	CHRG-117hhrg43964.txt	NO		It is now going to be $400 if
+12	pilot	us-congress	CHRG-117shrg50344.txt	NO		Therefore, policymakers should be cautious about extending
+13	pilot	us-congress	CHRG-118shrg54494.txt	NO		What specific actions will you take in your first few
+14	pilot	us-congress	CHRG-115hhrg30791.txt	NO		CDM will transform this, enabling
+15	pilot	us-congress	CHRG-118shrg60005.txt	NO		when it was going to happen.
+16	pilot	us-congress	CHRG-117hhrg44548.txt	NO		will only hasten the destruction of unique cultures within the
+17	pilot	us-congress	minutes-68-idr.txt	NO		- Rajiv -- well we can fix anything in theory.
+18	pilot	us-congress	CHRG-116shrg35617.txt	YES		the Members of this body that on day one, I will work with
+19	pilot	us-congress	CHRG-117shrg52323.txt	NO		Meeting in Baku Will be Hosted by Cultural Destroyers (https://
+20	pilot	us-congress	CHRG-117hhrg47035.txt	NO		that will guide our work for years to come.
+21	pilot	us-congress	CHRG-116hhrg38643.txt	NO		And so we will work with that.
+22	pilot	us-congress	CHRG-117shrg51736.txt	NO		President Castro will not fully align with the United
+23	pilot	us-congress	CHRG-116hhrg36878.txt	NO		Well, I hope that we can work constructively
+24	pilot	us-congress	CHRG-114shrg25897.txt	NO		The CH-53K will provide land and sea based heavy-lift capabilities
+25	pilot	us-congress	CHRG-116hhrg35169.txt	NO		So when I think about how we build infrastructure that will
+26	pilot	us-congress	CHRG-118hhrg52350.txt	NO		rising sea levels, etc.) will help implement the strategy put forth.
+27	pilot	us-congress	CHRG-115shrg38094.txt	NO		regulatory, should maintain the focus on streamlining reporting
+28	pilot	us-congress	CHRG-115shrg40416.txt	NO		The first GPS III space vehicle will launch later
+29	pilot	us-congress	minutes-103-qirg.txt	NO		Work toward a Quantum Internet is well underway in physics
+30	pilot	us-congress	minutes-114-rats-202207251000.md	NO		Should we add a standard profile
+31	pilot	us-congress	CHRG-116hhrg42327.txt	NO		or third party could file to unseal, well, that is true in some
+32	pilot	us-congress	CHRG-116shrg29104926.txt	NO		The $60.0 million budget will be used to: (1) develop, evaluate,
+33	pilot	us-congress	CHRG-116hhrg37407.txt	NO		And let me back up for just a second.
+34	pilot	us-congress	CHRG-116hhrg37586.txt	NO		Well, as I started to learn more about PFAS, I started to
+35	pilot	us-congress	CHRG-117hhrg47348.txt	NO		will be made part of the record.
+36	pilot	us-congress	CHRG-117hhrg48964.txt	NO		And if there is anything we need to address, we do that
+37	pilot	us-congress	CHRG-116hhrg40572.txt	NO		agriculture community was well represented, the building
+38	pilot	us-congress	CHRG-118shrg53163.txt	NO		Let me go to Mr. Pugliaresi.
+39	pilot	us-congress	CHRG-116hhrg41198.txt	NO		the Secretary has said repeatedly, the 737 MAX will not return to
+40	pilot	us-congress	CHRG-116hhrg38643.txt	NO		Tomahawk in the family of missile systems that is going to
+41	pilot	us-congress	CHRG-116hhrg40459.txt	NO		still going to have to make a request to the agency.
+42	pilot	us-congress	CHRG-117shrg50550.txt	NO		Let me follow on a couple of topics that seem to be a bit
+43	pilot	us-congress	CHRG-117hhrg47821.txt	NO		make sure their successors, the combatant commanders that will
+44	pilot	us-congress	minutes-85-jose.txt	NO		Richard: If MTI question is to be pursued, should it be run to ground now or flagged as issue.
+45	pilot	us-congress	CHRG-117shrg47082.txt	NO		I heard was, ``We know what the weather is going to be like for
+46	pilot	us-congress	CHRG-117shrg53390.txt	NO		So I am just going to ask one final question
+47	pilot	us-congress	CHRG-116hhrg37407.txt	NO		help me to understand, because we have--what should we do with
+48	pilot	us-congress	CHRG-116hhrg35663.txt	NO		Well, my view is that students who are paying
+49	pilot	us-congress	CHRG-117hhrg46198.txt	NO		increased for decades now, and you will have workers who are
+50	pilot	us-congress	CHRG-114shrg21972.txt	NO		that will be an important activity.
+51	pilot	us-congress	CHRG-117shrg29104948.txt	NO		I am going to get a little more parochial.
+52	pilot	us-congress	CHRG-117hhrg48066.txt	NO		The Chair will not, I'm sure, interrupt the
+53	pilot	us-congress	minutes-106-webtrans.md	NO		We need to clarify the relationships between organizations.
+54	pilot	us-congress	CHRG-117shrg44967.txt	NO		But do not set it in a way that is going to start taking
+55	pilot	us-congress	CHRG-114shrg21978.txt	NO		will put a lot of pressure on the agencies to focus on those
+56	pilot	us-congress	CHRG-117hhrg48615.txt	NO		And we need to get back to that business.''
+57	pilot	us-congress	CHRG-117shrg46951.txt	NO		Well, we look forward to working with you
+58	pilot	us-congress	CHRG-117hhrg48475.txt	NO		Well, when your seminar is 12 students and one is a
+59	pilot	us-congress	CHRG-118hhrg55275.txt	NO		They are going to make decisions in all those ways.
+60	pilot	us-congress	CHRG-117hhrg48999.txt	NO		over how Americans will cast ballots in the fall is just heating up.,
+61	pilot	us-congress	CHRG-116hhrg39401.txt	NO		expediency as it is anything else, and that should never be in
+62	pilot	us-congress	CHRG-118hhrg55275.txt	NO		Nobody should live in decrepit barracks or dorms.
+63	pilot	us-congress	CHRG-118hhrg54163.txt	NO		So we absolutely should be
+64	pilot	us-congress	CHRG-116hhrg38545.txt	NO		other countries; they should follow the rule of law.
+65	pilot	us-congress	CHRG-114hhrg98898.txt	NO		authority to the executive branch to carry out the will of
+66	pilot	us-congress	CHRG-117hhrg45253.txt	NO		I am not saying we should have the old asylums back
+67	pilot	us-congress	minutes-87-rtcweb.txt	NO		Web browsers upgrade very, very fast if we need to back something out.
+68	pilot	us-congress	CHRG-117shrg46951.txt	NO		specifically unelected bureaucrats--will implement policies to ban or
+69	pilot	us-congress	CHRG-117shrg51736.txt	NO		we should continue to urge them to use to press for full implementation
+70	pilot	us-congress	minutes-78-emu.txt	NO		Sam: responds that using diameter should be back compatible with radius as well.
+71	pilot	us-congress	CHRG-118shrg55612.txt	NO		on what we should do today to build on the Committee's record
+72	pilot	us-congress	CHRG-117shrg54686.txt	NO		How do you know whether a right should be granted
+73	pilot	us-congress	CHRG-117shrg47818.txt	NO		So do you agree that presidential leadership is going to be
+74	pilot	us-congress	CHRG-117shrg50076.txt	NO		have housing they should make the tribe give them housing services; or
+75	pilot	us-congress	CHRG-118shrg61572.txt	NO		It is my understanding that the administration plans to
+76	pilot	us-congress	minutes-124-cats-202511031430.md	NO		You might need to talk with Jim
+77	pilot	us-congress	CHRG-118hhrg53006.txt	NO		I am sure you remember it, but I will just refresh your memory,
+78	pilot	us-congress	CHRG-114hhrg25209.txt	NO		system remains unchanged, veterans will expect to wait six years for a
+79	pilot	us-congress	CHRG-116hhrg38643.txt	YES		We will get you the answers.
+80	pilot	us-congress	CHRG-116hhrg40459.txt	NO		instances of waste, fraud, and abuse, as well as misconduct in
+81	pilot	us-congress	CHRG-115shrg30282.txt	NO		regard, we should be relying on customers to generate
+82	pilot	us-congress	CHRG-117hhrg43953.txt	NO		research that will expand the availability of modernized water
+83	pilot	us-congress	CHRG-118hhrg53710.txt	NO		that if it is eligible under Federal law, we will do everything
+84	pilot	us-congress	CHRG-117shrg45439.txt	NO		administration all but ensured this pipeline will be completed
+85	pilot	us-congress	CHRG-118hhrg57059.txt	NO		Does the committee intend to allow the
+86	pilot	us-congress	CHRG-117shrg46951.txt	NO		thank you and Congress for passing a law that will enable us to
+87	pilot	us-congress	CHRG-118hhrg58669.txt	NO		political or otherwise, should lose their job because of the
+88	pilot	us-congress	CHRG-117hhrg44720.txt	NO		innovation, I do believe the payoff will come in 20 years.
+89	pilot	us-congress	CHRG-118hhrg53710.txt	NO		Childcare, I will tell you parents are not going back to
+90	pilot	us-congress	CHRG-115hhrg32361.txt	NO		medical records and some will not?
+91	pilot	us-congress	CHRG-117shrg47982.txt	NO		to cope around coming up with a plan for how they are going to
+92	pilot	us-congress	CHRG-117hhrg47569.txt	NO		whole intent today is what do we need to do going forward to
+93	pilot	us-congress	CHRG-114hhrg21309.txt	NO		Then we are going to move on to a bill introduced last week
+94	pilot	us-congress	CHRG-117shrg59798.txt	NO		now, we are absolutely committed to defending this country.
+95	pilot	us-congress	CHRG-114shrg99989.txt	YES		on March 17, the Subcommittee will hold a hearing examining the
+96	pilot	us-congress	CHRG-116hhrg41272.txt	NO		And, again, I will go back to--the one theme here is that
+97	pilot	us-congress	CHRG-117shrg45086.txt	NO		the line, we will go to Senator Cortez Masto.
+98	pilot	us-congress	CHRG-118hhrg57059.txt	NO		received assurances from House leaders that an earlier effort will
+99	pilot	us-congress	CHRG-117shrg47315.txt	NO		to the 1940s and World War II, but I will tell you that during
+100	pilot	us-congress	CHRG-116hhrg36063.txt	NO		The committee will come to order.
+101	pilot	us-congress	CHRG-117shrg45040.txt	NO		Policymakers should take care in labeling some economic or
+102	pilot	us-congress	CHRG-117hhrg46728.txt	NO		and you will see when the President's budget is fully fleshed
+103	pilot	us-congress	CHRG-118shrg54688.txt	NO		you will never guess what Grandpa did.
+104	pilot	us-congress	CHRG-115hhrg28783.txt	NO		need to make sure that more and more Americans are able to have
+105	pilot	us-congress	CHRG-117hhrg48851.txt	NO		tanks, are still working from an assumption that we're going to
+106	pilot	us-congress	CHRG-117hhrg49767.txt	NO		driven by the need to reduce greenhouse gas emissions and
+107	pilot	us-congress	CHRG-117hhrg48475.txt	NO		It was going to--they were going to pass.
+108	pilot	us-congress	CHRG-116hhrg38603.txt	NO		But we need to have the ability to do
+109	pilot	us-congress	CHRG-114shrg69104728.txt	NO		are still hoping to get an understanding as to how we intend to
+110	pilot	us-congress	CHRG-116hhrg36063.txt	NO		Fair Chance Act and think that our Federal Government should
+111	pilot	us-congress	CHRG-117hhrg48615.txt	NO		be something we need to focus on in the next stages as well.
+112	pilot	us-congress	CHRG-118hhrg55585.txt	NO		Our Elders and our disabled shareholders should not have to choose
+113	pilot	us-congress	CHRG-116hhrg36928.txt	NO		But what we need to do is make sure we are good stewards of
+114	pilot	us-congress	CHRG-114hhrg25212.txt	NO		contributions as well as its challenges in meeting our veterans' needs.
+115	pilot	us-congress	CHRG-114shrg93106.txt	YES		management, and we will share some of the results of that exercise when
+116	pilot	us-congress	CHRG-118jhrg53487.txt	NO		of China will continue to be highly influential, and it is imperative
+117	pilot	us-congress	CHRG-117shrg51736.txt	NO		and Vice President Bruce Jones, as well as Amb.
+118	pilot	us-congress	CHRG-114hhrg20613.txt	NO		The updates add tougher crash tests, will for the
+119	pilot	us-congress	CHRG-116shrg52763.txt	NO		in S&E, for us to invent the future, we need to develop and attract the
+120	pilot	us-congress	CHRG-117shrg45439.txt	NO		things that we are looking at that we need to look at and, of
+121	pilot	us-congress	CHRG-117hhrg44686.txt	NO		When you have a contract, you should
+122	pilot	us-congress	CHRG-118hhrg53170.txt	NO		One that is well-known is leuprolide
+123	pilot	us-congress	CHRG-117shrg55623.txt	NO		(2021 NDAA), NTIA released its initial plan to modernize and automate
+124	pilot	us-congress	CHRG-116hhrg35663.txt	NO		And I think colleges are going to have to rethink, with
+125	pilot	us-congress	CHRG-114hhrg98891.txt	NO		the committee will have a number of aspects that you mentioned
+126	pilot	us-congress	CHRG-114hhrg20615.txt	NO		We should instead work to improve the law and ensure all of
+127	pilot	us-congress	CHRG-118hhrg56001.txt	NO		I do not need to endorse it.
+128	pilot	us-congress	CHRG-117shrg39104989.txt	YES		I hope you will consult with the public
+129	pilot	us-congress	CHRG-116hhrg41198.txt	NO		communities have the flexibility they need to implement the program in
+130	pilot	us-congress	CHRG-115shrg40403.txt	NO		So, yes, the sanctions will be effective.
+131	pilot	us-congress	CHRG-118shrg58989.txt	NO		providing sustained contributions to the U.N. appeal for Gaza, as well
+132	pilot	us-congress	CHRG-115shrg40416.txt	NO		received, answer will be retained in committee files.
+133	pilot	us-congress	CHRG-117shrg53135.txt	NO		Having a skilled workforce will be essential to meeting
+134	pilot	us-congress	CHRG-115hhrg31566.txt	NO		And so they are going to travel around a bit and
+135	pilot	us-congress	CHRG-116hhrg37917.txt	NO		talking about, resiliency, and what we need to be doing because
+136	pilot	us-congress	CHRG-117shrg59798.txt	NO		Sixth, our global conventional strike capabilities will be built
+137	pilot	us-congress	CHRG-117shrg49553.txt	NO		each of you, as we've discussed, will have some role for your
+138	pilot	us-congress	CHRG-116hhrg36213.txt	NO		I will recognize myself for 5 minutes.
+139	pilot	us-congress	CHRG-114hhrg98917.txt	NO		I am hopeful that USDA will engage with DOE and EPA and work with them
+140	pilot	us-congress	CHRG-117shrg55623.txt	NO		released today, which we believe will help create a framework
+141	pilot	us-congress	CHRG-117hhrg47569.txt	NO		A balance needs to be struck between catalyzing domestic
+142	pilot	us-congress	CHRG-116hhrg35337.txt	NO		I would say that there needs to be
+143	pilot	us-congress	CHRG-118hhrg53014.txt	NO		How were we going to make it?
+144	pilot	us-congress	CHRG-116hhrg37929.txt	NO		They will go into the shelter system.
+145	pilot	us-congress	CHRG-118hhrg57756.txt	NO		adds another 1,000--I can show you our statistics on that--and
+146	pilot	us-congress	CHRG-118hhrg53014.txt	NO		how you are going to overcome this?
+147	pilot	us-congress	CHRG-118hhrg55710.txt	NO		Well, we would like to find out who
+148	pilot	us-congress	CHRG-117hhrg49767.txt	NO		two companies will bring much needed American manufacturing to
+149	pilot	us-congress	CHRG-118hhrg54983.txt	NO		Management, SBA will be better placed to support small
+150	pilot	us-congress	CHRG-117hhrg46680.txt	NO		Let me jump in because, otherwise, I
+151	pilot	us-congress	CHRG-117hhrg47413.txt	NO		business practices will create high-skilled, good paying jobs.
+152	pilot	us-congress	CHRG-118hhrg54079.txt	YES		deposition and Jankowicz says she will abide by it.
+153	pilot	us-congress	CHRG-117shrg51736.txt	YES		 If confirmed, do you commit to working with the respective USAID
+154	pilot	us-congress	CHRG-116hhrg35709.txt	NO		stakeholder community as well.
+155	pilot	us-congress	CHRG-115hhrg35951.txt	NO		businesses, as well as entrepreneurs and innovators.
+156	pilot	us-congress	CHRG-117shrg50076.txt	NO		Seminole nations should not be changed.
+157	pilot	us-congress	CHRG-118hhrg63406.txt	NO		know this is a sentiment that you share very deeply as well.
+158	pilot	us-congress	CHRG-116hhrg38643.txt	NO		No doubt, that is going to turn into
+159	pilot	us-congress	CHRG-118hhrg56487.txt	NO		Public investments in EV charging stations should require
+160	pilot	us-congress	CHRG-117shrg44973.txt	NO		Well, my hope is that at the end of today's hearing, we will
+161	pilot	us-congress	CHRG-116hhrg38643.txt	NO		reprogramming for several critical Readiness and Modernization needs to
+162	pilot	us-congress	CHRG-114shrg98771.txt	NO		There Is No Consensus on How Safe Autonomous Vehicles Should Be
+163	pilot	us-congress	CHRG-118hhrg56000.txt	NO		Policymakers should be careful to not conflate, for
+164	pilot	us-congress	CHRG-117hhrg46369.txt	NO		factors that will eventually create unsustainable upward
+165	pilot	us-congress	CHRG-118hhrg57118.txt	NO		Well, there are a number of reasons, but there is
+166	pilot	us-congress	CHRG-118shrg55518.txt	YES		I certainly can commit to working with
+167	pilot	us-congress	CHRG-118hhrg56532.txt	NO		Well, I think the data makes your case.
+168	pilot	us-congress	CHRG-117shrg47082.txt	NO		consensus on how we should mitigate climate risk in the
+169	pilot	us-congress	CHRG-114shrg21325.txt	NO		we will ask the same questions, and now they will have more
+170	pilot	us-congress	CHRG-117shrg46951.txt	NO		But we are going to have to continue to monitor
+171	pilot	us-congress	CHRG-114hhrg20843.txt	NO		case, the folks we bring on to accelerate those will be
+172	pilot	us-congress	CHRG-117hhrg48474.txt	NO		Can you talk a little bit about what you intend to do to
+173	pilot	us-congress	CHRG-117shrg47627.txt	NO		that leadership, people are going to think we are not at full
+174	pilot	us-congress	CHRG-118shrg58989.txt	NO		My colleague, Senator Carper, is going to come to introduce
+175	pilot	us-congress	CHRG-117hhrg47051.txt	YES		We will work to ensure humanitarian assistance is provided.
+176	pilot	us-congress	CHRG-118hhrg55604.txt	NO		there should never be a wrong door at VA and we recommend that VA
+177	pilot	us-congress	CHRG-117hhrg46224.txt	NO		Let me now go ahead and introduce our panel and the
+178	pilot	us-congress	CHRG-117hhrg47527.txt	NO		The only one we know of is the union, and it was very well
+179	pilot	us-congress	CHRG-117shrg45040.txt	NO		workers, when that is happening and accelerating, should we
+180	pilot	us-congress	CHRG-116hhrg38643.txt	NO		And I think those children should be flagged also for special
+181	pilot	us-congress	CHRG-118shrg63672.txt	NO		action plan to this Committee 18 months ago, got his
+182	pilot	us-congress	minutes-66-eai.txt	NO		Answer:Multiple issues with existing text, need to be discussed deeply
+183	pilot	us-congress	CHRG-118hhrg54409.txt	NO		her own timeline, her family's timeline, as well.
+184	pilot	us-congress	CHRG-118shrg55193.txt	NO		what they would need to know to be culturally competent or
+185	pilot	us-congress	CHRG-117hhrg44720.txt	NO		investment, and I will note to my obligation of fiscal
+186	pilot	us-congress	CHRG-117hhrg61990.txt	NO		am going to begin with 5 minutes.
+187	pilot	us-congress	CHRG-117hhrg46680.txt	NO		2022, will help the Federal Government stay ahead of the curve.
+188	pilot	us-congress	CHRG-118hhrg53710.txt	NO		But of course, your entire testimony will be included
+189	pilot	us-congress	CHRG-117hhrg47324.txt	NO		will benefit from increased customer traffic and an increased tax base
+190	pilot	us-congress	CHRG-118hhrg56487.txt	NO		regardless of whether it is feasible or not, what will be the
+191	pilot	us-congress	CHRG-117shrg46951.txt	YES		Will you commit to working with Congress and members of the
+192	pilot	us-congress	CHRG-117shrg46589.txt	NO		me what it will mean if the tribe, for the tribe, for the
+193	pilot	us-congress	CHRG-117hhrg46680.txt	YES		and we will have a briefing on the challenges of Log4j, as you
+194	pilot	us-congress	CHRG-117shrg45822.txt	FRAG		data, at least the paper that came out today, that we will
+195	pilot	us-congress	CHRG-117shrg52997.txt	NO		can get that inside the market and somebody is not going to
+196	pilot	us-congress	CHRG-117shrg46749.txt	NO		can afford and that they are not going to be paying for the
+197	pilot	us-congress	CHRG-116hhrg38016.txt	NO		guardrail should be rebuilt so that the top of the rail is 42"
+198	pilot	us-congress	CHRG-118hhrg52789.txt	YES		We will actively consider clean
+199	pilot	us-congress	CHRG-117shrg47802.txt	NO		laws against forced labor should not have the perverse effect
+1000	expansion_part0	ietf	minutes-91-trans.txt	YES		Paul: We will bring this to the list for more discussion
+1001	expansion_part0	us-congress	CHRG-117hhrg46039.txt	FRAG		To further flush out issues that need to be addressed: We
+1002	expansion_part0	us-congress	CHRG-118shrg49104046.txt	NO		Any and all recommendations they make will obviously be
+1003	expansion_part0	us-congress	CHRG-117hhrg46039.txt	NO		Recommendations from the task force will inform the Governor,
+1004	expansion_part0	us-congress	CHRG-118hhrg55023.txt	NO		Our policies should support the competitiveness of U.S.
+1005	expansion_part0	us-congress	CHRG-115shrg37709.txt	NO		Does CMS have plans to reevaluate all E/M codes to ensure
+1006	expansion_part0	us-congress	CHRG-117hhrg57563.txt	YES		Yes, I will take that for biosimilars.
+1007	expansion_part0	us-congress	CHRG-114hhrg99443.txt	NO		really need them reading in a way that it will take off,
+1008	expansion_part0	us-congress	CHRG-117hhrg49767.txt	NO		The United States will need these fuels in the
+1009	expansion_part0	us-congress	CHRG-117shrg46951.txt	NO		Given what I expect will be proper efforts on your part
+1010	expansion_part0	ietf	minutes-99-dtn.txt	NO		5050 will always re-transmit too early or too late.
+1011	expansion_part0	us-congress	CHRG-117shrg46749.txt	NO		We need to make higher education accessible so every
+1012	expansion_part0	us-congress	CHRG-117shrg49451.txt	NO		Well, thank you, Dr. Shafieezadeh.
+1013	expansion_part0	us-congress	CHRG-114shrg69104728.txt	NO		Given the obvious and BSEE acknowledged impact this rule will have;
+1014	expansion_part0	ietf	minutes-101-ntp.txt	YES		proposals, which will be discussed in a virtual interim.
+1015	expansion_part0	ietf	minutes-105-lpwan.txt	YES		Suresh: Then will launch IESG review.
+1016	expansion_part0	us-congress	CHRG-116shrg19104901.txt	NO		Well you operate off of fees in the
+1017	expansion_part0	us-congress	CHRG-117shrg59772.txt	NO		they go that distance, we will be under a lot of pressure to
+1018	expansion_part0	us-congress	CHRG-117hhrg46369.txt	NO		Well, the city of Austin did it.
+1019	expansion_part0	ietf	minutes-125-rift.txt	NO		We would need to extend BGP to achieve this, but RIFT already has this functionality built in.
+1020	expansion_part0	ietf	minutes-86-pcp.txt	NO		Need to consider how this gets impacted by probe query packets taking paths
+1021	expansion_part0	us-congress	CHRG-114shrg69104674.txt	NO		I will hold my opening statement for the
+1022	expansion_part0	us-congress	CHRG-114shrg69104674.txt	NO		that you have as well as signal the kinds of input that you
+1023	expansion_part0	us-congress	CHRG-118shrg52497.txt	NO		There should only be two, Secret and
+1024	expansion_part0	ietf	minutes-117-rsab.txt	YES		Alexis Rossi will follow up on finding broken links in normative
+1025	expansion_part0	us-congress	CHRG-117hhrg47051.txt	NO		And I will open that under to any of you.
+1026	expansion_part0	us-congress	CHRG-118shrg63672.txt	NO		Kendall's concern, and if so, how will you manage competing demands for
+1027	expansion_part0	us-congress	CHRG-117hhrg44720.txt	NO		One is that we need to--we have limited
+1028	expansion_part0	us-congress	CHRG-118hhrg53388.txt	NO		So let me ask this: The number of
+1029	expansion_part0	us-congress	CHRG-117hhrg47210.txt	YES		We will use a variety of means to monitor
+1030	expansion_part0	ietf	minutes-114-lamps-202207271000.md	NO		Microsoft asked if UTF8 was going to be required.
+1031	expansion_part0	us-congress	CHRG-116hhrg38071.txt	NO		This hearing will come to order.
+1032	expansion_part0	us-congress	CHRG-117shrg51186.txt	NO		Let me ask on mental health, for both of
+1033	expansion_part0	us-congress	CHRG-117shrg45187.txt	NO		need to protect the environment, public health, and the
+1034	expansion_part0	us-congress	CHRG-118shrg52497.txt	NO		Let me tell you, answer No.
+1035	expansion_part0	ietf	minutes-76-sasl.txt	YES		Will send e-mail to the list and list implementations.
+1036	expansion_part0	us-congress	CHRG-118hhrg56001.txt	NO		I can only speak for my district.
+1037	expansion_part0	us-congress	CHRG-116hhrg43928.txt	NO		should prioritize, recognizing that climate change itself is
+1038	expansion_part0	ietf	minutes-109-saag.txt	NO		BK - are these evolutions that you (Roman) will be driving
+1039	expansion_part0	ietf	minutes-89-i2rs.txt	YES		Ed: We will have more structured security discussion later in this meeting.
+1040	expansion_part0	ietf	minutes-68-trill.txt	NO		consistent with each other but also should use concepts in the same way.
+1041	expansion_part0	ietf	minutes-80-mpls.txt	NO		George: very detailed draft that need to be more socialized on the list
+1042	expansion_part0	ietf	minutes-107-ript.txt	NO		EKR: Thinks the parenthetical phrase "notably OAuth" should be removed.
+1043	expansion_part0	us-congress	CHRG-117hhrg47803.txt	NO		Well, it certainly emboldens criminals and
+1044	expansion_part0	ietf	minutes-90-straw.txt	NO		Topic:     Agenda bashing, IETF Note Well and WG status
+1045	expansion_part0	us-congress	CHRG-117shrg51736.txt	NO		intend to entrust to your Deputy Chief of Mission?
+1046	expansion_part0	us-congress	CHRG-118shrg59703.txt	NO		So I'll have more questions.
+1047	expansion_part0	us-congress	CHRG-116hhrg39401.txt	NO		Trump refused to provide information that he should have
+1048	expansion_part0	us-congress	CHRG-117hhrg43953.txt	NO		Do these factors need to be taken into account by Congress when
+1049	expansion_part0	us-congress	CHRG-117shrg19104911.txt	NO		the marine environment, the fates of those materials, as well as their
+1050	expansion_part0	ietf	minutes-88-l2vpn.txt	NO		Nabil - We need to move on.
+1051	expansion_part0	us-congress	CHRG-114hhrg20216.txt	NO		for our region, as well as the Nation.
+1052	expansion_part0	us-congress	CHRG-118hhrg56907.txt	NO		But there is the--well, if you could just say,
+1053	expansion_part0	ietf	minutes-115-radextra-202211071300.md	NO		*   Transport profiles should, if possible, be compatible with RFC 3539.
+1054	expansion_part0	us-congress	CHRG-117hhrg48964.txt	NO		My hope is that Congress will charge FRA with developing flexible
+1055	expansion_part0	us-congress	CHRG-114shrg69104728.txt	NO		reason it is not going to be released next month, I would
+1056	expansion_part0	ietf	minutes-65-ietf-ietf-operations-and-administration-plenary.txt	NO		We should not imagine that the
+1057	expansion_part0	us-congress	CHRG-114hhrg22622.txt	NO		I hope you will be pleased with what we are
+1058	expansion_part0	us-congress	CHRG-114hhrg26123.txt	NO		scattered through in our senior leadership as well, in our
+1059	expansion_part0	us-congress	CHRG-118hhrg57441.txt	NO		Let me remind the witnesses that we have read your written
+1060	expansion_part0	us-congress	CHRG-118hhrg56532.txt	NO		Party, what we need to be doing from an economic standpoint to
+1061	expansion_part0	us-congress	CHRG-117shrg57047.txt	NO		We need the authorization, and our committee needs to
+1062	expansion_part0	us-congress	CHRG-118shrg60005.txt	NO		been the major donor, if you will, both in terms of military
+1063	expansion_part0	ietf	minutes-126-httpbis.md	NO		But if that unidirectional stream gets reset, then the client will SEE that push promise has never been fulfilled.
+1064	expansion_part0	ietf	minutes-79-ipsecme.txt	NO		The doc should be seen as a stepping stone towards a full implementation.
+1065	expansion_part0	us-congress	CHRG-117shrg51736.txt	NO		We should continue support for democracy
+1066	expansion_part0	us-congress	CHRG-117hhrg51644.txt	NO		We should have been dealing with this decades and decades
+1067	expansion_part0	us-congress	CHRG-117shrg51736.txt	NO		Second, I determine what the organization is doing well and do more
+1068	expansion_part0	us-congress	CHRG-116shrg42448.txt	NO		globally, and studies estimate that number will balloon to 25
+1069	expansion_part0	us-congress	CHRG-114hhrg24380.txt	NO		sometimes in some grant periods, we will just put in for
+1070	expansion_part0	us-congress	CHRG-116hhrg39401.txt	NO		History will reflect that the House Judiciary
+1071	expansion_part0	ietf	minutes-87-clue.txt	NO		General feeling was that the messages themselves should be transport-independent, but that the signalling discussion will provide the need for the DTLS/SCTP channel.
+1072	expansion_part0	us-congress	CHRG-117shrg50344.txt	NO		physician to an established patient should not be subject to different
+1073	expansion_part0	us-congress	CHRG-117hhrg45006.txt	NO		Well, thank you for the question, Congresswoman.
+1074	expansion_part0	us-congress	CHRG-115shrg40883.txt	YES		With the sustained support of Congress, USCYBERCOM will build upon our
+1075	expansion_part0	us-congress	CHRG-116hhrg41272.txt	NO		insurance costs, as well as mitigate risk.
+1076	expansion_part0	us-congress	CHRG-117hhrg47569.txt	NO		under the Mining Law should inform Congress' and the Administration's
+1077	expansion_part0	us-congress	CHRG-117shrg45822.txt	NO		They are, and I will defer to Dr. Kim.
+1078	expansion_part0	us-congress	CHRG-116shrg41994.txt	NO		me when the time is up, or the Chinese will.
+1079	expansion_part0	us-congress	CHRG-116hhrg36928.txt	NO		I will do whatever it takes to make
+1080	expansion_part0	us-congress	CHRG-117shrg19104911.txt	NO		investments in the future health, resiliency, and well-being of our
+1081	expansion_part0	us-congress	CHRG-116shrg41994.txt	NO		The USMCA will increase formal sector employment by
+1082	expansion_part0	us-congress	CHRG-115hhrg33618.txt	NO		the technical center, you will see the unique laboratories that
+1083	expansion_part0	ietf	minutes-111-dtn.md	NO		- Need to develop security policy and its architecture
+1084	expansion_part0	ietf	minutes-69-tcpm.txt	NO		This report will focus on safety.
+1085	expansion_part0	ietf	minutes-90-dtnwg.txt	NO		Fred: Boeing has 4 projects that we need to have DTN built to practicality (standards track documents).
+1086	expansion_part0	us-congress	CHRG-118shrg58989.txt	YES		If confirmed, I will press the Government of Croatia to
+1087	expansion_part0	us-congress	CHRG-118shrg58989.txt	YES		Yes, I commit to personally engaging with civil society on
+1088	expansion_part0	us-congress	CHRG-117shrg45040.txt	NO		This is going to help narrow the wealth gap.
+1089	expansion_part0	ietf	minutes-101-lpwan.txt	YES		Alex: We will do this and we got the message that we need to finish SCHC over IP/UDP before we do rechartering.
+1090	expansion_part0	us-congress	CHRG-117shrg44456.txt	NO		We should be part of that.
+1091	expansion_part0	ietf	minutes-126-dawn.md	NO		- These requirements are just a start and will change as the WG
+1092	expansion_part0	us-congress	CHRG-117shrg51736.txt	NO		I think we will have a supplemental introduction.
+1093	expansion_part0	us-congress	CHRG-118hhrg52187.txt	NO		cable on the Pacific will be a challenge.
+1094	expansion_part0	us-congress	CHRG-117shrg47818.txt	NO		have to have legislation, by 2035, hopefully well before that,
+1095	expansion_part0	us-congress	CHRG-114shrg21972.txt	NO		I'll close by saying, on behalf of the geoscience
+1096	expansion_part0	us-congress	CHRG-117shrg53618.txt	NO		Well, I would encourage you and look
+1097	expansion_part0	us-congress	CHRG-118hhrg53014.txt	NO		time or which products were going to be increasing in cost to
+1098	expansion_part0	us-congress	CHRG-116hhrg37036.txt	NO		I don't think we should be afraid of
+1099	expansion_part0	us-congress	CHRG-117shrg51736.txt	NO		demand transparency from the Government, as well as strengthen the
+1100	expansion_part0	us-congress	CHRG-118hhrg53784.txt	NO		That is why I hope we will have a genuine discussion today
+1101	expansion_part0	ietf	minutes-75-pim.txt	NO		anyway, so this should maybe be clarified.
+1102	expansion_part0	ietf	minutes-98-6man.txt	YES		Bob: text coming, waiting to hear from reviewers will elicit draft.
+1103	expansion_part0	us-congress	CHRG-118hhrg57069.txt	NO		minerals or seafood as well?
+1104	expansion_part0	ietf	minutes-93-perc.txt	NO		Colin: Agrees we should try to seperate them out.
+1105	expansion_part0	us-congress	CHRG-118hhrg54144.txt	NO		should begin to look at the general fund.
+1106	expansion_part0	us-congress	CHRG-116hhrg39740.txt	NO		successful, and as a result, we will have to make good on these
+1107	expansion_part0	us-congress	CHRG-116hhrg38545.txt	NO		people know that elections will come with funding.
+1108	expansion_part0	us-congress	CHRG-116hhrg39740.txt	FRAG		So I would like to ask you again, will you commit to
+1109	expansion_part0	us-congress	CHRG-118hhrg51678.txt	NO		We should all be able to agree that State-imposed
+1110	expansion_part0	us-congress	CHRG-116hhrg36298.txt	NO		will have the muddy boots needed to understand how the military
+1111	expansion_part0	us-congress	CHRG-114shrg98771.txt	NO		needs to be modified for passenger use; it does not need to be modified
+1112	expansion_part0	ietf	minutes-72-netmod.txt	YES		After couple of weeks we'll issue a consensus
+1113	expansion_part0	ietf	minutes-93-ace.txt	NO		olaff bergman: yes, with .well-known/core, we can include an auth resource.
+1114	expansion_part0	ietf	minutes-124-pearg-202511071630.md	YES		*   action item: will be explained on the mailing list
+1115	expansion_part0	ietf	minutes-95-detnet.txt	NO		Bandwidth specification needs to be more precise, e.g., using Token Bucket models in order to take into account burstiness of sources.
+1116	expansion_part0	us-congress	CHRG-117hhrg46369.txt	NO		In both cases, while public transit will continue
+1117	expansion_part0	us-congress	CHRG-116shrg35617.txt	NO		the Enterprises should be raised dramatically.
+1118	expansion_part0	ietf	minutes-90-mif.txt	YES		Hummm for adoption: strong support: Will confirm on the mailing list.
+1119	expansion_part0	us-congress	CHRG-118hhrg59791.txt	NO		And I understand that you have got now G100UL, which will
+1120	expansion_part0	ietf	minutes-115-netmod-202211080930.md	NO		I don't think this should be allowed because 2.3.20 should be compatible with 2.3.6.
+1121	expansion_part0	us-congress	CHRG-118hhrg57578.txt	NO		Is that going to help speed
+1122	expansion_part0	us-congress	CHRG-117shrg47757.txt	NO		Bosnia it is tourism, in Kosovo it is agribusiness, as well as
+1123	expansion_part0	us-congress	CHRG-118hhrg56532.txt	NO		going to trust you all's judgment on this.
+1124	expansion_part0	us-congress	CHRG-114shrg93106.txt	NO		increase to Expand Annual Stock Assessments will help the agency
+1125	expansion_part0	us-congress	CHRG-117hhrg44720.txt	NO		committed to industrialization, with Ms. Nas being here from
+1126	expansion_part0	ietf	minutes-91-icnrg.txt	NO		will be differnet, so it needs to be supported efficiently.
+1127	expansion_part0	us-congress	CHRG-117shrg59798.txt	NO		building modernized air and space capabilities will only increase as
+1128	expansion_part0	ietf	minutes-105-manet.txt	NO		- if we do that, need to be careful of dest up.
+1129	expansion_part0	us-congress	CHRG-116hhrg39740.txt	YES		Will you commit to doing a small
+1130	expansion_part0	us-congress	CHRG-117shrg44406.txt	NO		I will say I mentioned this to Senator Shaheen earlier.
+1131	expansion_part0	us-congress	CHRG-117shrg46749.txt	NO		I will be very brief, and I thank you.
+1132	expansion_part0	us-congress	CHRG-116shrg36264.txt	NO		Congress should develop a strategy that includes preserving
+1133	expansion_part0	us-congress	CHRG-118hhrg56928.txt	NO		So, I will get right started.
+1134	expansion_part0	us-congress	CHRG-114shrg98989.txt	NO		Well, I guess I would use two examples.
+1135	expansion_part0	us-congress	CHRG-114shrg98771.txt	NO		final stance is going to be, because they have continually
+1136	expansion_part0	ietf	minutes-91-dice.txt	NO		* Carsten: We should give 3 weeks for the WGLC
+1137	expansion_part0	us-congress	CHRG-117shrg51736.txt	YES		If confirmed, I commit to continuing to comply with
+1138	expansion_part0	ietf	minutes-125-rtgwg-202603190100.md	NO		The network should not intervene.
+1139	expansion_part0	us-congress	CHRG-117hhrg47137.txt	NO		new 12 month seasons restart should occur each calendar
+1140	expansion_part0	us-congress	CHRG-117hhrg44807.txt	NO		Quad member countries as well, the Quad relationship is
+1141	expansion_part0	us-congress	CHRG-117jhrg55533.txt	YES		address this gap and will work with Congress to secure
+1142	expansion_part0	ietf	minutes-122-lake-202503181000.md	NO		MT (p3): Will need some help from authz authors to be realistic there.
+1143	expansion_part0	us-congress	CHRG-115shrg40416.txt	NO		Well, title 10, manned, trained,
+1144	expansion_part0	ietf	minutes-120-oauth-202407222000.md	NO		Opinion is that this should be in this draft.
+1145	expansion_part0	us-congress	CHRG-115hhrg30791.txt	NO		will enhance DOE's Integrated Joint Cybersecurity Coordination Center
+1146	expansion_part0	us-congress	CHRG-118hhrg56532.txt	NO		economic factor for two reasons, which I will go into.
+1147	expansion_part0	us-congress	CHRG-115shrg40487.txt	YES		Will you commit to standing up for the independence of
+1148	expansion_part0	ietf	minutes-114-pim.txt	NO		Stig: may be able to use SSM for the actual data traffic but you will need something for discovery.
+1149	expansion_part0	us-congress	CHRG-117hhrg46197.txt	NO		in Houston, we have done well with lot sizes.
+1150	expansion_part0	us-congress	CHRG-115hhrg28783.txt	NO		Well, thank you so much, Chairman.
+1151	expansion_part0	ietf	minutes-93-stir.txt	NO		Circuit calls will continue, and they won't be validated.
+1152	expansion_part0	us-congress	CHRG-116shrg55151.txt	YES		My office is also committed to working with the e-commerce
+1153	expansion_part0	ietf	minutes-125-rtgwg-202603190100.md	NO		as a side note - on a multi-plane fabric, it will take host about 20
+1154	expansion_part0	us-congress	CHRG-116hhrg38643.txt	NO		Well, when a nation's economy
+1155	expansion_part0	us-congress	CHRG-118hhrg55830.txt	NO		made a promise to keep an open mind about how the pandemic
+1156	expansion_part0	ietf	minutes-87-clue.txt	YES		The ticket will be closed.
+1157	expansion_part0	ietf	minutes-88-l2vpn.txt	NO		Ali - I�m not trying to reinvent anything, if there is something missing in transport the MPLS working group should take this.
+1158	expansion_part0	us-congress	CHRG-118shrg59703.txt	NO		or 15 percent of the resources going to tribal activities, not
+1159	expansion_part0	us-congress	CHRG-117hhrg57563.txt	NO		am hoping the user fee agreements will include a number of
+1160	expansion_part0	ietf	minutes-119-radext-202403200300.md	YES		Roland: Plan to read the draft.
+1161	expansion_part0	us-congress	CHRG-115hhrg29817.txt	NO		will be met by new production of natural gas.
+1162	expansion_part0	ietf	minutes-85-ipfix.txt	NO		revision before going to RFC Editor
+1163	expansion_part0	us-congress	CHRG-118hhrg56119.txt	NO		really need to, you know, I want to see the hotwash on that and
+1164	expansion_part0	us-congress	CHRG-117shrg48296.txt	NO		So with that, the Finance Committee is going to be
+1165	expansion_part0	us-congress	CHRG-118shrg59703.txt	NO		this, saying, well, why are we doing that?
+1166	expansion_part0	us-congress	CHRG-117hhrg57563.txt	NO		period in his life, what will make a difference to help him be
+1167	expansion_part0	ietf	minutes-111-teas.txt	NO		Should be able to work on some scoping language we can all agree on.
+1168	expansion_part0	us-congress	CHRG-114hhrg98731.txt	NO		need to do something about it.
+1169	expansion_part0	us-congress	CHRG-116hhrg42327.txt	NO		Let me give you a few facts
+1170	expansion_part0	ietf	minutes-89-clue.txt	NO		Should be reviewed by people working with CLUE.
+1171	expansion_part0	us-congress	CHRG-116jhrg36090.txt	NO		Dalibor Rohac will speak.
+1172	expansion_part0	us-congress	CHRG-118hhrg52350.txt	NO		I will just make sure everyone understands that Hambantota
+1173	expansion_part0	us-congress	CHRG-117hhrg46369.txt	NO		fraud risks, according to GAO, should help ensure that federal
+1174	expansion_part0	us-congress	CHRG-117shrg19104911.txt	NO		coastal communities which will result in returns of improved quality of
+1175	expansion_part0	us-congress	CHRG-117shrg57047.txt	NO		that its commercial partners will heavily leverage NASA
+1176	expansion_part0	us-congress	CHRG-117hhrg53899.txt	NO		communities, is something that will better inform our
+1177	expansion_part0	us-congress	CHRG-116hhrg36368.txt	NO		education plan, NIST's work will help provide assurance to
+1178	expansion_part0	ietf	minutes-85-abfab.txt	YES		Ken, Sam and Scott will review.
+1179	expansion_part0	us-congress	CHRG-117shrg50344.txt	NO		changes alone will not put Medicare on a sustainable path, but
+1180	expansion_part0	us-congress	CHRG-117shrg59798.txt	NO		point, I think we will need more of that going forward.
+1181	expansion_part0	us-congress	CHRG-115shrg30282.txt	NO		Maria, which is inevitable, is presented to us, there will be
+1182	expansion_part0	ietf	minutes-85-clue.txt	NO		Charles - I'm lost - the advertisement needs to come before the SDP offer?
+1183	expansion_part0	us-congress	CHRG-118shrg58989.txt	YES		But if confirmed, I will certainly get you that
+1184	expansion_part0	ietf	minutes-104-6man.txt	NO		Are you suggesting we should update
+1185	expansion_part0	us-congress	CHRG-116shrg40641.txt	NO		will not help undo what happened to me.
+1186	expansion_part0	us-congress	CHRG-118hhrg60114.txt	NO		revised the plan to reflect changes in several areas, including
+1187	expansion_part0	ietf	minutes-80-softwire.txt	NO		Yiu Lee: Why do we need to re-analyse well-known problem.
+1188	expansion_part0	us-congress	CHRG-118shrg58989.txt	NO		not share our values and are not committed to the foundational
+1189	expansion_part0	ietf	minutes-109-spring.txt	NO		Joel Halpern: The scope of the doc should be coming out from the next presentation.
+1190	expansion_part0	us-congress	CHRG-115hhrg32361.txt	NO		need to know about the substance use history of a patient.
+1191	expansion_part0	us-congress	CHRG-117shrg59798.txt	NO		Let me ask you about hypersonics
+1192	expansion_part0	us-congress	CHRG-116hhrg37929.txt	NO		housing policy, I think is going to be something that will help
+1193	expansion_part0	us-congress	CHRG-118hhrg55710.txt	NO		I can't talk for the whole of NIH, but certainly
+1194	expansion_part0	us-congress	CHRG-115hhrg29491.txt	NO		I will now turn to my good friend from Massachusetts, Ms.
+1195	expansion_part0	us-congress	CHRG-117shrg59762.txt	NO		The pace at which that change will occur is going to be
+1196	expansion_part0	us-congress	CHRG-117hhrg46224.txt	NO		Any military confrontation that is going to happen in Asia
+1197	expansion_part0	us-congress	CHRG-115hhrg30708.txt	NO		they will be willing to do.
+1198	expansion_part0	us-congress	CHRG-118hhrg59791.txt	NO		The decline in these logistics sectors will be driven by lower trade of
+1199	expansion_part0	us-congress	CHRG-117hhrg44548.txt	NO		Insular Cases and the colonial framework they established should be
+1200	expansion_part1	ietf	minutes-84-tls.txt	NO	NO	In the room Hum says: we should work on this.
+1201	expansion_part1	ietf	minutes-83-ippm.txt	YES	YES	evidence of support meeting attendees will be ratified on the list, of course.
+1202	expansion_part1	ietf	minutes-85-softwire.txt	NO	NO	won't work I need to keep that state somewhere and want machinery to
+1203	expansion_part1	ietf	minutes-70-dhc.txt	NO	NO	And now it is not very well.
+1204	expansion_part1	us-congress	CHRG-116shrg99104866.txt	NO	NO	Someday there will be a point
+1205	expansion_part1	ietf	minutes-69-vcarddav.txt	NO	NO	Some of the longstanding WebDAV functional alternatives come up here again, like HTTP caching and whether the data of a vcard should be treated as resource content (body) or properties (metadata).
+1206	expansion_part1	us-congress	CHRG-114hhrg20101.txt	YES	YES	Korea right now, and I will revisit the conversation with Mr.
+1207	expansion_part1	ietf	minutes-110-privacypass.md	NO	NO	In that case a number of trusted issuers being small should be enough.
+1208	expansion_part1	us-congress	CHRG-118hhrg55613.txt	NO	NO	protection law should be all about, adjusting that power
+1209	expansion_part1	us-congress	CHRG-117hhrg47413.txt	NO	NO	priority for us so that these new passengers will become regular
+1210	expansion_part1	ietf	minutes-85-netmod.txt	NO	NO	JS: I think it should be layer two.
+1211	expansion_part1	ietf	minutes-126-privacypass-202607221400.md	NO	NO	Sam: Cross browser impls will need consistency solution.
+1212	expansion_part1	ietf	minutes-77-tsvarea.txt	NO	NO	Connectivity philosophy: should "just work", even from peers, as quickly as possible, even from cold start, need fast connection setup; cannot spend lots of repeated work at establishing connections.
+1213	expansion_part1	us-congress	CHRG-118hhrg56487.txt	NO	NO	shortage, which currently stands at 78,000 drivers and which will
+1214	expansion_part1	us-congress	CHRG-115shrg37709.txt	NO	NO	Innovation Accelerator Program (IAP) will be available to States that
+1215	expansion_part1	ietf	minutes-80-v6ops.txt	NO	NO	Presentations without a draft behind them, will continue to be brought to the wg on the basis of relevance.
+1216	expansion_part1	us-congress	CHRG-116hhrg35894.txt	NO	NO	The president alone should not have that power to
+1217	expansion_part1	us-congress	CHRG-117shrg50550.txt	YES	YES	Yes, I will, and one, it was really
+1218	expansion_part1	us-congress	CHRG-116hhrg37741.txt	NO	NO	I'm going to cut you off there just because there
+1219	expansion_part1	us-congress	CHRG-116shrg55151.txt	NO	NO	This work shall include updating
+1220	expansion_part1	us-congress	CHRG-117shrg44967.txt	NO	NO	going to lose customers, especially right now while we are in a
+1221	expansion_part1	us-congress	CHRG-114shrg21325.txt	NO	NO	I am going to make a unanimous consent request.
+1222	expansion_part1	us-congress	CHRG-118hhrg53710.txt	NO	NO	challenge that is going to be fixed by HRSA.
+1223	expansion_part1	ietf	minutes-92-dmm.txt	NO	NO	Xinpeng: is the prefix defined – should it be defined here in dmm, or..
+1224	expansion_part1	ietf	minutes-98-mile.txt	YES	YES	benchmark data and will be working on vulnerability info too.
+1225	expansion_part1	ietf	minutes-99-ipsecme.txt	NO	NO	The problem needs to be mentioned in the doc.
+1226	expansion_part1	us-congress	CHRG-116shrg37810.txt	NO	NO	Let me turn to Senator Manchin.
+1227	expansion_part1	us-congress	CHRG-114hhrg25006.txt	NO	NO	funds should flow through Congress is longstanding.
+1228	expansion_part1	us-congress	CHRG-118shrg57203.txt	NO	NO	going to be extremely important to them.
+1229	expansion_part1	us-congress	CHRG-117shrg51736.txt	NO	NO	 Should reducing energy poverty in sub-Saharan Africa be a priority
+1230	expansion_part1	ietf	minutes-118-rswg-202311091045.md	NO	NO	Mirja Kühlewind: in general we should trust RPC as part of their role is
+1231	expansion_part1	us-congress	CHRG-118hhrg52632.txt	NO	NO	stopped train to get where they need to go.
+1232	expansion_part1	us-congress	CHRG-118shrg57393.txt	NO	NO	failed banks, it may need to act if a brokerage runs into
+1233	expansion_part1	us-congress	CHRG-117shrg46706.txt	NO	NO	You brought that up as well.
+1234	expansion_part1	ietf	minutes-122-core.md	YES	YES	attributes in responses that use link-format (I will come back on that).
+1235	expansion_part1	ietf	minutes-102-tsvwg.txt	YES	YES	Will you or Gorry read this draft against the INTAREA tunnels draft to make sure they are reconciled in terminology?
+1236	expansion_part1	us-congress	CHRG-116shrg42448.txt	NO	NO	CTA believes the Committee should continue to support this
+1237	expansion_part1	us-congress	CHRG-117hhrg48524.txt	NO	NO	And, just for the record, we are not going to
+1238	expansion_part1	ietf	minutes-124-detnet-202511032200.md	NO	NO	2) do you think the WG should be working on this (#4) solution?
+1239	expansion_part1	us-congress	CHRG-117hhrg43321.txt	NO	NO	should Congress concentrate on in order to create a small
+1240	expansion_part1	us-congress	CHRG-117shrg53135.txt	YES	YES	Will you cooperate in providing the Committee with requested
+1241	expansion_part1	ietf	minutes-95-rtcweb.txt	YES	YES	Adam: For the record we hate that, and will fix it.
+1242	expansion_part1	us-congress	CHRG-118shrg57730.txt	NO	NO	say, well, that would put us under the stigma from the market.
+1243	expansion_part1	us-congress	CHRG-114shrg69104679.txt	NO	NO	strongly that we need to get to the point in all three of these
+1244	expansion_part1	us-congress	CHRG-115hhrg29879.txt	NO	NO	And if there is going to be public funding for
+1245	expansion_part1	us-congress	CHRG-118shrg54470.txt	NO	NO	cheaper product even though it does not work as well.
+1246	expansion_part1	us-congress	CHRG-118hhrg52632.txt	NO	NO	This bill will provide the City of San
+1247	expansion_part1	us-congress	CHRG-116hhrg36794.txt	NO	NO	going to be in control of our future substantially more on the
+1248	expansion_part1	ietf	minutes-117-oauth-202307261630.md	NO	NO	Need to look at the grant types.
+1249	expansion_part1	us-congress	CHRG-114shrg98771.txt	NO	NO	voucher will get you a home.
+1250	expansion_part1	us-congress	CHRG-116shrg42755.txt	NO	NO	take the United States to war, and I do not see why we should
+1251	expansion_part1	ietf	minutes-89-rmcat.txt	NO	NO	Lars: We should maybe evaluate in AQM context
+1252	expansion_part1	us-congress	CHRG-116hhrg36562.txt	NO	NO	It can and should provide a means for all women to
+1253	expansion_part1	us-congress	CHRG-118shrg58989.txt	NO	NO	Friends and foes alike are watching closely and will draw
+1254	expansion_part1	us-congress	CHRG-116hhrg35169.txt	NO	NO	to use precision ag the way that they need to to be able to
+1255	expansion_part1	us-congress	CHRG-117shrg46202.txt	NO	NO	emissions, which I am sure concerns our Chairman, as well as
+1256	expansion_part1	us-congress	CHRG-117shrg51736.txt	YES	YES	``responsible,'' investment, and, if confirmed, I plan to engage with
+1257	expansion_part1	us-congress	CHRG-117shrg39104989.txt	NO	NO	Well, one thing is that we have started to
+1258	expansion_part1	us-congress	CHRG-117shrg54364.txt	NO	NO	We need to make sure that
+1259	expansion_part1	ietf	minutes-70-v6ops.txt	NO	NO	v6 hosts are not going to change either.
+1260	expansion_part1	us-congress	CHRG-117shrg51736.txt	YES	YES	all operations of the Mission, I intend to empower the Deputy Chief of
+1261	expansion_part1	us-congress	CHRG-118hhrg52350.txt	NO	NO	Mr. Derek Grossman, I am going to direct my first questions
+1262	expansion_part1	ietf	minutes-123-iabopen-202507230930.md	NO	NO	technical community will be back in the wording.
+1263	expansion_part1	us-congress	CHRG-117shrg46765.txt	NO	NO	First of all, Senator, let me congratulate
+1264	expansion_part1	us-congress	CHRG-117shrg59798.txt	NO	NO	Record will primarily be used to defend critical assets aboard CONUS
+1265	expansion_part1	us-congress	CHRG-118shrg61572.txt	NO	NO	and the Centers for Medicare and Medicaid Services, as well as a
+1266	expansion_part1	us-congress	CHRG-116hhrg37741.txt	NO	NO	of these radars, but we are going to need a new weather radar
+1267	expansion_part1	us-congress	CHRG-117shrg47082.txt	NO	NO	the U.S. financial system, but well-designed policies,
+1268	expansion_part1	us-congress	CHRG-116hhrg36568.txt	NO	NO	Well, thank you, Secretary Cooper.
+1269	expansion_part1	us-congress	CHRG-115shrg40598.txt	NO	NO	Should policymakers measure the success of a trading relationship
+1270	expansion_part1	us-congress	CHRG-118shrg54494.txt	YES	NO	I am committed to upholding the highest standards in
+1271	expansion_part1	us-congress	CHRG-118hhrg54069.txt	NO	NO	Yet all of us who care about religious freedom should be able
+1272	expansion_part1	us-congress	CHRG-117shrg48296.txt	NO	NO	others eligible, including many people who may not normally need to
+1273	expansion_part1	us-congress	CHRG-117shrg51736.txt	NO	NO	I do not need to kind of cite chapter and verse of
+1274	expansion_part1	us-congress	CHRG-114hhrg20615.txt	NO	NO	I can't commit to Monday, no.
+1275	expansion_part1	ietf	minutes-124-ianabis-202511031930.md	FRAG	NO	TH proposed ACTION: "if the meaning changes, then the registry should
+1276	expansion_part1	us-congress	CHRG-118hhrg53388.txt	NO	NO	Probably more than--well,
+1277	expansion_part1	us-congress	CHRG-116hhrg37929.txt	NO	NO	So, instead of them going to 17 different
+1278	expansion_part1	us-congress	CHRG-114hhrg24380.txt	NO	NO	We should begin to realize that
+1279	expansion_part1	us-congress	CHRG-116hhrg40572.txt	NO	NO	plan and a reproposal that literally will increase greenhouse
+1280	expansion_part1	ietf	minutes-124-oauth-202511031930.md	NO	NO	*   may need to include two tokens
+1281	expansion_part1	us-congress	CHRG-116hhrg37036.txt	NO	NO	I hope and believe that will continue.
+1282	expansion_part1	us-congress	CHRG-118hhrg56532.txt	NO	NO	look at what is the most important thing that should come from
+1283	expansion_part1	us-congress	CHRG-117hhrg46198.txt	NO	NO	well, we are not excluding people on the basis of economics or
+1284	expansion_part1	ietf	minutes-74-geopriv.txt	NO	NO	noted that any changes to this format will have to be coordinated with
+1285	expansion_part1	ietf	minutes-65-rpsec.txt	NO	NO	The document should clearly state that you should have your
+1286	expansion_part1	us-congress	CHRG-118hhrg56257.txt	NO	NO	consensus on the need to set controls on frontier AI systems
+1287	expansion_part1	ietf	minutes-65-6lowpan.txt	NO	NO	6lowpan is not going to have these
+1288	expansion_part1	us-congress	CHRG-118hhrg54144.txt	NO	NO	fiscal commission will not be easy for any single person on
+1289	expansion_part1	us-congress	CHRG-117hhrg47413.txt	YES	NO	will be undertaken on every aspect of the railroad.
+1290	expansion_part1	us-congress	CHRG-117shrg46749.txt	NO	NO	welcome your wife, Marissa, as well.
+1291	expansion_part1	us-congress	CHRG-118hhrg53710.txt	NO	NO	question, but I am going to take 4 or 5 minutes.
+1292	expansion_part1	ietf	minutes-107-webtrans.txt	NO	NO	DATAGRAM in HTTP/3 not yet, but conversations will happen soon.
+1293	expansion_part1	us-congress	CHRG-118hhrg58429.txt	NO	NO	Well, it is legal in almost any circumstance up
+1294	expansion_part1	us-congress	CHRG-118hhrg55808.txt	NO	NO	on your plan to ensure each of these positions is filled as quickly as
+1295	expansion_part1	us-congress	CHRG-118shrg55899.txt	NO	NO	I know this, let me just give you an
+1296	expansion_part1	us-congress	CHRG-117hhrg47266.txt	NO	NO	should stand up for what I believe in.'' But the political
+1297	expansion_part1	us-congress	CHRG-117hhrg48999.txt	NO	NO	witnesses will detail the Select Committee's findings on these
+1298	expansion_part1	us-congress	CHRG-117shrg47082.txt	NO	NO	underlying data that needs to fit into those models, which is
+1299	expansion_part1	us-congress	CHRG-117shrg46951.txt	NO	NO	Why does the Federal Government need to offer further debt forgiveness
+1300	expansion_part1	us-congress	CHRG-116shrg42755.txt	YES	YES	I will have to come back to you, sir, on
+1301	expansion_part1	us-congress	CHRG-117hhrg43953.txt	NO	NO	investments in our nation's water infrastructure, I will make three
+1302	expansion_part1	ietf	minutes-126-deleg.md	NO	NO	* Benjamin Schwartz expressed disappointment that the design does not maintain more parallelism with SVCB/HTTPS, noting that the WG may need to replicate encodings for TLS features (like Encrypted ClientHello or supported groups) in the future.
+1303	expansion_part1	us-congress	CHRG-114shrg25364.txt	NO	NO	Time will tell whether the Task Force succeeded in its objectives.
+1304	expansion_part1	ietf	minutes-110-manet.txt	NO	NO	AR: We should have the TSV Directorate look at these drafts as well.
+1305	expansion_part1	ietf	minutes-119-oauth-202403192330.md	YES	YES	Hannes: I'll do a poll on who has read the draft.
+1306	expansion_part1	us-congress	CHRG-118hhrg56785.txt	NO	NO	will go somewhere else and get health insurance.
+1307	expansion_part1	us-congress	CHRG-117hhrg46930.txt	NO	NO	year 1; the same thing is going to happen in year 2.
+1308	expansion_part1	ietf	minutes-117-oauth-202307261630.md	NO	NO	Great stab at it, need to pull concept back
+1309	expansion_part1	us-congress	CHRG-114shrg98989.txt	NO	NO	help him find the court he was going to, and I did not ask him
+1310	expansion_part1	us-congress	CHRG-115shrg30282.txt	NO	NO	So there would be redundancy, if you will, for resiliency,
+1311	expansion_part1	us-congress	CHRG-118shrg55526.txt	NO	NO	One quick question and I will pass it to our next
+1312	expansion_part1	us-congress	CHRG-117shrg59798.txt	NO	NO	families are going to need to opt-in to this, so they must
+1313	expansion_part1	us-congress	CHRG-117hhrg44451.txt	NO	NO	What we do need to do is try to find those mechanisms.
+1314	expansion_part1	us-congress	CHRG-118shrg58989.txt	YES	YES	Do you commit to us that you will serve as a fully
+1315	expansion_part1	us-congress	CHRG-117hhrg46369.txt	YES	NO	And we will work together, I am sure, on the
+1316	expansion_part1	us-congress	CHRG-117hhrg48008.txt	NO	NO	share my passion for agriculture and I am going to share a few
+1317	expansion_part1	us-congress	CHRG-114shrg79104795.txt	NO	NO	The resources we are requesting for fiscal year 2017 will
+1318	expansion_part1	us-congress	CHRG-117hhrg43630.txt	NO	NO	The Committee will come to order.
+1319	expansion_part1	us-congress	CHRG-116shrg41994.txt	NO	NO	at that time on trade policy as well.
+1320	expansion_part1	us-congress	CHRG-116hhrg37952.txt	YES	YES	We will continue to work with our
+1321	expansion_part1	us-congress	CHRG-117shrg19104915.txt	NO	NO	and well-being in their home country or a host country to find a new
+1322	expansion_part1	us-congress	CHRG-114shrg25897.txt	NO	NO	development before fielding, making the need to ``get the requirement
+1323	expansion_part1	us-congress	CHRG-118hhrg54430.txt	NO	NO	well, the statute--our statute gives us jurisdiction and never
+1324	expansion_part1	us-congress	CHRG-118hhrg56396.txt	NO	NO	their families prepared to respond should that call come.
+1325	expansion_part1	ietf	minutes-68-avt.txt	NO	NO	- non-compound should be allowed in early/intermediate AVPF framework
+1326	expansion_part1	ietf	minutes-115-secdispatch-202211101700.md	NO	NO	already in the libraries, so I do not need to write this from the
+1327	expansion_part1	us-congress	CHRG-117hhrg60333.txt	NO	NO	Today we will hear from the heads of some of our Nation's
+1328	expansion_part1	ietf	minutes-94-sidr.txt	NO	NO	·        Were’ going to skip the explanation of how it works.
+1329	expansion_part1	us-congress	CHRG-117shrg44456.txt	NO	NO	is going to result in development like we have not seen in
+1330	expansion_part1	us-congress	CHRG-116shrg35617.txt	NO	NO	I can commit to you today I know of nothing in front of me
+1331	expansion_part1	us-congress	CHRG-118shrg58989.txt	NO	NO	Service to Haiti is going to be one of the toughest
+1332	expansion_part1	us-congress	CHRG-118hhrg52632.txt	NO	NO	Then your testimony will be added to the
+1333	expansion_part1	us-congress	CHRG-114hhrg99443.txt	YES	YES	familiar with, I want to look into it, and we will get back to
+1334	expansion_part1	us-congress	CHRG-117hhrg47478.txt	NO	NO	we know that our families will be safe and this conversation
+1335	expansion_part1	us-congress	CHRG-118hhrg54144.txt	NO	NO	Well, I mean, I would agree that, principally
+1336	expansion_part1	us-congress	CHRG-118hhrg54449.txt	NO	NO	We should seize this opportunity rather than
+1337	expansion_part1	us-congress	CHRG-118hhrg53710.txt	NO	NO	a while, I will get a letter, I will get an email from someone,
+1338	expansion_part1	us-congress	CHRG-118hhrg57059.txt	NO	NO	Democrats want to give border agents what they need to
+1339	expansion_part1	us-congress	CHRG-118shrg60096.txt	YES	YES	and we are committed to do that.
+1340	expansion_part1	us-congress	CHRG-118hhrg52789.txt	NO	NO	of progress there as well.
+1341	expansion_part1	us-congress	CHRG-118shrg54494.txt	NO	NO	agree with the need to have one goal, one constituency that I
+1342	expansion_part1	us-congress	CHRG-118hhrg59791.txt	NO	NO	Also, the FAA should work internally and with international
+1343	expansion_part1	us-congress	CHRG-115hhrg31383.txt	NO	NO	Without objection, the hearing record will remain open
+1344	expansion_part1	us-congress	CHRG-114shrg98771.txt	NO	NO	important contribution will be the potential to greatly reduce the
+1345	expansion_part1	us-congress	CHRG-117hhrg60333.txt	NO	NO	and we are finally turning a profit, and so we are not going to
+1346	expansion_part1	us-congress	CHRG-117shrg45380.txt	NO	NO	Now we will hear from Ms.
+1347	expansion_part1	us-congress	CHRG-116shrg41994.txt	YES	YES	of importance this has for so many, will you commit that any
+1348	expansion_part1	us-congress	CHRG-116hhrg36213.txt	NO	NO	the extent to which this will remain in Xinjiang or expand
+1349	expansion_part1	us-congress	CHRG-118hhrg53388.txt	NO	NO	Well, one thing I know is that OMB has
+1350	expansion_part1	us-congress	CHRG-116shrg39872.txt	NO	NO	The new production as well as the expanded
+1351	expansion_part1	us-congress	CHRG-117shrg48204.txt	NO	NO	quote, ``We need to correct the misallocation of money and
+1352	expansion_part1	us-congress	CHRG-118shrg57730.txt	NO	NO	implement the updated rule, what will you do to ensure your
+1353	expansion_part1	ietf	minutes-102-mls.txt	NO	NO	- Not sure the ordering will be a big problem.
+1354	expansion_part1	ietf	minutes-91-6tisch.txt	NO	NO	What supporting elements will be available in a minimal network?
+1355	expansion_part1	us-congress	CHRG-116hhrg36596.txt	NO	NO	to offer him a job and say you can get--I am going to give you
+1356	expansion_part1	us-congress	CHRG-114hhrg25006.txt	NO	NO	pass the legislation, then we'll know.
+1357	expansion_part1	us-congress	CHRG-116hhrg36595.txt	NO	NO	Let me ask another question.
+1358	expansion_part1	us-congress	CHRG-116shrg52728.txt	NO	NO	that we need to keep on working on.
+1359	expansion_part1	us-congress	CHRG-118shrg58989.txt	YES	YES	TIP Report and will support the Government of Burundi's efforts in this
+1360	expansion_part1	ietf	minutes-86-tsvarea.txt	NO	NO	Lars Eggert - we need a drop-tail considered harmful BCP - should come out of IETF process and have an RFC number for procurement - why TSV, because this is where we've started seeing the effect
+1361	expansion_part1	ietf	minutes-69-ippm.txt	NO	NO	readability going in to the next version as well.
+1362	expansion_part1	us-congress	CHRG-117shrg51736.txt	NO	NO	emphasize the need to ensure any steps taken do not undermine the
+1363	expansion_part1	ietf	minutes-95-rtcweb.txt	NO	NO	Martin: I think I agree with Alissa; we should rip out justifications.
+1364	expansion_part1	ietf	minutes-66-rmt.txt	NO	NO	- Lorenzo: the WG milestones needs to be updated
+1365	expansion_part1	us-congress	CHRG-117shrg47903.txt	NO	NO	And we are just going to focus on
+1366	expansion_part1	us-congress	CHRG-116hhrg35663.txt	NO	NO	need to be focusing and growing those particular things.
+1367	expansion_part1	us-congress	CHRG-118hhrg53710.txt	NO	NO	I will not support what the Department is trying to do, and
+1368	expansion_part1	us-congress	CHRG-116shrg36264.txt	NO	NO	If we don't have affordability, we will fail.
+1369	expansion_part1	us-congress	CHRG-117hhrg48475.txt	NO	NO	Well, I was from a small State and had to
+1370	expansion_part1	ietf	minutes-74-ipfix.txt	NO	NO	Juergen: we should add a comment to the deprecated element in the IANA
+1371	expansion_part1	ietf	minutes-92-ecrit.txt	NO	NO	Discussion went around [and around] whether this draft does or does not address emergency calls and if a data only option should be considered in addition.
+1372	expansion_part1	us-congress	CHRG-118shrg55526.txt	NO	NO	Security receives the resources it needs to bolster
+1373	expansion_part1	us-congress	CHRG-117hhrg46728.txt	NO	NO	going to be in 4 weeks, in 8 weeks, and by the end of 2022.
+1374	expansion_part1	us-congress	CHRG-114hhrg25212.txt	NO	NO	recommend that should this recommendation be considered, this concern
+1375	expansion_part1	us-congress	CHRG-118hhrg57756.txt	NO	NO	are certainly committed to, is to recognizing what are the
+1376	expansion_part1	us-congress	CHRG-116hhrg38643.txt	NO	NO	As far as I know, there is no plan to extend the service
+1377	expansion_part1	us-congress	CHRG-116shrg29104926.txt	NO	NO	assurance we're going to get there as quickly as we can.
+1378	expansion_part1	us-congress	CHRG-118hhrg55613.txt	NO	NO	need to improve clarity and avoid making confusion worse.
+1379	expansion_part1	us-congress	CHRG-117shrg57047.txt	NO	NO	And you know, hopefully the station will go
+1380	expansion_part1	us-congress	CHRG-118hhrg59459.txt	NO	NO	I will take a cut at that first.
+1381	expansion_part1	us-congress	CHRG-114hhrg20613.txt	NO	NO	So, I will commend you for that.
+1382	expansion_part1	us-congress	CHRG-115hhrg31120.txt	NO	NO	should continue, as the other agencies have done?
+1383	expansion_part1	ietf	minutes-67-ecrit.txt	NO	NO	Jonathan: with Brian - this is hard stuff, should take a look later.
+1384	expansion_part1	ietf	minutes-112-add.md	NO	NO	Should I be able to use something other than IP as name in DoH URI?
+1385	expansion_part1	us-congress	CHRG-116hhrg37407.txt	NO	NO	fact that we know well in southern California where I live, and
+1386	expansion_part1	us-congress	CHRG-117shrg47024.txt	NO	NO	And, Mr. Adeyemo, I am going to try to go through three or
+1387	expansion_part1	us-congress	CHRG-115hhrg29991.txt	NO	NO	said that distributing is going to be overseen by the FDA, but
+1388	expansion_part1	ietf	minutes-89-ccamp.txt	YES	YES	Deborah Brungard: Please provide text for the liaison, we will send it to Q6/Q11/Q12, particularly mention hitless.
+1389	expansion_part1	us-congress	CHRG-118hhrg59459.txt	NO	NO	Reservoir Operations Assessment, which will further our understanding
+1390	expansion_part1	us-congress	CHRG-117shrg46752.txt	NO	NO	residency programs as well, I think we can strategically work
+1391	expansion_part1	us-congress	CHRG-114hhrg23565.txt	NO	NO	So this should be the carrot to
+1392	expansion_part1	us-congress	CHRG-114shrg93106.txt	NO	NO	The fiscal year 2016 President's Budget request will provide DEA
+1393	expansion_part1	us-congress	CHRG-118hhrg51706.txt	NO	NO	But let me move to AVs quickly.
+1394	expansion_part1	us-congress	CHRG-118jhrg51694.txt	NO	NO	committed to following the Middle Way Policy: the way forward shown by
+1395	expansion_part1	us-congress	CHRG-115shrg32492.txt	NO	NO	If confirmed, let me repeat what I said in the opening,
+1396	expansion_part1	us-congress	CHRG-118shrg58989.txt	NO	NO	encourage projects that demonstrate our care for the well-being of the
+1397	expansion_part1	us-congress	CHRG-116shrg38343.txt	NO	NO	I am going to focus a little bit on our farmers, and we do
+1398	expansion_part1	ietf	minutes-89-tls.txt	NO	NO	DmG: I do think we need to limit the scope.
+1399	expansion_part1	us-congress	CHRG-116shrg52730.txt	NO	NO	the port side itself, there's going to be exponential growth.
+1400	expansion_part2	us-congress	CHRG-117hhrg48645.txt	NO		Well, again, one of Professor Levitin's points,
+1401	expansion_part2	us-congress	CHRG-117hhrg43953.txt	NO		Improved policies and practices should be encouraged by federal
+1402	expansion_part2	us-congress	CHRG-117hhrg47051.txt	NO		that will create systematic transformational change for
+1403	expansion_part2	us-congress	CHRG-117hhrg48367.txt	YES		We will make your office aware
+1404	expansion_part2	us-congress	CHRG-118hhrg53604.txt	NO		Let me thank the witnesses for their
+1405	expansion_part2	us-congress	CHRG-118hhrg56926.txt	NO		going to get an answer to it until after the election,
+1406	expansion_part2	us-congress	CHRG-115shrg37709.txt	NO		about whether compliant MTM programs will qualify for inclusion in the
+1407	expansion_part2	us-congress	CHRG-118hhrg57069.txt	NO		Well, I will yield back, but perhaps we could have a next
+1408	expansion_part2	ietf	minutes-95-dtn.txt	NO		Need a registry of hash functions as well.
+1409	expansion_part2	us-congress	CHRG-118hhrg56991.txt	NO		needs to be an emphasis there.
+1410	expansion_part2	us-congress	CHRG-116shrg41390.txt	NO		should be kept to a minimum.
+1411	expansion_part2	us-congress	CHRG-118hhrg53741.txt	NO		I'll start with you, Lieutenant General Glynn.
+1412	expansion_part2	us-congress	CHRG-115jhrg30232.txt	NO		Dalai Lama will be determined by the Chinese Communist Party,
+1413	expansion_part2	ietf	minutes-71-6man.txt	NO		Dave T - agrees with Alain (IF/than SHOULD.)
+1414	expansion_part2	us-congress	CHRG-114hhrg20613.txt	NO		I am going to begin with a topic that receives far less
+1415	expansion_part2	us-congress	CHRG-114hhrg98917.txt	NO		good and has increased, but we also need to make sure that we
+1416	expansion_part2	ietf	minutes-114-manet.txt	NO		Also, part of normal operation for some protocols, that you are going to break.
+1417	expansion_part2	us-congress	CHRG-116hhrg40283.txt	NO		Hopefully he will get back here before the Committee
+1418	expansion_part2	us-congress	CHRG-118hhrg54363.txt	NO		The written statement of Mr. Tinston will be entered into
+1419	expansion_part2	us-congress	CHRG-118shrg55612.txt	NO		government should not put in place a one size fits all
+1420	expansion_part2	us-congress	CHRG-116hhrg43928.txt	NO		will follow a well understood cost reduction curve and
+1421	expansion_part2	ietf	minutes-107-drip.txt	NO		Jim Reid: need to ask the WG to adopt,
+1422	expansion_part2	ietf	minutes-65-ips.txt	NO		No decisions made - drafts will be considered
+1423	expansion_part2	us-congress	CHRG-117shrg45439.txt	NO		Afghanistan going to cost the American taxpayer billions of dollars,
+1424	expansion_part2	us-congress	CHRG-117shrg55819.txt	NO		themselves and the freshwater regions, as well as looking at
+1425	expansion_part2	ietf	minutes-116-quic.md	NO		I was under impression that we agreed to varint it, because that's what we do in this WG.
+1426	expansion_part2	us-congress	CHRG-117hhrg43321.txt	NO		I now will recognize the gentleman from Maryland, Mr.
+1427	expansion_part2	us-congress	CHRG-118hhrg53006.txt	NO		promised the witnesses, we are going to take a 10-minute recess
+1428	expansion_part2	us-congress	CHRG-117hhrg47210.txt	NO		So we think we have a good plan to do that, but in many
+1429	expansion_part2	us-congress	CHRG-118shrg54562.txt	NO		will repeat the top three from my recommendations.
+1430	expansion_part2	us-congress	CHRG-117hhrg47478.txt	NO		I will ask Ash Sheriff to chime in on
+1431	expansion_part2	us-congress	CHRG-114shrg93106.txt	NO		that behavior will not tatter or wear out or even break the
+1432	expansion_part2	ietf	minutes-102-tls.txt	YES		Will probably pull from the Editor's queue but will revisit.
+1433	expansion_part2	us-congress	CHRG-117shrg51736.txt	NO		This committee is strongly committed to fighting
+1434	expansion_part2	ietf	minutes-87-irtfopen.txt	NO		charted by the end of this meeting.
+1435	expansion_part2	ietf	minutes-70-dccp.txt	YES		Gorry: Yes, good idea, we will add this in the next revision.
+1436	expansion_part2	us-congress	CHRG-116hhrg36523.txt	NO		I will take your word for it.
+1437	expansion_part2	us-congress	CHRG-114hhrg20751.txt	NO		will take notice if they are, again, enforced to the least
+1438	expansion_part2	us-congress	CHRG-117hhrg47821.txt	NO		Well, in terms of managing on a continuing
+1439	expansion_part2	us-congress	CHRG-116shrg19104901.txt	NO		the Reserve Fund, will also enable the SEC to continue investments to
+1440	expansion_part2	ietf	minutes-101-mpls.txt	NO		Xiaohu: this draft and ours are leverage MPLS - should the 2 draft be combined?
+1441	expansion_part2	us-congress	CHRG-116jhrg39553.txt	NO		saying up to the year 2024, that there is going to be another
+1442	expansion_part2	ietf	minutes-92-dots.txt	NO		** If we share this information using DOTS, we are going to be much faster at responding to evolutions in the threat landscape.
+1443	expansion_part2	ietf	minutes-83-rtgwg.txt	YES		We'll revisit adoption in around a month.
+1444	expansion_part2	us-congress	CHRG-117shrg53390.txt	NO		formula funds as well as for programs like the Bus and Bus Facilities
+1445	expansion_part2	us-congress	CHRG-117hhrg46728.txt	NO		I have always said schools should be the last place to
+1446	expansion_part2	us-congress	CHRG-117shrg49553.txt	NO		The IIJA will make the largest Federal investment in
+1447	expansion_part2	ietf	minutes-119-privacypass-202403200500.md	NO		Timestamps: ways to round the expiration so there will be many users in
+1448	expansion_part2	us-congress	CHRG-116hhrg36523.txt	NO		Well, may I give you an example?
+1449	expansion_part2	us-congress	CHRG-114hhrg20533.txt	NO		There also needs to be a more direct confrontation of
+1450	expansion_part2	us-congress	CHRG-117hhrg45587.txt	NO		Congress should at minimum replace the portion of ATVM
+1451	expansion_part2	us-congress	CHRG-117hhrg43964.txt	NO		so much of it would go to households earning well above median
+1452	expansion_part2	us-congress	CHRG-117shrg51736.txt	FRAG		If confirmed, I will continue to
+1453	expansion_part2	us-congress	CHRG-114shrg98771.txt	NO		programs, in exchange for certain subsidies, private parties agree to
+1454	expansion_part2	us-congress	CHRG-114shrg24851.txt	NO		from one employee to 1,500 employees, I can tell you that these
+1455	expansion_part2	us-congress	CHRG-117shrg54686.txt	NO		III judge, should you be confirmed?
+1456	expansion_part2	us-congress	CHRG-117shrg59772.txt	NO		stable nuclear environment with the Russians will continue to
+1457	expansion_part2	us-congress	CHRG-117hhrg48851.txt	NO		And there is this thing called will.
+1458	expansion_part2	ietf	minutes-106-nwcrg.md	NO		VR: A question for the group is whether we should adopt I-Ds as research group document?
+1459	expansion_part2	us-congress	CHRG-118hhrg56568.txt	NO		Third, Congress and the White House should consider whether
+1460	expansion_part2	us-congress	CHRG-117shrg57047.txt	FRAG		The Solar Electric Propulsion (SEP) project will
+1461	expansion_part2	ietf	minutes-126-teas-202607221200.md	NO		we need to have an alignment with the Green WG that is where information
+1462	expansion_part2	ietf	minutes-66-sieve.txt	NO		Kjetil: generic options valid for all methods should be explicit :keywords.
+1463	expansion_part2	us-congress	CHRG-117hhrg47035.txt	NO		talent that will make us the agency that the Nation deserves.
+1464	expansion_part2	us-congress	CHRG-118hhrg56532.txt	NO		If we are going to spend the afternoon discussing the work
+1465	expansion_part2	us-congress	CHRG-114hhrg20546.txt	NO		So, all I can say, Congressman, is that the 9,000 employees
+1466	expansion_part2	ietf	minutes-88-ospf.txt	YES		I'm probably going to do that anyway over Christmas.
+1467	expansion_part2	ietf	minutes-123-fantel-202507240730.md	NO		use cases and problem statements, that solution analysis will be
+1468	expansion_part2	us-congress	CHRG-117shrg45187.txt	YES		To answer your question, we will work directly
+1469	expansion_part2	us-congress	CHRG-117shrg48296.txt	NO		employees must consent to a shift to these accounts, which will occur
+1470	expansion_part2	us-congress	CHRG-118hhrg52929.txt	NO		the Chair's requests, as well as other Committees with
+1471	expansion_part2	us-congress	CHRG-117shrg50344.txt	NO		We need to make sure government
+1472	expansion_part2	us-congress	CHRG-118hhrg53710.txt	NO		For example, it will enable us
+1473	expansion_part2	us-congress	CHRG-117shrg44456.txt	NO		going to improve its relationship with China unless China
+1474	expansion_part2	us-congress	CHRG-117hhrg48999.txt	NO		Where is this going to go?
+1475	expansion_part2	us-congress	CHRG-118hhrg57808.txt	NO		Mr. Chairman, I am going to yield back.
+1476	expansion_part2	us-congress	CHRG-118hhrg57756.txt	NO		recommends that DOD surplus equipment and parts should be made
+1477	expansion_part2	us-congress	CHRG-116hhrg38643.txt	YES		So when this hearing is over, I will have my staff get with
+1478	expansion_part2	ietf	minutes-88-rtcweb.txt	NO		We need to make the MTI decision as there are many more implementation other than the 4 browsers.
+1479	expansion_part2	us-congress	CHRG-115hhrg35951.txt	NO		using our Part 15 process to certify that they will notify
+1480	expansion_part2	ietf	minutes-89-ccamp.txt	NO		We might take such text and put it into to a different framework that will cover a signaling based approach.
+1481	expansion_part2	us-congress	CHRG-116hhrg40459.txt	NO		Certainly, not every agency will be implicated in any one case, but
+1482	expansion_part2	us-congress	CHRG-115shrg40416.txt	NO		going to approve the strategy, and they are going to submit
+1483	expansion_part2	us-congress	CHRG-116hhrg35337.txt	NO		and so I think when it comes to the academies as well.
+1484	expansion_part2	us-congress	CHRG-118hhrg55586.txt	NO		terms were on that lease, but I will assure you one thing.
+1485	expansion_part2	us-congress	CHRG-118hhrg54153.txt	NO		Robinson Honoring our Promise to Address Comprehensive Toxics
+1486	expansion_part2	ietf	minutes-103-qirg.txt	NO		We'd need to understand more fundamentals before we can know how to do things.
+1487	expansion_part2	ietf	minutes-126-icnrg-202607221400.md	NO		**David Oran**:Q: Do consumers as well as producers need to register
+1488	expansion_part2	us-congress	CHRG-118hhrg57059.txt	NO		The image of children in cages will haunt our Nation for decades to
+1489	expansion_part2	ietf	minutes-125-ietf-202603180830.md	NO		And I don't know how we are going to do it in terms of process, tools, et cetera.
+1490	expansion_part2	us-congress	CHRG-114hhrg20101.txt	NO		Well, let me go to Mr. Dubowitz for a short
+1491	expansion_part2	us-congress	CHRG-117shrg46951.txt	NO		will leave office with the economy in ruins.
+1492	expansion_part2	ietf	minutes-70-tsvarea.txt	NO		from cookbook from the 1980's. Difference between well-known and
+1493	expansion_part2	us-congress	CHRG-118hhrg57756.txt	NO		that support Tribal sovereignty and well-being, and what is the
+1494	expansion_part2	us-congress	CHRG-114hhrg20751.txt	NO		effects to their mental health and that has been well proven.
+1495	expansion_part2	us-congress	CHRG-116hhrg41174.txt	NO		Well, I think both of those things could
+1496	expansion_part2	us-congress	CHRG-115hhrg35951.txt	NO		In terms of infrastructure, we need to make sure that we
+1497	expansion_part2	us-congress	CHRG-116hhrg40455.txt	NO		are entitled to, at a bare minimum, adequate medical care, as well as
+1498	expansion_part2	ietf	minutes-122-tsvwg-202503190830.md	YES		charis will take over by presenting the available options in order to
+1499	expansion_part2	ietf	minutes-91-alto.txt	NO		-- Jon presents his slides on bigger picture on where ALTO should go with
+1500	expansion_part2	ietf	minutes-115-radextra-202211071300.md	NO		as User-Password no longer need to be obfuscated, and can be sent
+1501	expansion_part2	us-congress	CHRG-117shrg59772.txt	NO		Let me ask you about a follow on to the New
+1502	expansion_part2	us-congress	CHRG-117shrg44973.txt	NO		How will you ensure that any future support provided to
+1503	expansion_part2	us-congress	CHRG-115shrg30282.txt	NO		I will now limit my remarks solely to the restoration of
+1504	expansion_part2	us-congress	CHRG-118hhrg58669.txt	NO		the schools themselves as well.
+1505	expansion_part2	us-congress	CHRG-118hhrg56349.txt	NO		degree, Bureau policy will inevitably reflect differences in
+1506	expansion_part2	us-congress	CHRG-117hhrg43630.txt	NO		This roadmap will allow us and our development
+1507	expansion_part2	ietf	minutes-90-dart.txt	YES		The following wonderful and heroic people have volunteered to review the
+1508	expansion_part2	ietf	minutes-113-rtgwg.txt	NO		Even though the work probably needs to be done in spring, the mpls chairs will probably want to be kept in the loop.
+1509	expansion_part2	ietf	minutes-72-tsvwg.txt	YES		- Will be seeking input from the working group on new format
+1510	expansion_part2	us-congress	CHRG-114shrg69104674.txt	YES		a number, but I will get that number for you.
+1511	expansion_part2	us-congress	CHRG-116hhrg40890.txt	NO		resources as well as the ability to collaborate with the HUD-
+1512	expansion_part2	us-congress	CHRG-117shrg50550.txt	NO		We will see veterans through this surge
+1513	expansion_part2	us-congress	CHRG-115hhrg29518.txt	NO		These things are going to happen.
+1514	expansion_part2	us-congress	CHRG-117hhrg44983.txt	NO		that is how we should approach it, from a global problem, to
+1515	expansion_part2	us-congress	CHRG-114hhrg23443.txt	NO		I do want to stress that we are committed to ensuring U.S.
+1516	expansion_part2	us-congress	CHRG-118shrg49104050.txt	NO		Secretary Turk, I am going to begin with you.
+1517	expansion_part2	us-congress	CHRG-114hhrg21525.txt	NO		Similarly, Iran has stated that it will refuse to allow inspectors
+1518	expansion_part2	us-congress	CHRG-118shrg59703.txt	FRAG		Specifically, NOAA will make
+1519	expansion_part2	us-congress	CHRG-117shrg48204.txt	YES		part of this agenda, I will strengthen the OCC's focus on
+1520	expansion_part2	us-congress	CHRG-117hhrg46269.txt	NO		We are all going to be very
+1521	expansion_part2	ietf	minutes-66-l1vpn.txt	NO		L1VPN may need to stabilize requirements
+1522	expansion_part2	us-congress	CHRG-116hhrg37917.txt	NO		So perhaps new forms of indemnification will be needed to absorb
+1523	expansion_part2	us-congress	CHRG-114shrg20940.txt	NO		line is that these new, more stringent standards are going to
+1524	expansion_part2	us-congress	CHRG-114hhrg98916.txt	NO		compulsory military service will not yield the quality Army the
+1525	expansion_part2	us-congress	CHRG-117shrg46202.txt	NO		We do forecast that production in the U.S. will dip
+1526	expansion_part2	ietf	minutes-117-idr-202307242000.md	NO		holdtimer needs to be discussed.
+1527	expansion_part2	us-congress	CHRG-118shrg59104061.txt	NO		When should we expect the next announcement of sanctions
+1528	expansion_part2	us-congress	CHRG-116hhrg40455.txt	NO		mentally ill immigration detainees naked in deplorable conditions and
+1529	expansion_part2	us-congress	CHRG-118hhrg52929.txt	NO		So, I can appreciate that concern.
+1530	expansion_part2	us-congress	CHRG-117shrg50076.txt	NO		You testified that the Muscogee Creek Nation should not
+1531	expansion_part2	us-congress	CHRG-118hhrg54449.txt	NO		muddy, and walks right up to the edge, and will potentially
+1532	expansion_part2	us-congress	CHRG-118hhrg54163.txt	NO		I believe we also need to couple transparency
+1533	expansion_part2	us-congress	CHRG-118hhrg55666.txt	NO		I plan to focus my remarks this morning on our vital
+1534	expansion_part2	ietf	minutes-95-dime.txt	NO		Lionel - client needs to manage each individual request for group assignment.
+1535	expansion_part2	ietf	minutes-108-rats-202007291100.txt	YES		(Kathleen) Will take steps to recommend for adoption.
+1536	expansion_part2	us-congress	CHRG-118shrg57203.txt	NO		Circuit decision as well as a 2020 document that the agency put
+1537	expansion_part2	us-congress	CHRG-116hhrg43928.txt	NO		environmental sustainability as well.
+1538	expansion_part2	us-congress	CHRG-117shrg44967.txt	NO		My question is going to be for Mr. Sobocinski here in a
+1539	expansion_part2	us-congress	CHRG-117hhrg57563.txt	NO		to have more diversity in clinical trials we need to make it
+1540	expansion_part2	ietf	minutes-91-ace.txt	NO		You will still have an opportunity to fight for the content.
+1541	expansion_part2	us-congress	CHRG-117hhrg47210.txt	NO		Like you, General McKenzie, I am going to be watching closely.
+1542	expansion_part2	ietf	minutes-107-dispatch.txt	YES		chairs will improve on that in the future.
+1543	expansion_part2	us-congress	CHRG-115shrg36552.txt	NO		law, and they will, of course.
+1544	expansion_part2	us-congress	CHRG-118hhrg58429.txt	NO		you within, like, 30 seconds Huntsville is going to be cheaper
+1545	expansion_part2	ietf	minutes-121-opsawg-202411060930.md	YES		was okay with this, and mcr will work to do this and submit a new draft.
+1546	expansion_part2	us-congress	CHRG-114hhrg99627.txt	NO		With that, I will turn to the ranking member for any
+1547	expansion_part2	us-congress	CHRG-118hhrg59459.txt	NO		Provisions and Future Needs.'' The hearing will provide Members
+1548	expansion_part2	us-congress	CHRG-118hhrg56000.txt	NO		innovation, and the Biden Administration regulators should take
+1549	expansion_part2	us-congress	CHRG-118hhrg53388.txt	NO		supported in their important safety efforts as well.
+1550	expansion_part2	us-congress	CHRG-117shrg50076.txt	NO		The Congressional Commission created by S. 2907 will help further
+1551	expansion_part2	us-congress	CHRG-118hhrg52632.txt	NO		Seeing none, thank you for your testimony, and we will
+1552	expansion_part2	ietf	minutes-75-mpls.txt	NO		Ross (individual): great document, concise, well done
+1553	expansion_part2	us-congress	CHRG-116hhrg36568.txt	NO		but I can tell you that there are some requirements that they
+1554	expansion_part2	us-congress	CHRG-116shrg52726.txt	NO		Using blockchain in the near future, we'll have answers to
+1555	expansion_part2	us-congress	CHRG-114hhrg26176.txt	NO		Silver Line from everything else and declare that it's going to
+1556	expansion_part2	us-congress	CHRG-117hhrg48524.txt	NO		they will be 100 percent right all the time.
+1557	expansion_part2	us-congress	CHRG-118shrg54470.txt	NO		Well, I appreciate you guys coming on
+1558	expansion_part2	us-congress	CHRG-116hhrg43859.txt	NO		Well, thank you very much.
+1559	expansion_part2	ietf	minutes-104-dnsop.txt	NO		Paul: Should be for zone administrators who want this served this way.
+1560	expansion_part2	us-congress	CHRG-116hhrg40455.txt	NO		I will recognize my colleague, Mr. Crenshaw from Texas, for
+1561	expansion_part2	ietf	minutes-94-v6ops.txt	NO		ÊÊÊÊÊÊÊ Q, Shin Miyazawa:Ê support for LorenzoÕs draft.Ê We should not charge for IP addresses.
+1562	expansion_part2	us-congress	CHRG-118hhrg53388.txt	NO		programs that DOT should implement to improve efficiency and
+1563	expansion_part2	us-congress	CHRG-115hhrg32478.txt	NO		And the fact that the resources are less than they need to be
+1564	expansion_part2	us-congress	CHRG-118hhrg53002.txt	NO		COVID-19 will, in fact, heighten this chilling effect on the
+1565	expansion_part2	ietf	minutes-110-masque.md	NO		Eric Kinnear: Yes, all the setting says is the server can do datagrams not that it will.
+1566	expansion_part2	us-congress	CHRG-116shrg36264.txt	NO		Well, I think in the ten-year window I think
+1567	expansion_part2	us-congress	CHRG-118hhrg55982.txt	NO		dollars--that's well more than the Service's annual budget.
+1568	expansion_part2	ietf	minutes-90-tsvwg.txt	NO		Is the scope unclear, or people think we should not work on this?
+1569	expansion_part2	ietf	minutes-98-teep.txt	NO		there needs trust apps, and types of trust apps doesn't need to be a
+1570	expansion_part2	us-congress	CHRG-117shrg50344.txt	NO		residents should not be disadvantaged in accessing telehealth just
+1571	expansion_part2	us-congress	CHRG-117shrg45439.txt	NO		States should be clear in pushing back on this illegal aggression, but
+1572	expansion_part2	us-congress	CHRG-117hhrg45253.txt	NO		limit, and people are going to say, I don't want to earn that
+1573	expansion_part2	us-congress	CHRG-114hhrg25269.txt	NO		the public, the industry should not be permitted to ignore court
+1574	expansion_part2	us-congress	CHRG-114shrg25897.txt	NO		LHA 8, the first Flight 1 ship, will have a well deck to increase
+1575	expansion_part2	us-congress	CHRG-117shrg47024.txt	NO		Now my question is, if we are really going to correct those
+1576	expansion_part2	us-congress	CHRG-117shrg51736.txt	YES		I commit to using the appropriate CT tools at
+1577	expansion_part2	us-congress	CHRG-115shrg39879.txt	NO		NTIA and the FCC should coordinate their expertise and
+1578	expansion_part2	us-congress	CHRG-117hhrg47527.txt	NO		Again, I can't specifically talk on this
+1579	expansion_part2	us-congress	CHRG-116hhrg41198.txt	NO		Act of 2018 included the provision that ``there shall be a presumption
+1580	expansion_part2	ietf	minutes-67-l1vpn.txt	NO		should work on IS-IS as well?
+1581	expansion_part2	us-congress	CHRG-114shrg93106.txt	NO		I will tell you how it works.
+1582	expansion_part2	us-congress	CHRG-117hhrg44548.txt	NO		Indo-Pacific, I concur that the People of Guam should have a voice in
+1583	expansion_part2	us-congress	CHRG-118hhrg52187.txt	NO		think we need to go forward modernizing that, though.
+1584	expansion_part2	ietf	minutes-96-tcpinc.txt	YES		Action: draft-bittau-tcpinc-bcp should be renamed from -bcp to
+1585	expansion_part2	us-congress	CHRG-116hhrg40455.txt	NO		Members of Congress and their staffs should visit detention
+1586	expansion_part2	us-congress	CHRG-117shrg51186.txt	NO		Well, Chairman, thank you for the question.
+1587	expansion_part2	us-congress	CHRG-118hhrg57120.txt	NO		what, $247 but the annual energy savings will be about $751,
+1588	expansion_part2	us-congress	CHRG-116hhrg41198.txt	YES		We plan to introduce this technology next year, and it will
+1589	expansion_part2	us-congress	CHRG-117shrg54364.txt	NO		desperately need to move ahead.
+1590	expansion_part2	ietf	minutes-82-l2vpn.txt	NO		Need to point out this has been studied in ARMD.
+1591	expansion_part2	ietf	minutes-111-gendispatch.txt	NO		Lars: don't think IESG proposal will work, prefer proposals from the community, but that is another topic
+1592	expansion_part2	us-congress	CHRG-117hhrg46269.txt	YES		what I can commit to you is to follow up with you, to work
+1593	expansion_part2	us-congress	CHRG-117shrg55819.txt	NO		In your view, will additional costs like this actually make
+1594	expansion_part2	ietf	minutes-111-ace.txt	NO		Seems like it would count but need to confirm
+1595	expansion_part2	us-congress	CHRG-118hhrg56926.txt	NO		parties should support these changes.
+1596	expansion_part2	us-congress	CHRG-114hhrg98627.txt	NO		I apologize in advance for how I'm going to get this--
+1597	expansion_part2	ietf	minutes-74-6lowpan.txt	NO		Carsten: the strong message will actually be the IESG message that the
+1598	expansion_part2	us-congress	CHRG-114hhrg98891.txt	NO		will continue to get better.
+1599	expansion_part2	us-congress	CHRG-117shrg50076.txt	NO		members of said tribe, shall ever exist in said Nation; and inasmuch as
