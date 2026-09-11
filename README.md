@@ -48,8 +48,11 @@ accident and impossible to break in the obvious ways without a test turning red.
 Follow Through needs Python 3.11 or newer and has no dependencies.
 
 ```bash
-python3 -m pip install --no-deps .
+pip install follow-through
 ```
+
+To install from a clone instead, `python3 -m pip install --no-deps .` from the
+repository root.
 
 ## Use it
 
