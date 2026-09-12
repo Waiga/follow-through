@@ -10,6 +10,6 @@ Offline by design. Nothing in this package opens a network connection.
 # tests/test_offline.py refuses that on purpose — importlib can reach anything.
 # The guard is worth more than the convenience, so the duplication stays and
 # tests/test_version.py fails if the two copies ever disagree.
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 __all__ = ["__version__"]
