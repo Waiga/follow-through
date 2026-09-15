@@ -13,7 +13,7 @@ Follow Through is a command-line tool that reads a transcript, finds the
 statements that commit someone to a future action, and tracks each one until you
 say it is done.
 
-It reads English and Hinglish — Hindi spoken in Roman script, which is what
+It reads English and Hinglish: Hindi spoken in Roman script, which is what
 transcription tools return for most of India. That is not a bonus feature.
 English-only rules do not degrade gracefully on a Hindi conversation: they
 return nothing at all, while reporting nothing wrong.
@@ -31,9 +31,9 @@ transcripts are never uploaded anywhere.
 
 That is enforced, not just promised. `tests/test_offline.py` reads this package's
 own source on every run and fails if any module imports something that can reach
-the network, names one of the `os` functions that starts another program —
-however it is spelled, including behind an alias, an aliased import, or a string
-passed to `getattr` — or reaches for `__import__`, `eval` or `exec`. Each
+the network, names one of the `os` functions that starts another program
+(however it is spelled, including behind an alias, an aliased import, or a string
+passed to `getattr`), or reaches for `__import__`, `eval` or `exec`. Each
 detector has its own test proving it can fail, and one test smuggles a working
 exfiltration path in to confirm it is caught.
 
@@ -56,7 +56,7 @@ repository root.
 
 ## Use it
 
-Start with a transcript. Any plain text file works — exported meeting notes, a
+Start with a transcript. Any plain text file works: exported meeting notes, a
 transcription, or something you typed yourself.
 
 ```bash
@@ -86,7 +86,7 @@ follow-through track examples/weekly-sync.txt
 ```
 
 That writes a ledger to `.follow-through/ledger.json`. Run it again over the same
-file after it has grown and only the new commitments are added — nothing is
+file after it has grown and only the new commitments are added. Nothing is
 duplicated, and nothing you have already closed comes back.
 
 A commitment is identified by its wording, its owner, and the file it came from.
@@ -94,8 +94,8 @@ The file matters: people promise the same thing, in the same words, every week.
 If last week's transcript and this week's were treated as one, the second promise
 would silently match the first one you closed and disappear.
 
-The file is recorded as the path you gave, shortened, not as an absolute path —
-otherwise the same transcript would produce different ids on different machines.
+The file is recorded as the path you gave, shortened, not as an absolute path.
+Otherwise the same transcript would produce different ids on different machines.
 One consequence worth knowing: if two directories each hold a `standup.txt` and
 both are tracked from inside themselves into one shared ledger, both record
 `standup.txt` and merge. Run `track` from a common parent and the paths differ,
@@ -110,15 +110,15 @@ follow-through report
 ```
 
 `report` writes Markdown and HTML to `reports/`. Open commitments are grouped by
-person, with the unattributed ones in their own visible group — those are the
+person, with the unattributed ones in their own visible group. Those are the
 ones that actually go missing.
 
 A worked example of the finished report is in
-[`examples/expected-report.md`](examples/expected-report.md).
+[`examples/expected-report.md`](https://github.com/Waiga/follow-through/blob/main/examples/expected-report.md).
 
 ## Hinglish
 
-The same command, on [`examples/weekly-sync-hinglish.txt`](examples/weekly-sync-hinglish.txt):
+The same command, on [`examples/weekly-sync-hinglish.txt`](https://github.com/Waiga/follow-through/blob/main/examples/weekly-sync-hinglish.txt):
 
 ```
 30c32ccddb01  Neha                  kal tak               Main signed copy finance ko kal tak bhej dungi.
@@ -128,7 +128,7 @@ Hindi puts two things in different places from English, and both matter.
 
 **Who is committing is in the verb ending, not in a pronoun.** `-unga` / `-ungi`
 is "I will", `-enge` is "we will", `-ega` / `-egi` after a name is "she will" or
-"he will" — which is how work actually gets handed to someone in a Hindi meeting.
+"he will", which is how work actually gets handed to someone in a Hindi meeting.
 The rules match the ending, so verbs nobody thought to list are still caught.
 
 **When it is due is at the end of the phrase.** `kal` is "tomorrow"; `kal tak` is
@@ -142,7 +142,7 @@ to everything, these rules invented commitments in English sentences and invente
 people to own them.
 
 So a sentence has to look like Hindi first. Either it contains a Hindi function
-word — `hai`, `ko`, `kar`, `nahi` — or it contains an unmistakably Hindi verb: a
+word (`hai`, `ko`, `kar`, `nahi`) or it contains an unmistakably Hindi verb: a
 **lowercase** word ending `-ega`, `-egi`, `-enge`, `-unga`, `-ungi`. The
 lowercase part is what does the work. Hindi verbs are not capitalised in the
 middle of a sentence, and the English words that share those endings are proper
@@ -150,11 +150,11 @@ nouns: Ortega, Vega, Omega, Noriega. That one distinction separates
 "Amazon listing Farhan update karega" from "Maria Ortega raised the issue"
 without needing a dictionary of either language.
 
-Transliteration is not standardised — people write `hu` and `hoon`, `kar dunga`
+Transliteration is not standardised: people write `hu` and `hoon`, `kar dunga`
 and `kardunga`. The common spellings are covered and the list will always be
 incomplete. Adding to it is the single most useful contribution anyone can make,
 and the rules are plain data in
-[`follow_through/hinglish.py`](follow_through/hinglish.py).
+[`follow_through/hinglish.py`](https://github.com/Waiga/follow-through/blob/main/follow_through/hinglish.py).
 
 ## What it will not do
 
@@ -167,10 +167,10 @@ This list is the design, not a disclaimer.
   owner stays `unknown`. It will not attribute a line to whoever was talking
   most, and it will not turn `From:` or `TODO:` into an owner. "We'll decide on
   Friday" commits a room, not whoever said "we", so that stays `unknown` too.
-  An owner is whoever the text names, which may be a team — "Legal will review
+  An owner is whoever the text names, which may be a team. "Legal will review
   the contract" records Legal, because that is who was named.
 - **It will not guess a deadline.** No timing phrase means no deadline. It records
-  the phrase the speaker actually used — `by Friday`, `in 3 days` — as text, and
+  the phrase the speaker actually used (`by Friday`, `in 3 days`) as text, and
   never converts it to a calendar date, because that would mean assuming when the
   conversation happened.
 - **It will not decide that something was done.** Only you close an entry, and a
@@ -198,7 +198,7 @@ was measured against 1,067 real meeting records before it was made.
   nothing. That also means "IESG will publish it" records nothing. A protocol,
   a document and a working-group short name all look identical to a part
   number, and naming one as the person responsible is exactly the invention
-  this tool exists not to make. Write the owner as a word — `Legal`, `Chairs` —
+  this tool exists not to make. Write the owner as a word (`Legal`, `Chairs`)
   and it is recorded.
 - **"I can" counts only at the start of a clause, and only unhedged.** "I can
   write the text" is an offer. "It is nice to have this as I can just mirror it
@@ -248,7 +248,7 @@ was measured against 1,067 real meeting records before it was made.
 ## How it decides
 
 The rules are ordinary regular expressions, kept together as data in
-[`follow_through/cues.py`](follow_through/cues.py) so you can read and extend
+[`follow_through/cues.py`](https://github.com/Waiga/follow-through/blob/main/follow_through/cues.py) so you can read and extend
 them without touching any logic. There is no model involved.
 
 A sentence becomes a candidate when it contains someone undertaking to do
@@ -256,7 +256,7 @@ something (`I'll`, `we will`, `let me`, `let's`, `I can write`), handing work to
 somebody else (`please send`, `Priya will`, `Mark agreed to`), or writing it down
 as an action item (`Mark to post the revised draft`, `Ask the WG to adopt it`).
 It is rejected when it is hypothetical, negated, tentative, or already in the
-past — `if I get time`, `I don't think I'll`, `I might`, `I already sent`,
+past: `if I get time`, `I don't think I'll`, `I might`, `I already sent`,
 `Mozilla will not implement`.
 
 Contractions require their apostrophe, straight or typographic. This reads like
@@ -270,15 +270,15 @@ modes?" is a question at a microphone, and recording it as an obligation was the
 tool's second largest source of noise.
 
 Nothing quoted is read as a commitment. A scribe writing down what somebody else
-said is reporting, not recording a promise, and a negated future — "X will not
-do Y" — is refused in every person.
+said is reporting, not recording a promise, and a negated future ("X will not
+do Y") is refused in every person.
 
 Four shapes carry a commitment without any of the words above, and all four are
 read:
 
 - **Committing in so many words.** "Will you commit to working with my office?"
   and the answer, "I certainly can commit to working with you." The verb is the
-  cue. So is an expectation put on the record — "I hope you will consult with
+  cue. So is an expectation put on the record: "I hope you will consult with
   the public".
 - **A subject the scribe dropped.** "Fangwei: will move the model to that
   format." The label already said who, so the sentence does not. Only read
@@ -300,7 +300,7 @@ determiner or a pronoun does not, and that makes the `to` a preposition. `be` is
 allowed, because "Mirja to be the responsible AD" is a real assignment.
 
 The head must not be a word this document also writes in lower case. A capital
-at the start of a sentence carries no information — the capital is the sentence.
+at the start of a sentence carries no information: the capital is the sentence.
 When the same file says "due to" and "want to" in lower case elsewhere, the
 capital was punctuation. A name never gets that contradiction, and every word of
 a name has to be contradicted before the head is refused, so "Mark Nottingham"
@@ -322,13 +322,13 @@ person named. A collective undertaking belongs to nobody. When two of these
 appear in one sentence the owner is genuinely unclear, so it is left unknown.
 
 A heading ends the current speaker's turn, including when it sits alone on its
-line — `Action items:` with nothing after it. A pasted mail quote (`> ...`) ends
+line (`Action items:` with nothing after it). A pasted mail quote (`> ...`) ends
 it too: those are somebody else's words.
 
 Filler is treated differently from a hypothetical. "I might look at it" and
 "we'll never get this done" are rejected outright, whatever else the sentence
 says. "Let me know if that works" is rejected only because nothing was promised
-by when — "Let me know the vendor's answer by Friday" is kept.
+by when. "Let me know the vendor's answer by Friday" is kept.
 
 What counts for that second rule is a phrase that names when work is due: `by
 Friday`, `before Monday`, `within two days`, `end of week`, `on Thursday`.
@@ -351,7 +351,7 @@ word. That is a filter, not name detection. It rejects `From:`, `TODO:` and
 `Actually`; it cannot tell an unusual name from an unusual noun, so a heading it
 has never heard of will read as a speaker. There is a test that says so.
 
-An owner is not necessarily a person. Whoever the sentence names is recorded —
+An owner is not necessarily a person. Whoever the sentence names is recorded,
 unless an article stands in front of the name. English does not put one in front
 of a person: "Priya will send the deck" names somebody, "The Committee will hold
 a hearing" and "our Chairs will decide" name a thing and a role. That single test
@@ -366,7 +366,7 @@ it threw away.
 So the file is measured first. A hard-wrapped file has a ceiling: nearly every
 line stops just short of one column, and the few that pass it are a URL, a table
 row or a rule of equals signs. That ceiling is read off the 95th percentile of
-the line lengths, never off the longest line — the longest line is the outlier
+the line lengths, never off the longest line. The longest line is the outlier
 the ceiling has to be measured in spite of. A file needs at least forty lines
 before the percentile can exclude anything, and a quarter of its lines have to
 sit in the band just under the ceiling; otherwise it is note-style minutes,
@@ -405,9 +405,9 @@ python3 -m unittest discover -s tests -t . -v
 
 ## Contributing
 
-Bounded, useful tasks are listed in [ROADMAP.md](ROADMAP.md), and
-[CONTRIBUTING.md](CONTRIBUTING.md) explains how the project is reviewed. New cue
-patterns are especially welcome — they are data, they are easy to test, and every
+Bounded, useful tasks are listed in [ROADMAP.md](https://github.com/Waiga/follow-through/blob/main/ROADMAP.md), and
+[CONTRIBUTING.md](https://github.com/Waiga/follow-through/blob/main/CONTRIBUTING.md) explains how the project is reviewed. New cue
+patterns are especially welcome: they are data, they are easy to test, and every
 one of them makes the tool find something it used to miss.
 
 ## Honest status
@@ -427,7 +427,7 @@ did when it was pointed at documents nobody involved with it had written.
 **How this was measured.** Which 6,320 documents, how they were selected, which
 of the four measurement passes each figure below belongs to, and the complete
 800-sentence labelled set with its labels:
-[`docs/corpus-manifest.md`](docs/corpus-manifest.md). Its opening section carries
+[`docs/corpus-manifest.md`](https://github.com/Waiga/follow-through/blob/main/docs/corpus-manifest.md). Its opening section carries
 the full account of how the 800 labels were produced, including the dispatch-by-
 dispatch record.
 
@@ -457,7 +457,7 @@ isolated language model instance, five in total: four labelling 200 sentences ea
 and a fifth re-labelling one block of 200 to measure agreement. The fifth agreed
 with the first on 197 of 200, Cohen's kappa 0.92.
 
-No person labelled any of the 800 sentences. The isolation was real — each
+No person labelled any of the 800 sentences. The isolation was real: each
 instance started fresh, was given the task from linguistic criteria alone, and was
 instructed not to read this tool's source and not to look for its answers, so no
 labeller could have copied it. But the labels come from the same model family that
@@ -486,7 +486,7 @@ their regression suite: 88 tests whose fixtures are real corpus sentences rather
 than invented ones.
 
 The largest single defect was one optional apostrophe. `\bwe'?ll\b` matches the
-ordinary word **well**, and `\bi'?ll\b` matches **ill** — 31,599 findings, more
+ordinary word **well**, and `\bi'?ll\b` matches **ill**: 31,599 findings, more
 than a third of everything the tool reported, came from that alone. It is now 96.
 
 The worst was a quoted slogan recorded as an open obligation owned by the group
@@ -495,7 +495,7 @@ the slogan named. Two guards close it, and neither is a list of words.
 Two of the four rounds existed to fix something an earlier round had introduced.
 The cue added to catch `Mark to post the draft` also fired on the ordinary
 English preposition, so a report carried owners called According, Deferring and
-Due — 5.5% of all findings, now 1.8%. The line-rejoiner added to fix that
+Due: 5.5% of all findings, now 1.8%. The line-rejoiner added to fix that
 measured a file's width from its longest line, so one URL or table row hid the
 wrap column and it missed 76% of the hard-wrapped files it existed for,
 including the transcript it had been written from. Both were caught by measuring
@@ -515,7 +515,7 @@ Standards-body minutes and parliamentary hearings are two genres it was not
 designed for, in which most sentences containing "will" are prediction,
 procedure or rhetoric rather than promise. These are numbers from hostile
 ground, not a description of ordinary use. No measurement on ordinary business
-meeting transcripts exists, because no public corpus of them does — and a
+meeting transcripts exists, because no public corpus of them does, and a
 precision of 0.348 is not a good score by any reading.
 
 Three further limits, stated rather than buried. Both corpora are hard-wrapped
@@ -531,7 +531,7 @@ before release.
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](https://github.com/Waiga/follow-through/blob/main/LICENSE).
 
 ## Author
 
