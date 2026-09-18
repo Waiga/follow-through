@@ -86,7 +86,7 @@ def counts(entries: list[Entry]) -> dict[str, int]:
 def _markdown_entry(entry: Entry) -> list[str]:
     due = entry.due_phrase if entry.due_phrase != UNKNOWN else "no stated deadline"
     return [
-        f"- **{entry.id}** — {as_text(entry.text)}",
+        f"- **{entry.id}**: {as_text(entry.text)}",
         f"  - Deadline: {as_text(due)}",
         f"  - Source: {as_text(entry.source)} line {entry.line}",
         f"  - Cues: {', '.join(entry.cues)}",
@@ -124,7 +124,7 @@ def render_markdown(entries: list[Entry]) -> str:
     if closed_entries:
         lines.extend([f"## Closed ({len(closed_entries)})", ""])
         for entry in closed_entries:
-            lines.append(f"- **{entry.id}** — {as_text(entry.text)}")
+            lines.append(f"- **{entry.id}**: {as_text(entry.text)}")
             lines.append(f"  - Closed because: {as_text(entry.note)}")
         lines.append("")
 
