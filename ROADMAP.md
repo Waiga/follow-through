@@ -20,7 +20,7 @@ A second language would be added the same way. Tamil, Bengali, Spanish and
 Portuguese transcripts have the same problem and none of the tooling.
 
 **More cue patterns.** The rules live in `follow_through/cues.py` as plain data.
-Add the phrasings you actually hear — regional English, industry habits, ways of
+Add the phrasings you actually hear: regional English, industry habits, ways of
 committing that the current list misses. Each new pattern needs one test showing
 what it now catches and one showing what it still correctly rejects.
 
