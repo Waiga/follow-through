@@ -1,4 +1,4 @@
-# Follow Through — Design
+# Follow Through: the design
 
 **Date:** 6 September 2026
 **Author:** Waiga Arya
@@ -48,7 +48,7 @@ unknown, never as a confirmed negative.
 
 ## Languages
 
-The tool reads English and Hinglish — Hindi conversation transliterated into
+The tool reads English and Hinglish, Hindi conversation transliterated into
 Roman script, which is what transcription tools return for most of India.
 
 This was not in the original design. It was added after the first version was
@@ -60,41 +60,41 @@ reporting nothing wrong.
 That observation came from a single private transcript and was scored by the
 author of the rules. It is the reason the module exists. It is not a measurement,
 and the Hinglish rules have never been run against a public Hindi-English
-corpus — none is known to me.
+corpus, because none is known to me.
 
 Hinglish lives in one module that feeds the same cue families, so nothing
-downstream knows which language a sentence was in and a mixed sentence — which is
-how people actually speak — is matched by whichever rule fires. A third language
+downstream knows which language a sentence was in and a mixed sentence, which is
+how people actually speak, is matched by whichever rule fires. A third language
 would be added the same way.
 
 **The Hindi rules are gated on the sentence containing Hindi.** They were first
 applied to every sentence, and Roman script does not permit that: "fungi" ends
 like "karungi", "Ortega" like "karega", "karo" is a syrup and "bolo" is a tie.
 Fifteen of fifty-nine ordinary English sentences were recorded as commitments,
-four of them owned by invented people — "Q3", "Project", "Phase 1", "Slide 3".
+four of them owned by invented people: "Q3", "Project", "Phase 1", "Slide 3".
 
 The gate has two signals, either sufficient. The first is a Hindi function word:
 pronouns, postpositions, auxiliaries, connectives. They are unavoidable in a Hindi sentence, near-absent
 from an English one, and carry no meaning worth matching on their own. Words that
-exist in both languages are deliberately excluded from the list — "the", "to",
+exist in both languages are deliberately excluded from the list: "the", "to",
 "me", "us", "main", "hi", "par", and "agar", which is Hindi for "if" and also a
 laboratory growth medium. One false hit opens every Hindi rule on an English
 sentence, and a real Hindi sentence contains several of these words, not one.
 
 The second signal is an unmistakably Hindi verb: a lowercase word ending -ega,
 -egi, -enge, -unga or -ungi, or one of a short list of imperatives that have no
-English twin. This exists because most Hinglish is code-mixed — English nouns
-with a single Hindi verb, "Amazon listing Farhan update karega" — and a
+English twin. This exists because most Hinglish is code-mixed, English nouns
+with a single Hindi verb, "Amazon listing Farhan update karega", and a
 function-word test alone dropped eleven of twenty realistic lines of that shape.
 
 Case is what makes the second signal safe. Hindi verbs are not capitalised
 mid-sentence; the English words sharing those endings are proper nouns (Ortega,
-Vega, Omega, Noriega). Lowercase lookalikes that are ordinary English words —
-challenge, revenge, fungi, lungi — are held by a short guard list, which must be
+Vega, Omega, Noriega). Lowercase lookalikes that are ordinary English words,
+challenge, revenge, fungi and lungi, are held by a short guard list, which must be
 matched case-insensitively: it was not, and that silently made every entry in it
 inert, since those words only ever appear capitalised.
 
-Names that are also Hindi function words — Jo, Ho, Diya, Bas, Tak — are kept out
+Names that are also Hindi function words (Jo, Ho, Diya, Bas, Tak) are kept out
 of the not-a-name list. Rejecting one as a speaker label is worse than losing an
 owner: the label is then read as document structure, which also ends the current
 speaker's turn and orphans every unlabelled line after it.
@@ -107,8 +107,8 @@ Two structural differences drive the rules:
 **Person is in the verb ending.** `-unga` / `-ungi` is first person, `-enge` is
 collective, and `-ega` / `-egi` following a name is an assignment to that person.
 Matching the ending rather than a list of verbs covers the language instead of a
-sample, at the cost of a small guard list for English words that end the same way
-— "challenge", "revenge", "omega".
+sample, at the cost of a small guard list for English words that end the same
+way: "challenge", "revenge", "omega".
 
 **The deadline marker is at the end.** `kal` is "tomorrow"; `kal tak` is "by
 tomorrow". Only the second sets a deadline, so the filler override tests the end
@@ -117,7 +117,7 @@ of the phrase for Hinglish and the start of it for English.
 Two rules were tried and removed for producing false positives on real speech:
 `ho jayega` ("it will get done"), which is nearly always a prediction, and a
 general "any word plus na hai" obligation rule, which fired on the English nouns
-that fill Hinglish sentences — "done hai", "phone hai", "online hai". The verb
+that fill Hinglish sentences: "done hai", "phone hai", "online hai". The verb
 stems are listed explicitly instead.
 
 ## Users
@@ -154,14 +154,14 @@ speaking context for the sentences that follow, until the next label.
 **Commitment cues.** A sentence becomes a candidate when it matches at least one
 cue family:
 
-- *First person undertaking* — `I'll`, `I will`, `I'm going to`, `let me`,
+- *First person undertaking*: `I'll`, `I will`, `I'm going to`, `let me`,
   `I can have`, `we'll`, `we will`, `we're going to`.
-- *Assignment to another party* — `can you`, `could you`, `please send`,
+- *Assignment to another party*: `can you`, `could you`, `please send`,
   `<Name> will`, `<Name> is going to`.
 
 **Owner resolution.** For a first-person undertaking, the owner is the current
 speaker label if one exists, otherwise `unknown`. For a named assignment, the
-owner is the person named. A collective undertaking — "we'll decide on Friday" —
+owner is the person named. A collective undertaking, "we'll decide on Friday",
 belongs to nobody, because recording it against whoever said "we" would be an
 invention. An open ask does not say who was addressed, so it stays `unknown`.
 When two of these fire in one sentence the owner is unclear, and unclear is
@@ -171,8 +171,8 @@ who spoke most.
 **What counts as a name.** A capitalised word is treated as a name only when no
 word in it is an ordinary English word. This is a filter, not name detection: it
 can reject, never confirm. It exists because the first version produced owners
-called "From", "TODO" and "Brien" — the last of those from splitting "O'Brien" in
-half — and the second still produced "Actually" and "Hopefully". Names are matched
+called "From", "TODO" and "Brien", the last of those from splitting "O'Brien" in
+half, and the second still produced "Actually" and "Hopefully". Names are matched
 without assuming ASCII, so "José" and "Алекс" work, and April, May and June are
 allowed through because they are given names as often as months.
 
@@ -180,12 +180,12 @@ The filter cannot close the class, only narrow it. A capitalised word in the
 subject position is indistinguishable from a name in one line of text. Two
 consequences are accepted and documented rather than hidden: a heading the list
 has never seen will read as a speaker, and a named party may be a team or a
-company rather than a person. The second is not a defect — "Legal will review the
+company rather than a person. The second is not a defect. "Legal will review the
 contract" names who is responsible, and refusing it would lose a real commitment.
 
 **Filler versus hypotheticals.** Exclusions come in two strengths. A hypothetical,
-a negation, or something already done is rejected outright — a deadline never
-rescues "we'll never get this done by Friday". Conversational filler is rejected
+a negation, or something already done is rejected outright, because a deadline
+never rescues "we'll never get this done by Friday". Conversational filler is rejected
 only when nothing was promised by when.
 
 Two details make that rule safe. The overriding phrase must name when work is
@@ -229,14 +229,14 @@ over that file after it has grown adds only what is new.
 
 The source belongs in the identity. People promise the same thing, in the same
 words, every week. Without it, week two's promise would match week one's closed
-entry and disappear — a confirmed "nothing open" where the honest answer is that
-a new commitment exists.
+entry and disappear, giving a confirmed "nothing open" where the honest answer
+is that a new commitment exists.
 
 States are `open` and `closed`, and a ledger containing anything else is refused
 on load rather than passed through: an unrecognised state would leave an entry
 counted in the total, listed under neither heading, and reported to nobody. A
-closed entry with no reason is refused for the same kind of reason — closure is
-supposed to be a recorded human judgement.
+closed entry with no reason is refused for the same kind of reason, because
+closure is supposed to be a recorded human judgement.
 
 There is deliberately no `overdue` state, because the tool does not compute dates.
 A report can show which entries have a due phrase and are still open; it will not

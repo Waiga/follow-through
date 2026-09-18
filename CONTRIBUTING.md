@@ -5,7 +5,7 @@ Contributions are welcome, including the kind that tell me the tool is wrong.
 ## Before you start
 
 Open an issue describing what you intend to change. For a bug, the most useful
-issue contains a short piece of transcript text that reproduces it — invented
+issue contains a short piece of transcript text that reproduces it. Invented
 text, please, not a real meeting. For a new feature, check
 [ROADMAP.md](ROADMAP.md); the "deliberately not planned" section explains what
 this tool will not become and why.

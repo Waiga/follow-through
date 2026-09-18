@@ -12,8 +12,8 @@ reconstructing it. It also corrects one thing the README implies and should not.
 The README says the 800 sentences were marked by "labellers who had not seen the
 source code", and that "a second labeller re-marked 200 of them without seeing
 the first set". Both statements are true about the *procedure*. Neither says who
-the labellers were, and the natural reading — human annotators, and therefore a
-human inter-annotator agreement figure — is wrong.
+the labellers were, and the natural reading (human annotators, and therefore a
+human inter-annotator agreement figure) is wrong.
 
 **No human labelled any of the 800 sentences.** Every label was produced by an
 isolated large-language-model subagent. Specifically, five separate dispatches of
@@ -58,8 +58,8 @@ congressional hearing transcripts, 184 MB, collected 7 September 2026. Neither
 body of documents was written for this tool, and no example in this repository
 came from either.
 
-**The list.** [`docs/corpus/documents.tsv`](corpus/documents.tsv) — 6,320 rows
-plus a header:
+**The list.** [`docs/corpus/documents.tsv`](corpus/documents.tsv) holds 6,320
+rows plus a header:
 
 | column | meaning |
 |---|---|
@@ -72,7 +72,7 @@ plus a header:
 Every row carries a URL. The `sha256` needs one qualification per corpus, given
 under each heading below.
 
-### IETF working-group minutes — 5,733 documents
+### IETF working-group minutes: 5,733 documents
 
 **Selection rule.** The IETF publishes a machine-readable catalogue of meeting
 materials. Every entry whose name matches `minutes-<meeting number>-*` and whose
@@ -81,7 +81,7 @@ excludes slides, agendas, and minutes published only as PDF or HTML. A response
 under 200 bytes was discarded as a stub. 5,746 entries matched the rule; 5,733
 were obtained.
 
-**Where.** `https://www.ietf.org/proceedings/<meeting>/minutes/<file>` — the
+**Where.** `https://www.ietf.org/proceedings/<meeting>/minutes/<file>`. The
 exact URL for every document is in the manifest.
 
 **Range.** IETF 65 (2006) to IETF 126 (2026). The meeting number is the first
@@ -92,10 +92,10 @@ manifest.
 `sha256` is directly comparable against a fresh download.
 
 **Licence.** IETF meeting minutes are IETF Trust material, published as part of
-the IETF's public proceedings. **The documents are not redistributed here** —
+the IETF's public proceedings. **The documents are not redistributed here**,
 only their names, URLs and hashes.
 
-### United States congressional hearings — 587 documents
+### United States congressional hearings: 587 documents
 
 **Selection rule, exactly, including its seed.** For each of the years 2016,
 2018, 2019, 2021, 2022, 2023 and 2024, the GovInfo sitemap
@@ -107,8 +107,8 @@ under 3,000 characters was discarded. 587 of the 600 were obtained.
 **Note the year list.** It is seven specific years, **not** a continuous range.
 2017 and 2020 are absent. The README describes the set as "587 United States
 congressional hearing transcripts from 2016 to 2024"; the seven years above are
-what was actually sampled. By Congress, the 587 fall out as: 114th — 75, 115th —
-60, 116th — 114, 117th — 173, 118th — 165.
+what was actually sampled. By Congress, the 587 fall out as: 114th, 75; 115th,
+60; 116th, 114; 117th, 173; 118th, 165.
 
 **Where.** `https://www.govinfo.gov/content/pkg/<ID>/html/<ID>.htm`.
 
@@ -126,12 +126,12 @@ manifest is the authority on which 587 were used; the seed records how they were
 chosen, not a guarantee that the choice repeats.
 
 **Licence.** Works of the United States Government, in the public domain. Not
-redistributed here — names, URLs and hashes only.
+redistributed here: names, URLs and hashes only.
 
 ## 2. The 800 labelled sentences
 
 **The set.** [`docs/corpus/labelled-sentences.tsv`](corpus/labelled-sentences.tsv)
-— 800 rows plus a header, the complete labelled evaluation set:
+holds 800 rows plus a header, the complete labelled evaluation set:
 
 | column | meaning |
 |---|---|
@@ -154,14 +154,14 @@ than a self-selected one.
 
 **Label definitions,** as given to every labeller:
 
-- `YES` — the sentence commits an identifiable party (person, group or
+- `YES`: the sentence commits an identifiable party (person, group or
   organisation) to a specific future action that could later be marked done or
   not done.
-- `NO` — everything else: opinions, predictions, questions asking for
+- `NO`: everything else. Opinions, predictions, questions asking for
   information, descriptions of the past, abstract "should" statements,
   procedural narration of the present moment, hypotheticals committing nobody,
   refusals and negations.
-- `FRAG` — cut off exactly where the commitment would be stated, so it cannot
+- `FRAG`: cut off exactly where the commitment would be stated, so it cannot
   fairly be judged.
 
 Fifteen worked rulings accompanied the definitions and are reproduced in the
@@ -193,7 +193,7 @@ different populations. This is the mapping.
 |---|---|---|---|
 | precision, 800 blind labels | 0.131 | 0.348 | the 800 above, minus the 8 `FRAG` rows, so **792 scored** |
 | recall, 800 blind labels | 0.432 | 0.605 | same 792 |
-| recall, whole pipeline over whole documents | 0.318 | 0.455 | **423 documents** — those the labelled sentences came from, run end to end |
+| recall, whole pipeline over whole documents | 0.318 | 0.455 | **423 documents**, those the labelled sentences came from, run end to end |
 | action items the scribes marked and it missed | 1,598 of 1,760 | 1,249 of 1,760 | **all 6,320 documents** |
 | findings quoted cut off mid-sentence | 62.6% | 11.7% | a **900-document** random sample; 12,801 findings v0.1, 8,140 v0.2 |
 | findings carrying a deadline | 1.5% | 3.7% | the same 900-document sample |
@@ -202,14 +202,14 @@ different populations. This is the mapping.
 
 Supporting figures in the surrounding prose, and where they sit:
 
-- "31,599 findings … from that alone", now 96 — all 6,320 documents.
-- "more than a third of everything the tool reported" — 31,599 of 90,529 is
+- "31,599 findings … from that alone", now 96: all 6,320 documents.
+- "more than a third of everything the tool reported": 31,599 of 90,529 is
   34.9%.
-- "71% of what human scribes wrote down … is still missed" — 1,249 of 1,760,
+- "71% of what human scribes wrote down … is still missed": 1,249 of 1,760,
   all 6,320 documents. The v0.1 rate was 90.8%.
 - "6,320 documents, zero crashes, zero timeouts, about a seventh of a second
-  each" — all 6,320 documents.
-- Owners "According, Deferring and Due — 5.5% of all findings, now 1.8%" — all
+  each": all 6,320 documents.
+- Owners "According, Deferring and Due: 5.5% of all findings, now 1.8%", over all
   6,320 documents.
 
 **The wrap-detection population, exactly.** The first 2,500 documents of the
@@ -218,7 +218,7 @@ frozen corpus list were tested geometrically for hard wrapping, independently of
 non-blank lines, its 90th-percentile line length is between 50 and 85
 characters, and at least 35% of its lines fall within 10 characters of that
 percentile. **932 documents met that test.** `wrap_column` returned a column for
-781 of them and nothing for 151 — a detection rate of **83.8%**, which the
+781 of them and nothing for 151, a detection rate of **83.8%**, which the
 README rounds to 84%. The 24% is the same probe against the v0.1 tree.
 
 **The 197-of-200 agreement figure.** The re-label covers `expansion_part1` only,
@@ -233,11 +233,11 @@ from the `label` and `second_label` columns.
 
 | claim | status |
 |---|---|
-| which 6,320 documents | **reproducible** — names, URLs and hashes ship here |
-| the IETF selection rule | **reproducible** — stated exactly |
+| which 6,320 documents | **reproducible**, names, URLs and hashes ship here |
+| the IETF selection rule | **reproducible**, stated exactly |
 | the congressional selection rule | reproducible as a *procedure*; the exact 587 are pinned by the manifest, not by re-running the seed |
-| the 800 labelled sentences and their labels | **reproducible** — the complete set ships here |
-| precision, recall and kappa | **reproducible** — recomputable from the label set |
-| that the labels are a fair ground truth | **not established** — the labellers were LLM subagents, see the warning at the top |
+| the 800 labelled sentences and their labels | **reproducible**, the complete set ships here |
+| precision, recall and kappa | **reproducible**, recomputable from the label set |
+| that the labels are a fair ground truth | **not established**, the labellers were LLM subagents, see the warning at the top |
 | the whole-pipeline, truncation and wrap figures | populations named above; the per-run result files are working files on one machine and are **not published** |
-| the measurement scripts | **not published** — `tests/test_corpus_defects.py` holds the regression tests the corpus produced, but not the harness that produced the table |
+| the measurement scripts | **not published**. `tests/test_corpus_defects.py` holds the regression tests the corpus produced, but not the harness that produced the table |
