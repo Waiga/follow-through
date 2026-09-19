@@ -412,7 +412,7 @@ one of them makes the tool find something it used to miss.
 
 ## Honest status
 
-Version 0.2. The behaviour described here is covered by tests that run on every
+Version 0.3. The behaviour described here is covered by tests that run on every
 change, and the example above is checked in and compared against real output, so
 the documentation cannot drift away from the code.
 

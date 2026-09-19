@@ -20,6 +20,7 @@ from pathlib import Path
 import follow_through
 
 PYPROJECT = Path(__file__).resolve().parent.parent / "pyproject.toml"
+README = Path(__file__).resolve().parent.parent / "README.md"
 
 
 def declared_version() -> str:
@@ -36,13 +37,39 @@ def declared_version() -> str:
     return match.group(1)
 
 
-class TheTwoCopiesOfTheVersionAgree(unittest.TestCase):
+def version_the_readme_claims() -> str:
+    """The version the README's Honest status section states, as major.minor.
+
+    That section is the one place a reader is told which version they hold, and
+    it was written by hand in prose, so no version bump touches it. It drifted:
+    0.3.0 shipped while this line still read 0.2, inside a paragraph promising
+    the documentation cannot drift away from the code. The anchor is the start
+    of a line so the historical v0.1 and v0.2 measurement table is not matched.
+    """
+    text = README.read_text(encoding="utf-8")
+    match = re.search(r"^Version (\d+\.\d+)\.", text, re.MULTILINE)
+    if match is None:
+        raise AssertionError("README.md has no 'Version X.Y.' line")
+    return match.group(1)
+
+
+class TheThreeCopiesOfTheVersionAgree(unittest.TestCase):
     def test_the_package_reports_what_pyproject_declares(self):
         self.assertEqual(
             follow_through.__version__,
             declared_version(),
             "follow_through.__version__ and pyproject.toml disagree. Both have "
             "to be bumped together, or the release announces the wrong version.",
+        )
+
+    def test_the_readme_states_the_version_that_ships(self):
+        major_minor = ".".join(follow_through.__version__.split(".")[:2])
+        self.assertEqual(
+            version_the_readme_claims(),
+            major_minor,
+            "README.md's Honest status section names a different version from "
+            "the one that ships. A reader is told which version they hold in "
+            "that paragraph and nowhere else.",
         )
 
     def test_the_version_looks_like_a_version(self):
